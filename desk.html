@@ -1,38 +1,101 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
-    <title>Memory Game</title>
+    <title>BoardGame</title>
     <!-- <link rel="stylesheet" href="./style.css" /> -->
     <link rel="stylesheet" href="style_card.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    
+    <script src='card_id.js'></script> 
     
 </head>
 
   <body>
-    <div class="contain ">
-        <div id="card"  class="col-sm-2 ">
+    <!-- <div class="contain " >
+        <div id="card1"  class="col-sm-2 card" data-framework="1">
             <h2>card對方卡牌</h2> 
+            <h1>id: {{id}}</h1>
             <h1>attack : {{attack}}</h1>
             <h1>gun_short : {{gun_short}}</h1>
             <h1>sword_short:{{sword_short}}</h1>
             <h1>exp : {{exp}}</h1>
         </div>
-        <div id="role" class="col-sm-2 ">
-            <h2>role角色卡牌</h2> 
-            <h1>hp : {{hp}}</h1>
+        <div id="card2"  class="col-sm-2 card" data-framework="2">
+            <h2>card對方卡牌</h2> 
+            <h1>id: {{id}}</h1>
+            <h1>attack : {{attack}}</h1>
+            <h1>gun_short : {{gun_short}}</h1>
+            <h1>sword_short:{{sword_short}}</h1>
             <h1>exp : {{exp}}</h1>
-            <h1>gun:{{gun}}</h1>
-            
         </div>
+        <div id="card3"  class="col-sm-2 card" data-framework="3">
+            <h2>card對方卡牌</h2> 
+            <h1>id: {{id}}</h1>
+            <h1>attack : {{attack}}</h1>
+            <h1>gun_short : {{gun_short}}</h1>
+            <h1>sword_short:{{sword_short}}</h1>
+            <h1>exp : {{exp}}</h1>
+        </div>
+    </div> -->
+    <div id="role1" class="col-sm-2 ">
+        <h2>role角色卡牌</h2> 
+         hp : {{hp}}
+         exp : {{exp}}
+         gun:{{gun}}
+         sword:{{sword}} 
+         arrow:{{arrow}} 
+  
+        
+    </div>
+    <section class="memory-game"> 
+        <div class="memory-card" data-framework="1"></div>
+        <div class="memory-card" data-framework="2"></div>
+        <div class="memory-card" data-framework="3"></div>
+        <div class="memory-card" data-framework="4"></div>
+        <div class="memory-card" data-framework="5"></div>
+        <div class="memory-card" data-framework="6"></div>
+        <div class="memory-card" data-framework="7"></div>
+        <div class="memory-card" data-framework="8"></div>
+        <div class="memory-card" data-framework="9"></div>
+        <div class="memory-card" data-framework="10"></div>
+        <div class="memory-card" data-framework="11"></div>
+        <div class="memory-card" data-framework="12"></div>
+        <div class="memory-card" data-framework="13"></div>
+        <div class="memory-card" data-framework="14"></div>
+        <div class="memory-card" data-framework="15"></div>
+        <div class="memory-card" data-framework="16"></div>
+        <div class="memory-card" data-framework="17"></div>
+        <div class="memory-card" data-framework="18"></div>
+        <div class="memory-card" data-framework="19"></div>
+        <div class="memory-card" data-framework="20"></div>
+        <div class="memory-card" data-framework="21"></div>
+        <div class="memory-card" data-framework="22"></div>
+        <div class="memory-card" data-framework="23"></div>
+        <div class="memory-card" data-framework="24"></div>
+        <div class="memory-card" data-framework="25"></div>
+    </section>
+    <!-- <div id="role1" class="col-sm-2 ">
+            <h2>role角色卡牌</h2> 
+             hp : {{hp}}
+             exp : {{exp}}
+             gun:{{gun}}
+             sword:{{sword}} 
+             arrow:{{arrow}} 
+      
+            
+    </div> -->
+
+    
+    
         <button id="cost">role扣血</button>
         <button id="attack">role被卡牌攻擊</button>
-    </div>
+    
   </body>
   <!-- vue要等網頁載完才執行 -->
-  <script src='card.js'></script> 
   <script src='event.js'></script>
+  <script src='card.js'></script> 
+  
   </html>    
