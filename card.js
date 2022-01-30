@@ -164,13 +164,9 @@ $(document).ready(function(){
         
     //    // alert(this.dataset.framework);
     //     })
-        
-    shuffle(card_list,24);//陣列，數量洗牌
-    addOption();//戴入卡片
-    setActive();//初始化下五張為active
-
+    setStart();//初始化
     $("section").on ("click",".active",function(){
-    $(this).addClass("flip");//點擊後翻面
+    $(this).addClass("used");//點擊後消失
     setNextActive(this.dataset.framework);//設上一張卡為active
     });
 

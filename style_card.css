@@ -16,9 +16,7 @@ body {
     background: #ecf3f2; */
   }
 
-.card{
-    background-color: aqua;
-    }
+
 
 /* #card,#role{
     width: calc(25% - 10px);
@@ -43,4 +41,8 @@ body {
 
 #role{
     background-color: rgb(229, 210, 247);
+}
+
+.used{
+  visibility:hidden;
 }

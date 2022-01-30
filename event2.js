@@ -6,10 +6,29 @@ var three=[];
 var four=[];
 var five=[];
 
+//初始化
+function setStart(){   
+  shuffle(card_list,24);//陣列，數量洗牌
+  addOption();//戴入卡片
+  setActive();//初始化下五張為active
+
+  
+  //偶數牌及底五張設為flip
+  for(i=0;i<=20;i=i+2){
+  var tem='[data-framework='+String(i)+']';
+  if(tem<0){return};//不能用break 會跳出整個ready函式
+  $(tem).addClass('flip');
+  }
+  $('[data-framework=21]').addClass('flip');
+  $('[data-framework=22]').addClass('flip');
+  $('[data-framework=23]').addClass('flip');
+  $('[data-framework=24]').addClass('flip');
+  $('[data-framework=25]').addClass('flip');
+} 
 
 //新增一張卡片背面
 function addOption(){
-    //$('.memory-game').afert('<div class="memory-card" data-framework="react">');
+    //$('.memory-game').afert('<div class="card" data-framework="react">');
     console.log(card_list);
     
     card_list.forEach(element => {
@@ -81,10 +100,10 @@ function setActive(){
 
 };
 
-//設上一張卡為active
+//設點擊完的上一張卡為active
 function setNextActive(framwork){
   var tem='[data-framework='+String(framwork-5)+']';
    if(tem<0){return};//不能用break 會跳出整個ready函式
-   $(tem).addClass('active');
+   $(tem).addClass('flip active');
 
 };
