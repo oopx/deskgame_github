@@ -11,11 +11,13 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
     this.order=order;//卡牌在場上順序
     
     //攻擊系統,靈魂系統
-    this.attackEvent=function (){
-        //role.hp--;
+    this.attackEvent=function(){
+        console.log(role.hp);
         //var card=this;
+        //role.hp++;
+        
         role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-        role.exp=role.exp+this.exp;
+        //role.exp=role.exp+this.exp;
                     
     };
     this.elementGet=function(){};
@@ -28,7 +30,7 @@ for(var i=0;i<25;i++)
 {
     var src="c1_"+String(i+1)+".png";
     console.log(src);
-    var tem=new CardMonster(i+1,src);
+    var tem=new CardMonster(i+1,src,1,1,1,1,1);
     card_list.push(tem);
 }
 
@@ -56,7 +58,7 @@ var role1 = new Vue({
         }   
     
 })
-var role1 = new Vue({
+var role2 = new Vue({
     el: '#role2 ',
     data:{
         id:1,
@@ -191,9 +193,11 @@ $(document).ready(function(){
     $("section").on ("click",".active",function(){
     $(this).addClass("used");//點擊後消失
     setNextActive(this.dataset.framework);//設上一張卡為active
+    
+    getCard(this.dataset.framework);//發動點擊該卡的效果
     });
 
-    //$('*').click(setAttack());
+    //
     
     
 })

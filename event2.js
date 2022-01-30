@@ -1,11 +1,3 @@
-//分組
-
-var one=[];
-var two=[];
-var three=[];
-var four=[];
-var five=[];
-
 //初始化
 function setStart(){   
   shuffle(card_list,24);//陣列，數量洗牌
@@ -38,25 +30,8 @@ function addOption(){
       element.order=j;//設定每張的位置
       //以下分五組
       console.log(j%4); 
-      if(j%5==0){}
-      switch (j%5) {
-        case 1:
-          one.push(element)
-          break;
-        case 2:
-          two.push(element)
-          break;
-        case 3:
-          three.push(element)
-          break;
-        case 4:
-          four.push(element)
-          break;
-        case 0:
-          five.push(element)
-          break;
-          
-      }
+      
+
       
 
       $('[data-framework='+j+']').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
@@ -107,3 +82,23 @@ function setNextActive(framwork){
    $(tem).addClass('flip active');
 
 };
+
+//點擊該卡效果
+function getCard(framework){
+  var clickCard=card_list[framework-1]
+  console.log(clickCard);
+  clickCard.attackEvent();
+
+
+
+}
+//負值為0
+function ignoreNegative(num){
+  if (num <0)
+  {
+   num=0;
+   return num;
+  }
+  else
+   return num
+}
