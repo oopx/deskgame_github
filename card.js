@@ -34,7 +34,30 @@ for(var i=0;i<25;i++)
 
 //創立 VUE 物件
 var role1 = new Vue({
-    el: '#role1',
+    el: '#role1 ',
+    data:{
+        id:1,
+        hp:8,
+        exp:0,
+        //attack:0;
+        gun:0,
+        sword:0,
+        arrow:0,
+        num:3,
+        restUp:3,
+        soul:0,
+        friend_gun:0,
+        friedn_sword:0,
+        friend_arrow:0,
+        },
+    methods: {
+        rest:function rest(){},
+        sacrifice:function sacrifice(){},
+        }   
+    
+})
+var role1 = new Vue({
+    el: '#role2 ',
     data:{
         id:1,
         hp:8,
