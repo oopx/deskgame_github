@@ -92,6 +92,14 @@ function getCard(framework){
 
 
 }
+
+//設定陷阱卡
+function setTrap (framework){
+  $('[data-framework='+framework+']').append('<img class="trap1" src="img/t1_4.png" alt="React" />');
+  $('[data-framework='+framework+']').append('<img class="trap2" src="img/t1_4.png" alt="React" />');//使兩面都有圖案
+
+}
+
 //負值為0
 function ignoreNegative(num){
   if (num <0)

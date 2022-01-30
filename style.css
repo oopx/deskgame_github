@@ -44,7 +44,7 @@ h1 {
 
 .card {
   width: calc(20% - 10px);
-  /* height: calc(33.333% - 10px); */
+  height: calc(20% - 10px); 
   margin: 5px;
   position: relative;
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);

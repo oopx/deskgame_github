@@ -1,4 +1,4 @@
-//卡片建構子
+//怪物卡片建構子
 function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,order){
     this.id=id;
     this.src=src;
@@ -23,16 +23,45 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
     this.elementGet=function(){};
 
 }
+//大怪卡片建構子
+function CardBoss(id,src,gun_short,sword_short,arrow_short,level,bassAttack,exp,soul,order){
+    this.id=id;
+    this.src=src;
+    this.gun_short=gun_short;
+    this.sword_short=sword_short;
+    this.arrow_short=arrow_short;
+    this.level=level;
+    this.bassAttack=bassAttack;
+    this.attack=bassAttack*this.level;
+    this.exp=exp;
+    this.soul=soul;
+    this.order=order;//卡牌在場上順序
+    
+    //攻擊系統,靈魂系統
+    this.attackEvent=function(){
+        console.log(role.hp);
+        //var card=this;
+        //role.hp++;
+        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
+        //role.exp=role.exp+this.exp;               
+    };
+    this.elementGet=function(){};
+
+}
 
 //大量建立卡牌
 var card_list=[];
-for(var i=0;i<25;i++)
+for(var i=0;i<24;i++)
 {
     var src="c1_"+String(i+1)+".png";
     console.log(src);
     var tem=new CardMonster(i+1,src,1,1,1,1,1);
     card_list.push(tem);
 }
+//建立魔王卡
+var tem=new CardBoss(25,"boss1.png",1,1,1,10,1,1);
+card_list.push(tem);
+
 
 //創立 VUE 物件
 var role1 = new Vue({
@@ -193,11 +222,14 @@ $(document).ready(function(){
     $("section").on ("click",".active",function(){
     $(this).addClass("used");//點擊後消失
     setNextActive(this.dataset.framework);//設上一張卡為active
-    
     getCard(this.dataset.framework);//發動點擊該卡的效果
     });
 
-    //
+    $(".card").click(function(){
+        setTrap (this.dataset.framework);//加上陷阱
+    })
+
+    
     
     
 })
