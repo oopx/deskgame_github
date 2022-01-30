@@ -69,6 +69,7 @@ function shuffle(poker,x){
 
 
 };
+
 //設定最後一張為Active
 function setActive(){
   $('[data-framework=21]').addClass('active');
@@ -79,32 +80,11 @@ function setActive(){
 
 
 };
+
 //設上一張卡為active
 function setNextActive(framwork){
   var tem='[data-framework='+String(framwork-5)+']';
-  if(tem<=0){break};
-  $(tem).addClass('active');
+   if(tem<0){return};//不能用break 會跳出整個ready函式
+   $(tem).addClass('active');
 
 };
-  
-
-
-function attackEvent(){
-
-    role.hp=role.hp-ignoreNegative(gun_short-gun)-ignoreNegative(sword_short-sword)-ignoreNegative(arrow_short-arrow)-attack;
-}
-
-function encounter()
-{
-
-}
-
-function ignoreNegative(num){
-    if (num <0)
-    {
-     num=0;
-     return num;
-    }
-    else
-     return num
-}
