@@ -1,5 +1,5 @@
 //怪物卡片建構子
-function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,order){
+function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,order,trapOwner,trapAttack){
     this.id=id;
     this.src=src;
     this.gun_short=gun_short;
@@ -9,6 +9,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
     this.exp=exp;
     this.soul=soul;
     this.order=order;//卡牌在場上順序
+    this.trap={trapOwner:role,trapAttack:trapAttack};
     
     //攻擊系統,靈魂系統
     this.attackEvent=function(){
@@ -36,6 +37,7 @@ function CardBoss(id,src,gun_short,sword_short,arrow_short,level,bassAttack,exp,
     this.exp=exp;
     this.soul=soul;
     this.order=order;//卡牌在場上順序
+    
     
     //攻擊系統,靈魂系統
     this.attackEvent=function(){
@@ -225,19 +227,23 @@ $(document).ready(function(){
     getCard(this.dataset.framework);//發動點擊該卡的效果
     });
 
-    $(".buttonTrap").one("click",function(){
+    $(".buttonTrap").on("click",function(){
         $('.active').addClass("unactive");
         $('.active').removeClass("active");
         $('.card').addClass("canTrap");//可加陷阱的class
-        $('.canTrap').on("click",function(){ //每個圖只能加一次ONE
-            //console.log(this.dataset.framework);
-            setTrap(this.dataset.framework);
-            $(this).off();// 移除On 避免之前開陷阱留下的事件
-           //加上陷阱
-            })
-        
+               
             
         })
+
+         
+    $("section").one("click",'.canTrap',function(){ //每個圖只能加一次ONE
+        //console.log(this.dataset.framework);
+        setTrap(this.dataset.framework);
+        console.log(this);
+        $(this).off();// 移除On 避免之前開陷阱留下的事件
+        //加上陷阱
+        })
+
     $('.buttonUnTrap').click(function(){
         $('.unactive').addClass("active");//激活點擊功能
         $('.unactive').removeClass("unactive");//取消無法點卡

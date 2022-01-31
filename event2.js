@@ -98,6 +98,10 @@ function setTrap (framework){
   $('[data-framework='+framework+']').append('<img class="trap1" src="img/t1_4.png" alt="React" />');
   $('[data-framework='+framework+']').append('<img class="trap2" src="img/t1_4.png" alt="React" />');//使兩面都有圖案
 
+  var clickCard=card_list[framework-1]//使該卡片加入陷阱傷害
+  clickCard.trap.trapOwner="role1";
+  clickCard.trap.trapAttack=2;
+  
 }
 
 //負值為0
