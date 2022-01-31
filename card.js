@@ -135,21 +135,20 @@ $(document).ready(function(){
     //    // alert(this.dataset.framework);
     //     })
     setStart();//初始化
-        role=role1;
-        $("section").on ("click",".active",function(){
-        $(this).addClass("used");//點擊後消失
-        setNextActive(this.dataset.framework);//設上一張卡為active
-        getCard(this.dataset.framework);//發動點擊該卡的效果
-    });
+    
+
+    
 
     $(".buttonTrap").on("click",function(){
         $('.active').addClass("unactive");
         $('.active').removeClass("active");
-        $('.card').addClass("canTrap");//可加陷阱的class
-               
-            
+        $('.card').addClass("canTrap");//可加陷阱的class  
         })
 
+    
+    
+    
+    //下陷阱
          
     $("section").on("click",'.canTrap',function(){ 
         //console.log(this.dataset.framework);

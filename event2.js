@@ -1,9 +1,12 @@
 //初始化
 var role;
 var other;
+var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
 
-function setStart(){   
+function setStart(){  
+  role=role2; 
   shuffle(card_list,24);//陣列，數量洗牌
+  othersTurn();
   addOption();//戴入卡片
   setActive();//初始化下五張為active
 
@@ -21,9 +24,58 @@ function setStart(){
   $('[data-framework=23]').addClass('flip');
   $('[data-framework=24]').addClass('flip');
   $('[data-framework=25]').addClass('flip');
+
+//確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+  $(".rest").on("click",function(){
+    doWhat=2;
+    $(this).addClass('doWhat')
+  })
+  $(".remove").on("click",function(){
+      doWhat=3;
+      $(this).addClass('doWhat')
+  })
+  $(".learn").on("click",function(){
+      doWhat=4;
+      $(this).addClass('doWhat')
+  })
+  $(".sacrifice").on("click",function(){
+    doWhat=5;
+    $(this).addClass('doWhat')
+  })  
+
+//點卡後的行動
+  $("section").on ("click",".active",function(){
+    $(this).addClass("used");//點擊後消失
+    setNextActive(this.dataset.framework);//設上一張卡為active
+    switch(doWhat){//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+        case 1:                
+            getCard(this.dataset.framework);//發動點擊該卡的效果
+            break;
+        case 2:
+            rest();
+            $('.rest').removeClass('doWhat');
+            
+            break;
+        case 3: 
+            {};
+            $('.remove').removeClass('doWhat');
+            break;
+        case 4:
+            {};
+            $('.learn').removeClass('doWhat');
+            break;
+        case 5: 
+            {};
+            $('.sacrifice').removeClass('doWhat');
+            break;
+    }
+  });
+
 } 
 
-//回合系統
+
+
+//切換回合系統
 function othersTurn(){
   if (role==role1)
     {
@@ -105,7 +157,16 @@ function setNextActive(framwork){
 
 };
 
-//點擊該卡效果
+//休息系統
+function rest(){
+  role.hp=role.hp+role.restUp;
+  //console.log(clickCard);
+  console.log(role.hp);
+  doWhat=1;
+  
+}
+
+//點擊執行場面上的卡效果
 function getCard(framework){
   var clickCard=card_list[framework-1]
   console.log(clickCard);

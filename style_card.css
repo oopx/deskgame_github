@@ -1,11 +1,27 @@
+
 #role1,#role2{
   position:fixed;
+  height:100%;
   
-  
-  width: 15%;
+  color: rgb(49, 49, 49);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 16%;
 }
+section{
+  background-color:rgb(245, 156, 156);
+  background-image: url("https://alldata.sgp1.digitaloceanspaces.com/images/christmas-dark.png");
+}
+
 .your_turn{
   background-color:rgb(95, 255, 56);
+}
+
+button{
+  font-size: xx-large;
+}
+button.doWhat{
+  background-color: rgb(247, 70, 70);
+  
 }
 
 .item_right{
