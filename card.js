@@ -236,9 +236,10 @@ $(document).ready(function(){
         })
 
          
-    $("section").one("click",'.canTrap',function(){ //每個圖只能加一次ONE
+    $("section").on("click",'.canTrap',function(){ 
         //console.log(this.dataset.framework);
         setTrap(this.dataset.framework);
+        $(this).removeClass("canTrap");//每個圖只能加一次
         console.log(this);
         $(this).off();// 移除On 避免之前開陷阱留下的事件
         //加上陷阱
