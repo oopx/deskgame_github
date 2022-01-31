@@ -30,11 +30,17 @@ function othersTurn(){
     console.log("turn");
     role=role2;
     other=role1
+    $("#role2").addClass("your_turn");
+    $("#role1").removeClass("your_turn");
     } 
     else{
     role=role1;
     other=role2;
+    $("#role1").addClass("your_turn");
+    $("#role2").removeClass("your_turn");
     }
+
+   
 }
 
 //新增一張卡片背面
