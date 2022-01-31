@@ -225,8 +225,14 @@ $(document).ready(function(){
     getCard(this.dataset.framework);//發動點擊該卡的效果
     });
 
-    $(".card").click(function(){
-        setTrap (this.dataset.framework);//加上陷阱
+    $(".buttonTrap").one("click",function(){
+        $('.active').addClass("unactive");
+        $('.active').removeClass("active");
+        $('.card').one("click",function(){ //每個圖只能加一次ONE
+            //console.log(this.dataset.framework);
+            setTrap(this.dataset.framework);
+           //加上陷阱
+            })
     })
 
     
