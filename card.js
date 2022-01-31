@@ -66,7 +66,7 @@ card_list.push(tem);
 
 
 //創立 VUE 物件
-var role1 = new Vue({
+var role1= new Vue({
     el: '#role1 ',
     data:{
         id:1,
@@ -94,7 +94,9 @@ var role1 = new Vue({
         }   
     
 })
-var role2 = new Vue({
+
+//創立 VUE 物件
+var role2= new Vue({
     el: '#role2 ',
     data:{
         id:1,
@@ -110,6 +112,11 @@ var role2 = new Vue({
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
+        more_attack:0,//來自怪的傷害增加或減少，容許負值
+        more_trapAttack:0,//受到陷阱傷害增加
+        friend_free:false,//招伙伴免費
+        magic:0,//擁有魔法數
+        weapon:0,//擁有武器數
         },
     methods: {
         rest:function rest(){},
@@ -117,105 +124,6 @@ var role2 = new Vue({
         }   
     
 })
-
-//回合系統
-var role=role2; 
-var other=role1;
-
-
-
-// //創立 VUE 物件
-// var card1 = new Vue({
-//     el: '#card1',
-//     data:{
-//         id:1,
-//         gun_short:0,
-//         sword_short:0,
-//         arrow_short:0,
-//         attack:1,
-//         exp:1,
-//         soul:0,
-//         //攻擊系統,靈魂系統
-//         attackEvent:function (){
-//             //role.hp--;
-//             var card=this;
-//             role.hp=role.hp-ignoreNegative(card.gun_short-role.gun)-ignoreNegative(card.sword_short-role.sword)-ignoreNegative(card.arrow_short-role.arrow)-card.attack;
-//             role.exp=role.exp+card.exp;
-            
-            
-//         },
-//     },
-//     methods:{
-        
-//         element:function elementGet(){},
-//         UpAttack:function UpAttack(){},
-//         //attackEvent:function attackEvent(){},
-//         restUp:function restUp(){}
-//     }
-// })
-
-// //創立 VUE 物件
-// var card2 = new Vue({
-//     el: '#card2',
-//     data:{
-//         id:2,
-//         gun_short:0,
-//         sword_short:0,
-//         arrow_short:0,
-//         attack:2,
-//         exp:2,
-//         soul:0,
-//         //攻擊系統,靈魂系統
-//         attackEvent:function (){
-//             //role.hp--;
-//             var card=this;
-//             role.hp=role.hp-ignoreNegative(card.gun_short-role.gun)-ignoreNegative(card.sword_short-role.sword)-ignoreNegative(card.arrow_short-role.arrow)-card.attack;
-//             role.exp=role.exp+card.exp;
-            
-            
-//         },
-//     },
-//     methods:{
-        
-//         element:function elementGet(){},
-//         UpAttack:function UpAttack(){},
-//         //attackEvent:function attackEvent(){},
-//         restUp:function restUp(){}
-//     }
-// })
-
-// //創立 VUE 物件
-// var card3 = new Vue({
-//     el: '#card3',
-//     data:{
-//         id:3,
-//         gun_short:0,
-//         sword_short:0,
-//         arrow_short:0,
-//         attack:3,
-//         exp:3,
-//         soul:0,
-//         //攻擊系統,靈魂系統
-//         attackEvent:function (){
-//             //role.hp--;
-//             var card=this;
-//             role.hp=role.hp-ignoreNegative(card.gun_short-role.gun)-ignoreNegative(card.sword_short-role.sword)-ignoreNegative(card.arrow_short-role.arrow)-card.attack;
-//             role.exp=role.exp+card.exp;
-            
-            
-//         },
-//     },
-//     methods:{
-        
-//         element:function elementGet(){},
-//         UpAttack:function UpAttack(){},
-//         //attackEvent:function attackEvent(){},
-//         restUp:function restUp(){}
-//     }
-// })
-//////////////以上為卡片參數
-//card=[,card1,card2,card3];
-
 
 $(document).ready(function(){
     //$('#cost').click( function(){ role1.hp--;});
@@ -227,6 +135,7 @@ $(document).ready(function(){
     //    // alert(this.dataset.framework);
     //     })
     setStart();//初始化
+        role=role1;
         $("section").on ("click",".active",function(){
         $(this).addClass("used");//點擊後消失
         setNextActive(this.dataset.framework);//設上一張卡為active
@@ -256,6 +165,8 @@ $(document).ready(function(){
         $('.unactive').removeClass("unactive");//取消無法點卡
         $('.canTrap').removeClass("canTrap");//移除陷阱的class
     })
+
+    $('.turn').click( function(){othersTurn();});//換回合
 
     
     

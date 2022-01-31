@@ -1,15 +1,20 @@
 //初始化
+var role;
+var other;
+
 function setStart(){   
   shuffle(card_list,24);//陣列，數量洗牌
   addOption();//戴入卡片
   setActive();//初始化下五張為active
 
+
+
   
-  //偶數牌及底五張設為flip
+//偶數牌及底五張設為flip
   for(i=0;i<=20;i=i+2){
-  var tem='[data-framework='+String(i)+']';
-  if(tem<0){return};//不能用break 會跳出整個ready函式
-  $(tem).addClass('flip');
+    var tem='[data-framework='+String(i)+']';
+    if(tem<0){return};//不能用break 會跳出整個ready函式
+    $(tem).addClass('flip');
   }
   $('[data-framework=21]').addClass('flip');
   $('[data-framework=22]').addClass('flip');
@@ -17,6 +22,20 @@ function setStart(){
   $('[data-framework=24]').addClass('flip');
   $('[data-framework=25]').addClass('flip');
 } 
+
+//回合系統
+function othersTurn(){
+  if (role==role1)
+    {
+    console.log("turn");
+    role=role2;
+    other=role1
+    } 
+    else{
+    role=role1;
+    other=role2;
+    }
+}
 
 //新增一張卡片背面
 function addOption(){
@@ -30,10 +49,7 @@ function addOption(){
       element.order=j;//設定每張的位置
       //以下分五組
       console.log(j%4); 
-      
-
-      
-
+    
       $('[data-framework='+j+']').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
       
       $('[data-framework='+j+']').append('<img class="back-face" src="img/back1.png" alt="back"/>');// 動態新增卡牌
