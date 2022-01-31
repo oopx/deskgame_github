@@ -1,133 +1,111 @@
-card_list =[
-    {
-            id:1,
-            src:"c1_1.png",
-            gun_short:2,
-            sword_short:0,
-            arrow_short:1,
-            attack:3,
-            exp:1,
-            soul:0,
-            restUp:0,
-            friend_gun:0,
-            friedn_sword:0,
-            friend_arrow:0,
-            UpAttack:0,
-            //攻擊系統,靈魂系統
-            attackEvent:function (){
-                //role.hp--;
-                //var card=this;
-                role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-                role.exp=role.exp+this.exp;
-                           
+ability_list =[
+    { 
+        name:"adventure",
+        exp:4,
+        ability:function(){//選牌時可選第二張公開的卡片
+            $
             },
-            element:function elementGet(){},
         },
-        
-      ////////////////////////////////////////////////////////////////////////////////////////////////
-      {
-        id:2,
-        src:"c1_2.png",
-        gun_short:1,
-        sword_short:2,
-        arrow_short:0,
-        attack:3,
+
+    { 
+        name:"Curseman",
+        exp:5,
+        ability:function(){//對手怪物HP+3
+            other.more_attack=this+3;//other 未設定
+            },
+        },
+
+    { 
+        name:"thief",
         exp:1,
-        soul:0,
-        restUp:0,
-        friend_gun:0,
-        friedn_sword:0,
-        friend_arrow:0,
-        UpAttack:0,
-        //攻擊系統,靈魂系統
-        attackEvent:function (){
-            //role.hp--;
-            //var card=this;
-            role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-            role.exp=role.exp+this.exp;
-                       
+        ability:function(){//立即HP少2，並未來執行陷阱卡時，對手HP-1
+            other.hp=this-2;
+            other.more_trapAttack=this+1;//受到更多傷害
+
+            },
         },
-        element:function elementGet(){},
-    },
-    
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  {
-    id:3,
-    src:"c1_3.png",
-    gun_short:1,
-    sword_short:2,
-    arrow_short:0,
-    attack:3,
-    exp:1,
-    soul:0,
-    restUp:0,
-    friend_gun:0,
-    friedn_sword:0,
-    friend_arrow:0,
-    UpAttack:0,
-    //攻擊系統,靈魂系統
-    attackEvent:function (){
-        //role.hp--;
-        //var card=this;
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-        role.exp=role.exp+this.exp;
-                   
-    },
-    element:function elementGet(){},
-},
+    { 
+        name:"pope",
+        exp:1,
+        ability:function(){
+            role.hp=this+8;
+            },
+        },
+    { 
+        name:"rune master",
+        exp:2,
+        ability:function(){
 
-////////////////////////////////////////////////////////
-  {
-    id:4,
-    src:"c1_4.png",
-    gun_short:0,
-    sword_short:1,
-    arrow_short:2,
-    attack:4,
-    exp:1,
-    soul:0,
-    restUp:0,
-    friend_gun:0,
-    friedn_sword:0,
-    friend_arrow:0,
-    UpAttack:0,
-    //攻擊系統,靈魂系統
-    attackEvent:function (){
-        //role.hp--;
-        //var card=this;
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-        role.exp=role.exp+this.exp;
-                   
-    },
-    element:function elementGet(){},
-},
+            },
+        },
+    { 
+        name:"lord",
+        exp:1,
+        ability:function(){//招伙伴免費
+        role.friend_free=true;
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-{
-    id:5,
-    src:"c1_5.png",
-    gun_short:1,
-    sword_short:2,
-    arrow_short:0,
-    attack:5,
-    exp:1,
-    soul:0,
-    restUp:0,
-    friend_gun:0,
-    friedn_sword:0,
-    friend_arrow:0,
-    UpAttack:0,
-    //攻擊系統,靈魂系統
-    attackEvent:function (){
-        //role.hp--;
-        //var card=this;
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-        role.exp=role.exp+this.exp;
-                   
-    },
-    element:function elementGet(){},
-},
+            },
+        },
+    { 
+        name:"cleric",
+        exp:2,
+        ability:function(){//HP+2並休息+2
+        role.hp=this+2;
+        role.restUp=this+2;
+            },
+        },
+    { 
+        name:"warrior",
+        exp:2,
+        ability:function(){
+        role.more_attack=this-1;
 
+            },
+        },
+    { 
+        name:"wizard",
+        exp:4,
+        ability:function(){//每有一種魔法，怪物HP-2
+        role.more_attack=this-(2*maigic);
+            },
+        },
+    { 
+        name:"bard",
+        exp:3,
+        ability:function(){
+
+            },
+        },
+    { 
+        name:"weapon master",
+        exp:4,
+        ability:function(){//每有一武器，怪物HP-1
+        role.more_more_attack=this-(1*weapon);
+            },
+        },
+    { 
+        name:"hero",
+        exp:4,
+        ability:function(){//自帶三種武器
+        role.gun=this+1;
+        role.sword=this+1;
+        role.arrow=this+1;
+            },
+        },
+    { 
+        name:"noble",
+        exp:5,
+        ability:function(){
+
+            },
+        },
+    { 
+        name:"guider",
+        exp:5,
+        ability:function(){
+
+            },
+            },
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 

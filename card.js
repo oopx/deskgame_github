@@ -17,7 +17,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
         //var card=this;
         //role.hp++;
         
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
+        role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
         //role.exp=role.exp+this.exp;
                     
     };
@@ -44,8 +44,8 @@ function CardBoss(id,src,gun_short,sword_short,arrow_short,level,bassAttack,exp,
         console.log(role.hp);
         //var card=this;
         //role.hp++;
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.gun)-ignoreNegative(this.sword_short-role.sword)-ignoreNegative(this.arrow_short-role.arrow)-this.attack;
-        //role.exp=role.exp+this.exp;               
+        role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
+        //role.exp=role.exp+this.exp;      //attack 的攻擊應拆分成可抵及不可抵的，未完成。         
     };
     this.elementGet=function(){};
 
@@ -80,8 +80,13 @@ var role1 = new Vue({
         restUp:3,
         soul:0,
         friend_gun:0,
-        friedn_sword:0,
+        friend_sword:0,
         friend_arrow:0,
+        more_attack:0,//來自怪的傷害增加或減少，容許負值
+        more_trapAttack:0,//受到陷阱傷害增加
+        friend_free:false,//招伙伴免費
+        magic:0,//擁有魔法數
+        weapon:0,//擁有武器數
         },
     methods: {
         rest:function rest(){},
@@ -103,7 +108,7 @@ var role2 = new Vue({
         restUp:3,
         soul:0,
         friend_gun:0,
-        friedn_sword:0,
+        friend_sword:0,
         friend_arrow:0,
         },
     methods: {
@@ -114,7 +119,8 @@ var role2 = new Vue({
 })
 
 //回合系統
-var role=role1; 
+var role=role2; 
+var other=role1;
 
 
 
@@ -221,10 +227,10 @@ $(document).ready(function(){
     //    // alert(this.dataset.framework);
     //     })
     setStart();//初始化
-    $("section").on ("click",".active",function(){
-    $(this).addClass("used");//點擊後消失
-    setNextActive(this.dataset.framework);//設上一張卡為active
-    getCard(this.dataset.framework);//發動點擊該卡的效果
+        $("section").on ("click",".active",function(){
+        $(this).addClass("used");//點擊後消失
+        setNextActive(this.dataset.framework);//設上一張卡為active
+        getCard(this.dataset.framework);//發動點擊該卡的效果
     });
 
     $(".buttonTrap").on("click",function(){
