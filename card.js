@@ -228,11 +228,20 @@ $(document).ready(function(){
     $(".buttonTrap").one("click",function(){
         $('.active').addClass("unactive");
         $('.active').removeClass("active");
-        $('.card').one("click",function(){ //每個圖只能加一次ONE
+        $('.card').addClass("canTrap");//可加陷阱的class
+        $('.canTrap').on("click",function(){ //每個圖只能加一次ONE
             //console.log(this.dataset.framework);
             setTrap(this.dataset.framework);
+            $(this).off();// 移除On 避免之前開陷阱留下的事件
            //加上陷阱
             })
+        
+            
+        })
+    $('.buttonUnTrap').click(function(){
+        $('.unactive').addClass("active");//激活點擊功能
+        $('.unactive').removeClass("unactive");//取消無法點卡
+        $('.canTrap').removeClass("canTrap");//移除陷阱的class
     })
 
     
