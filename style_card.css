@@ -13,7 +13,7 @@ section{
 }
 
 .your_turn{
-  background-color:rgb(158, 158, 158);
+  background-color:rgb(165, 255, 113);
 }
 
 button{
@@ -63,10 +63,22 @@ button.doWhat{
   /* 使兩面都有圖 */
 
 }
+.weapon{
+  width: calc(30% );
+  filter:opacity(.2);
+  filter:grayscale(1);
+  /* 變黑白刷淡 */
+}
+
+.choose{
+  filter:grayscale(0);
+  filter:opacity(1);
+}
 
 /* 放大 */
 .card:hover img{ 
   transform: scale(-2,2); 
+  /* -2的原因是他是背景會反轉 */
   /* transform: scaleX(-2);  */
   
   

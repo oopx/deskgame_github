@@ -9,6 +9,7 @@ function setStart(){
   othersTurn();//換人
   addOption();//戴入卡片
   setActive();//初始化下五張為active
+  weaponChooseSys();//武器監聽系統
 
 
 
@@ -115,6 +116,8 @@ function othersTurn(){
     $("button").removeClass('doWhat');//全部換白色按鍵
     canActive();//可再點卡
     endAction('',false);//重啟點卡按鍵
+    $('.weapon').removeClass('choose');//武器系統還原為空
+    role.weaponChoose="";//武器系統還原為空
 
 }
 
@@ -220,7 +223,31 @@ function rest(){
 function sacrifice(){
   role.hp=role.hp-(role.sacrificeNum*2);
   role.sacrificeNum++;//血祭次數加一
+
 };
+
+//武器選擇系統
+function weaponChooseSys(){
+  $(".gun").on("click",function(){
+    $('.weapon').removeClass('choose');
+    $(this).addClass('choose');
+    role.weaponChoose="gun";
+    
+    
+  });
+  $(".arrow").on("click",function(){
+    $('.weapon').removeClass('choose');
+    $(this).addClass('choose');
+    role.weaponChoose="arrow";
+    
+  })
+  $(".sword").on("click",function(){
+    $('.weapon').removeClass('choose');
+    $(this).addClass('choose');
+    role.weaponChoose="sword";
+    
+  })
+}
 
 
 

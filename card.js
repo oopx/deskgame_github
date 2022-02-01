@@ -5,7 +5,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
     this.gun_short=gun_short;
     this.sword_short=sword_short;
     this.arrow_short=arrow_short;
-    this.attack=attack;
+    this.attack=attack;//需扣除弱點後的傷害
     this.exp=exp;
     this.soul=soul;
     this.order=order;//卡牌在場上順序
@@ -17,8 +17,22 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
         //var card=this;
         //role.hp++;
         
+        //武器判定
+        switch(role.weaponChoose){
+            case "gun":this.gun_short=ignoreNegative(this.gun_short-role.gun);
+                break;
+            case "sword":this.sword_short=ignoreNegative(this.sword_short-role.sword);
+                break;
+            case "arrow":this.arrow_short=ignoreNegative(this.arrow_short-role.arrow);
+                break;
+            default: {
+                break;
+                }
+        }
+        //血量計算
         role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
-        //role.exp=role.exp+this.exp;
+        
+        role.exp=role.exp+this.exp;
                     
     };
     this.elementGet=function(){};
@@ -87,7 +101,9 @@ var role1= new Vue({
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數
         weapon:0,//擁有武器數
-        sacrificeNum:1//血祭次數
+        sacrificeNum:1,//血祭次數
+        friendNum:1,//召朋友次數
+        weaponChoose:"",//當前使用武器
         },
     methods: {
         rest:function rest(){},
