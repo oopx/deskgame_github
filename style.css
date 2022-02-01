@@ -63,7 +63,7 @@ h1 {
   cursor: pointer;
 }
 
-.card:active {
+/* .card:active {
   -webkit-transform: scale(0.97);
   -ms-transform: scale(0.97);
   transform: scale(0.97);
@@ -72,7 +72,7 @@ h1 {
   -o-transition: transform .2s;
   transition: transform .2s;
   transition: transform .2s, -webkit-transform .2s;
-}
+} */
 
 .card.flip {
   -webkit-transform: rotateY(180deg);

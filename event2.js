@@ -6,7 +6,7 @@ var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4
 function setStart(){  
   role=role2; 
   shuffle(card_list,24);//陣列，數量洗牌
-  othersTurn();
+  othersTurn();//換人
   addOption();//戴入卡片
   setActive();//初始化下五張為active
 
@@ -27,53 +27,73 @@ function setStart(){
 
 //確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
   $(".rest").on("click",function(){
-    doWhat=2;
-    $(this).addClass('doWhat')
+      doWhat=2;
+      $("button").removeClass('doWhat');
+      $(this).addClass('doWhat')
   })
   $(".remove").on("click",function(){
       doWhat=3;
+      $("button").removeClass('doWhat');
       $(this).addClass('doWhat')
   })
   $(".learn").on("click",function(){
       doWhat=4;
+      $("button").removeClass('doWhat');
       $(this).addClass('doWhat')
   })
   $(".sacrifice").on("click",function(){
-    doWhat=5;
-    $(this).addClass('doWhat')
+      doWhat=5;
+      $("button").removeClass('doWhat');
+      $(this).addClass('doWhat')
+      canActive();//可再執行行動，因為可一直血祭
   })  
 
-//點卡後的行動
+//執行點卡後的行動
   $("section").on ("click",".active",function(){
-    $(this).addClass("used");//點擊後消失
-    setNextActive(this.dataset.framework);//設上一張卡為active
+    
     switch(doWhat){//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
         case 1:                
             getCard(this.dataset.framework);//發動點擊該卡的效果
+            endAction(this,'disabled')//無法再進行任何行動
             break;
         case 2:
             rest();
             $('.rest').removeClass('doWhat');
-            
+            endAction(this,'disabled')//無法再進行任何行動
             break;
         case 3: 
             {};
             $('.remove').removeClass('doWhat');
+            endAction(this,'disabled')//無法再進行任何行動
             break;
         case 4:
             {};
             $('.learn').removeClass('doWhat');
+            endAction(this,'disabled')//無法再進行任何行動
             break;
-        case 5: 
-            {};
-            $('.sacrifice').removeClass('doWhat');
+        case 5:
+            
+            sacrifice();
+            setUsed(this);
+            endAction('',false);//血祭後可重啟點卡按鍵
+           // $('.sacrifice').removeClass('doWhat'); 血祭不能關紅燈
+            
             break;
     }
   });
 
 } 
 
-
+//結束行動，使不可按行動，並變色
+function endAction(fromThis,isAble){
+    $(".remove").attr('disabled',isAble);//使按扭不能再次使用
+    $(".rest").attr('disabled',isAble);//使按扭不能再次使用
+    $(".learn").attr('disabled',isAble);//使按扭不能再次使用
+    
+    if(fromThis=="")return;//若未回傳，則不執從消失卡牌    
+    setUsed(fromThis);
+    notActive()// 不可再點卡
+}
 
 //切換回合系統
 function othersTurn(){
@@ -91,8 +111,11 @@ function othersTurn(){
     $("#role1").addClass("your_turn");
     $("#role2").removeClass("your_turn");
     }
+    
+    $("button").removeClass('doWhat');//全部換白色按鍵
+    canActive();//可再點卡
+    endAction('',false);//重啟點卡按鍵
 
-   
 }
 
 //新增一張卡片背面
@@ -138,6 +161,15 @@ function shuffle(poker,x){
 
 };
 
+//點擊後就消失設定為USED
+function setUsed(Fromthis){
+
+  
+  $(Fromthis).addClass("used");//點擊後消失
+  setNextActive(Fromthis.dataset.framework);//設上一張卡為active
+  
+};
+
 //設定最後一張為Active
 function setActive(){
   $('[data-framework=21]').addClass('active');
@@ -149,6 +181,18 @@ function setActive(){
 
 };
 
+//無法再執行點擊行動
+function notActive(){
+  $('.active').addClass("unactive");
+  $('.active').removeClass("active");
+  };
+
+ //可再執行行動
+function canActive(){
+  $('.unactive').addClass("active");
+  $('.unactive').removeClass("unactive");
+};
+
 //設點擊完的上一張卡為active
 function setNextActive(framwork){
   var tem='[data-framework='+String(framwork-5)+']';
@@ -157,24 +201,28 @@ function setNextActive(framwork){
 
 };
 
+//點擊執行場面上的卡效果
+function getCard(framework){
+  var clickCard=card_list[framework-1]
+  console.log(clickCard);
+  clickCard.attackEvent();
+}
+
 //休息系統
 function rest(){
   role.hp=role.hp+role.restUp;
   //console.log(clickCard);
   console.log(role.hp);
   doWhat=1;
-  
-}
+};
 
-//點擊執行場面上的卡效果
-function getCard(framework){
-  var clickCard=card_list[framework-1]
-  console.log(clickCard);
-  clickCard.attackEvent();
-
+//血祭系統
+function sacrifice(){
+  role.hp=role.hp-(role.sacrificeNum*2);
+  role.sacrificeNum++;//血祭次數加一
+};
 
 
-}
 
 //設定陷阱卡
 function setTrap (framework){

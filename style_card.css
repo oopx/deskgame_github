@@ -13,7 +13,7 @@ section{
 }
 
 .your_turn{
-  background-color:rgb(95, 255, 56);
+  background-color:rgb(158, 158, 158);
 }
 
 button{
@@ -62,4 +62,12 @@ button.doWhat{
   transform: rotateY(180deg);
   /* 使兩面都有圖 */
 
+}
+
+/* 放大 */
+.card:hover img{ 
+  transform: scale(-2,2); 
+  /* transform: scaleX(-2);  */
+  
+  
 }

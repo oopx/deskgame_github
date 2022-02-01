@@ -87,6 +87,7 @@ var role1= new Vue({
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數
         weapon:0,//擁有武器數
+        sacrificeNum:1//血祭次數
         },
     methods: {
         rest:function rest(){},
@@ -117,6 +118,7 @@ var role2= new Vue({
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數
         weapon:0,//擁有武器數
+        sacrificeNum:1//血祭次數,一開始為一
         },
     methods: {
         rest:function rest(){},
@@ -137,19 +139,18 @@ $(document).ready(function(){
     setStart();//初始化
     
 
-    
+    //下陷阱
 
     $(".buttonTrap").on("click",function(){
-        $('.active').addClass("unactive");
-        $('.active').removeClass("active");
+        notActive();
         $('.card').addClass("canTrap");//可加陷阱的class  
         })
-
     
+    $('.buttonUnTrap').click(function(){
+        canActive();
+        $('.canTrap').removeClass("canTrap");//移除陷阱的class
+        })
     
-    
-    //下陷阱
-         
     $("section").on("click",'.canTrap',function(){ 
         //console.log(this.dataset.framework);
         setTrap(this.dataset.framework);
@@ -159,11 +160,7 @@ $(document).ready(function(){
         //加上陷阱
         })
 
-    $('.buttonUnTrap').click(function(){
-        $('.unactive').addClass("active");//激活點擊功能
-        $('.unactive').removeClass("unactive");//取消無法點卡
-        $('.canTrap').removeClass("canTrap");//移除陷阱的class
-    })
+    
 
     $('.turn').click( function(){othersTurn();});//換回合
 
