@@ -102,7 +102,7 @@ function othersTurn(){
     {
     console.log("turn");
     role=role2;
-    other=role1
+    other=role1;
     $("#role2").addClass("your_turn");
     $("#role1").removeClass("your_turn");
     } 
@@ -252,13 +252,13 @@ function weaponChooseSys(){
 
 
 //設定陷阱卡
-function setTrap (framework){
+function setTrap (framework,trapAttack_origin){
   $('[data-framework='+framework+']').append('<img class="trap1" src="img/t1_4.png" alt="React" />');
   $('[data-framework='+framework+']').append('<img class="trap2" src="img/t1_4.png" alt="React" />');//使兩面都有圖案
   //使該卡片加入陷阱傷害
-  var clickCard=card_list[framework-1]
-  clickCard.trap.trapOwner="role1";
-  clickCard.trap.trapAttack=2+other.more_trapAttack;//受到額外傷害，other未設置完成
+  var clickCard=card_list[framework-1];
+  clickCard.trap.trapOwner=role.id;
+  clickCard.trap.trapAttack=trapAttack_origin;//受到的陷阱傷害
   
 }
 

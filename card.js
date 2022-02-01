@@ -9,7 +9,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
     this.exp=exp;
     this.soul=soul;
     this.order=order;//卡牌在場上順序
-    this.trap={trapOwner:role,trapAttack:trapAttack};
+    this.trap={trapOwner:role,trapAttack:0};//陷阱物件 預設trap傷害為0
     
     //攻擊系統,靈魂系統
     this.attackEvent=function(){
@@ -29,9 +29,11 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,soul,or
                 break;
                 }
         }
-        //血量計算
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
+        //攻擊血量計算
         role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
-        
+        //經驗值計算
         role.exp=role.exp+this.exp;
                     
     };
@@ -116,7 +118,7 @@ var role1= new Vue({
 var role2= new Vue({
     el: '#role2 ',
     data:{
-        id:1,
+        id:2,
         hp:8,
         exp:0,
         //attack:0;
@@ -130,7 +132,7 @@ var role2= new Vue({
         friend_sword:0,
         friend_arrow:0,
         more_attack:0,//來自怪的傷害增加或減少，容許負值
-        more_trapAttack:0,//受到陷阱傷害增加
+        more_trapAttack:0,//自帶受到額外陷阱傷害增加
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數
         weapon:0,//擁有武器數
@@ -169,7 +171,7 @@ $(document).ready(function(){
     
     $("section").on("click",'.canTrap',function(){ 
         //console.log(this.dataset.framework);
-        setTrap(this.dataset.framework);
+        setTrap(this.dataset.framework,2);
         $(this).removeClass("canTrap");//每個圖只能加一次
         console.log(this);
         $(this).off();// 移除On 避免之前開陷阱留下的事件
