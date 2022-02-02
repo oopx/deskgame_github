@@ -57,12 +57,14 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
 }
 
 //夥伴卡片建構子
-function CreatParnerCard(){
+function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
     this.id=id;
     this.src=src;
     this.friend_gun=friend_gun;
     this.friend_sword=friend_sword;
     this.friend_arrow=friend_arrow;
+    this.order=0;
+    this.trap={trapOwner:role,trapAttack:0};
     this.attackEvent=function(){//點擊後執行
         role.friend_gun=role.friend_gun+this.friend_gun;
         role.friend_sword=role.friend_sword+this.friend_sword;
@@ -70,24 +72,30 @@ function CreatParnerCard(){
         role.hp=role.hp-role.friendNum;//號召夥伴花的血量
         role.friendNum++;//號召朋友的次數
         //加入手牌
-        if(role=role1)
-            {$('#toolList_role1>.trapTool').append('<img class="tool" src="'+this.src+'"/>');}
-        if(role=role2)
-            {$('#toolList_role2>.trapTool').append('<img class="tool" src="'+this.src+'"/>');}
+        if(role==role1)
+            {$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');}
+        if(role==role2)
+            {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
 
 
         
     }
 }
 //武器卡片建構子
-function CreatWeaponCard(){
+function CreatWeaponCard(id,src,gun,sword,arrow){
     this.id=id;
     this.src=src;
     this.gun=gun,
     this.sword=sword,
     this.arrow=arrow,
+    this.order=0,
+    this.trap={trapOwner:role,trapAttack:0};
     this.attackEvent=function(){//點擊後執行
-        $('#toolList_role1').append('<img class="tool" src="'+this.src+'"/>');//加入手牌
+        //$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');//加入手牌
+        if(role==role1)
+            {$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');}
+        if(role==role2)
+            {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
         
         if(this.gun>role.gun){role.gun=this.gun};
         if(this.sword>role.wsord){role.sword=this.sword};
@@ -95,15 +103,35 @@ function CreatWeaponCard(){
     }
 }
 //陷阱卡建構子
-function CreatTrapCard(){
+function CreatTrapCard(id,src,attack,isTrap){
     this.id=id;
     this.src=src;
+    this.attack=attack;
+    this.order=0;
+    this.trap={trapOwner:role,trapAttack:0};
     this.attackEvent=function(){
-        if(role=role1)
+        other.hp=other.hp-this.attack;
+        if(isTrap==0)return;//若該陷阱卡無帶可設陷阱
+        
+        if(role==role1)
             {$('#toolList_role1>.trapTool').removeClass("used")}//開啟，使陷阱可使用
-        if(role=role2)
+        if(role==role2)
             {$('#toolList_role2>.trapTool').removeClass("used")}//開啟，使陷阱可使用
 
+    }
+}
+//建立治療卡
+function CreatTreatCard(id,src,treat,restUp){
+    this.id=id;
+    this.src=src;
+    this.treat=treat;
+    this.restUp=restUp;
+    this.order=0;
+    this.trap={trapOwner:role,trapAttack:0};
+    this.attackEvent=function(){
+        role.restUp=role.restUp+this.restUp;
+        role.hp=role.hp+this.treat;
+    
     }
 }
 
@@ -190,21 +218,31 @@ var role2= new Vue({
 })
 
 //建立卡牌
-function creatMonsterCard(num){
-    for(var i=0;i<num;i++)
-    {
-        var src="c1_"+String(i+1)+".png";
-        console.log(src);
-        var tem=new CardMonster(i+1,src,1,1,1,1,1,0,0,0,0,0,1);
-        card_list.push(tem);
-    }
-  }
-//建立夥伴
-function creatParnerCard(){
-    var tem=new CardMonster(25,"boss1.png",1,1,1,1,1,0,0,0,0,0,1);
-} 
-//建立武器
-
+// function creatMonsterCard(num){
+//     for(var i=0;i<num;i++)
+//     {
+//         var src="c1_"+String(i+1)+".png";
+//         console.log(src);
+//         var tem=new CardMonster(i+1,src,1,1,1,1,1,0,0,0,0,0,1);
+//         card_list.push(tem);
+//     }
+//   }
+//建立小怪
+function creatMonsterCard(){
+    var tem=new CardMonster(1,"c1_1.png",2,0,1,0,1,0,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(2,"c1_2.png",1,2,0,0,1,0,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(3,"c1_3.png",1,2,0,0,1,0,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(4,"c1_4.png",0,1,2,1,1,0,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(5,"c1_5.png",1,2,0,2,1,0,0,0,0,0,0       );card_list.push(tem);
+    var tem=new CardMonster(6,"c1_6.png",0,1,2,2,1,0,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(7,"c1_7.png",0,2,1,0,0,1,0,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(8,"c1_8.png",1,2,0,0,0,0,1,0,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(9,"c1_9.png",2,0,1,0,0,0,0,0,1,0,0        );card_list.push(tem);
+    var tem=new CardMonster(10,"c1_10.png",0,1,2,0,0,0,0,0,0,1,0        );card_list.push(tem);
+    var tem=new CardMonster(11,"c1_11.png",2,1,0,0,0,0,0,0,0,0,1        );card_list.push(tem);
+    var tem=new CardMonster(12,"c1_12.png",1,0,2,0,0,0,0,1,0,0,0        );card_list.push(tem);
+        
+}
 //建立Boss卡牌
 function creatBossCard(){
     var tem=new CardMonster(25,"boss1.png",1,1,1,1,1,0,0,0,0,0,1);
@@ -212,5 +250,39 @@ function creatBossCard(){
     card_list.push(tem);
 
 }
+//建立夥伴
+
+function creatParnerCard(){
+    var tem=new CreatParnerCard(13,"c1_13.png",0,0,1);card_list.push(tem);
+    var tem=new CreatParnerCard(14,"c1_14.png",0,0,1);card_list.push(tem);
+    var tem=new CreatParnerCard(15,"c1_15.png",0,1,0);card_list.push(tem);
+    var tem=new CreatParnerCard(16,"c1_16.png",0,1,0);card_list.push(tem);
+    var tem=new CreatParnerCard(17,"c1_17.png",1,0,0);card_list.push(tem);
+    var tem=new CreatParnerCard(18,"c1_18.png",1,0,0);card_list.push(tem);
+   
+} 
+//建立武器
+function creatWeaponCard(){
+    var tem=new CreatWeaponCard(19,"c1_19.png",0,0,1);card_list.push(tem);
+    var tem=new CreatWeaponCard(20,"c1_20.png",1,0,0);card_list.push(tem);
+    var tem=new CreatWeaponCard(21,"c1_21.png",0,1,0);card_list.push(tem);
+   
+}
+
+
+
+//陷阱卡建構子
+function creatTrapCard(){
+    var tem=new CreatTrapCard(22,"c1_22.png",2,0);card_list.push(tem);
+    var tem=new CreatTrapCard(23,"c1_23.png",0,2);card_list.push(tem);
+}
+
+
+////建立治療卡
+function creatTreatCard(){
+    var tem=new CreatTreatCard(24,"c1_24.png",1,1);card_list.push(tem);
+}
+
+
     
 

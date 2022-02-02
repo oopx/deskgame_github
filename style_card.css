@@ -108,10 +108,10 @@ button.doWhat{
 
 
 .tool{
-  width: calc(30% );
+  height: calc(30% );
   
 }
-#toolList_role1:hover img{ 
+#toolList_role1:hover img,#toolList_role2:hover img{ 
   transform: scale(2,2); 
 }
 

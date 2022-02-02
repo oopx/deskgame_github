@@ -7,8 +7,15 @@ var card_list=[];//場面上的牌組
 
 function setStart(){  
   role=role2; 
-  creatMonsterCard(24);//創立牌組
+  //creatMonsterCard(24);//創立牌組
+  
   creatBossCard();//創立boss卡
+  creatMonsterCard();
+  creatParnerCard();
+  creatWeaponCard();
+  creatTrapCard();
+  creatTreatCard();
+  
   shuffle(card_list,24);//陣列，數量洗牌
   othersTurn();//換人
   addOption();//戴入卡片

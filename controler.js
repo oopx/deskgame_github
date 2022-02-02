@@ -23,7 +23,7 @@ $(document).ready(function(){
 
     $("section").on("click",'.canTrap',function(){ 
         //console.log(this.dataset.framework);
-        setTrap(this.dataset.framework,2);
+        setTrap(this.dataset.framework,2);//取得該卡的位置，原始傷害2
         $(this).removeClass("canTrap");//每個圖只能加一次
         console.log(this);
         $(this).off();// 移除On 避免之前開陷阱留下的事件
