@@ -7,7 +7,28 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   width: 16%;
 }
+#toolBar{
+  position:fixed;
+  float:bottom;
+  height:30%;
+  width: 100%;
+  bottom: 0px; 
+  background-color: rgba(0, 0, 0, 0.411);     
+  z-index: 99;       
+}
+
+#toolButton{
+  position:fixed;
+  bottom: 0px; 
+  width: 6%;
+  z-index: 100;
+  transform: scale(-1,1);
+}
+#toolButton.click{
+  transform: scale(1,1);
+}
 section{
+  /* cursor:crosshair;  */
   background-color:rgb(245, 156, 156);
   background-image: url("https://alldata.sgp1.digitaloceanspaces.com/images/christmas-dark.png");
 }
@@ -17,6 +38,8 @@ section{
 }
 
 button{
+  /* cursor:crosshair; */
+  /* cursor:url('img/sword.png'); */
   font-size: xx-large;
 }
 button.doWhat{
@@ -29,7 +52,7 @@ button.doWhat{
     right:0px;
 
  }
- ​
+ 
 .item_left{
   float:right; 
 }
@@ -59,7 +82,7 @@ button.doWhat{
   display:flex;
   position: absolute;
   z-index: 2;
-  width: calc(50% - 10px);
+  height: calc(50% - 10px);
   top:calc(50% + 10px);
   right:calc(50% - 26px);
   transform: rotateY(180deg);
@@ -67,7 +90,7 @@ button.doWhat{
 
 }
 .weapon{
-  width: calc(30% );
+  width: calc(31% );
   filter:opacity(.2);
   filter:grayscale(1);
   /* 變黑白刷淡 */
@@ -87,6 +110,9 @@ button.doWhat{
 .tool{
   width: calc(30% );
   
+}
+#toolList_role1:hover img{ 
+  transform: scale(2,2); 
 }
 
 .choose{

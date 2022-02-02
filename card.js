@@ -55,46 +55,55 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
     
 
 }
-//Boss卡片建構子
-function CardBoss(id,src,gun_short,sword_short,arrow_short,level,bassAttack,exp,soul,order){
+
+//夥伴卡片建構子
+function CreatParnerCard(){
     this.id=id;
     this.src=src;
-    this.gun_short=gun_short;
-    this.sword_short=sword_short;
-    this.arrow_short=arrow_short;
-    this.level=level;
-    this.bassAttack=bassAttack;
-    this.attack=bassAttack*this.level;
-    this.exp=exp;
-    this.soul=soul;
-    this.order=order;//卡牌在場上順序
-    
-    
-    //攻擊系統,靈魂系統
+    this.friend_gun=friend_gun;
+    this.friend_sword=friend_sword;
+    this.friend_arrow=friend_arrow;
+    this.attackEvent=function(){//點擊後執行
+        role.friend_gun=role.friend_gun+this.friend_gun;
+        role.friend_sword=role.friend_sword+this.friend_sword;
+        role.friend_arrow=role.friend_arrow+this.friend_arrow;
+        //加入手牌
+        if(role=role1)
+            {$('#toolList_role1>.trapTool').append('<img class="tool" src="'+this.src+'"/>');}
+        if(role=role2)
+            {$('#toolList_role2>.trapTool').append('<img class="tool" src="'+this.src+'"/>');}
+
+
+        
+    }
+}
+//武器卡片建構子
+function CreatWeaponCard(){
+    this.id=id;
+    this.src=src;
+    this.gun=gun,
+    this.sword=sword,
+    this.arrow=arrow,
+    this.attackEvent=function(){//點擊後執行
+        $('#toolList_role1').append('<img class="tool" src="'+this.src+'"/>');//加入手牌
+        
+        if(this.gun>role.gun){role.gun=this.gun};
+        if(this.sword>role.wsord){role.sword=this.sword};
+        if(this.arrow>role.arrow){role.arrow=this.arrow};       //換上最強的武器
+    }
+}
+//陷阱卡建構子
+function CreatTrapCard(){
+    this.id=id;
+    this.src=src;
     this.attackEvent=function(){
-        console.log(role.hp);
-        //var card=this;
-        //role.hp++;
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
-        //role.exp=role.exp+this.exp;      //attack 的攻擊應拆分成可抵及不可抵的，未完成。         
-    };
-    
+        if(role=role1)
+            {$('#toolList_role1>.trapTool').removeClass("used")}//開啟，使陷阱可使用
+        if(role=role2)
+            {$('#toolList_role2>.trapTool').removeClass("used")}//開啟，使陷阱可使用
 
+    }
 }
-
-//大量建立卡牌
-var card_list=[];
-for(var i=0;i<24;i++)
-{
-    var src="c1_"+String(i+1)+".png";
-    console.log(src);
-    var tem=new CardMonster(i+1,src,1,1,1,1,1,0,0,0,0,0,1);
-    card_list.push(tem);
-}
-//建立魔王卡
-var tem=new CardBoss(25,"boss1.png",1,1,1,10,1,1);
-card_list.push(tem);
-
 
 //創立 VUE 物件
 var role1= new Vue({
@@ -137,7 +146,7 @@ var role1= new Vue({
     
 })
 
-//創立 VUE 物件
+//創立 VUE 角色物件
 var role2= new Vue({
     el: '#role2 ',
     data:{
@@ -177,42 +186,28 @@ var role2= new Vue({
     
 })
 
+//建立卡牌
+function creatMonsterCard(num){
+    for(var i=0;i<num;i++)
+    {
+        var src="c1_"+String(i+1)+".png";
+        console.log(src);
+        var tem=new CardMonster(i+1,src,1,1,1,1,1,0,0,0,0,0,1);
+        card_list.push(tem);
+    }
+  }
+//建立夥伴
+function creatParnerCard(){
+    var tem=new CardMonster(25,"boss1.png",1,1,1,1,1,0,0,0,0,0,1);
+} 
+//建立武器
 
+//建立Boss卡牌
+function creatBossCard(){
+    var tem=new CardMonster(25,"boss1.png",1,1,1,1,1,0,0,0,0,0,1);
+    tem.attack=tem.attack*level;//隨關卡增加
+    card_list.push(tem);
+
+}
     
 
-//const cards = document.querySelectorAll('.memory-card');
-//cards.forEach(card => card.addEventListener('click', flipCard));//點擊後翻面
-/*
-friend
-{
-    payHp();
-    UpAttack();
-
-}
-weapon
-{
-    type:[gun,sword,arrow];
-    upAttack();
-}
-treat
-{
-    HpUp();
-    restUp();
-
-}
-trap
-{
-    
-}
-monster
-{
-    //payHp:;
-    expUp();
-    elementGet();
-    gun_short:
-    sword_short:
-    arrow_short:
-    attack:
-
-}
-*/

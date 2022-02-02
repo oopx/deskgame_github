@@ -1,7 +1,15 @@
 $(document).ready(function(){
     setStart();//初始化
     tollCenter();//工具管理系統
-    
+    $("#toolButton").on("click",function(){
+        let check=$(this).is('.click');
+        $("#toolBar").toggle(300);
+        if(check==true)$(this).removeClass("click");
+        if(check==false)$(this).addClass("click");
+       
+
+
+    })
     
 
     //下陷阱
