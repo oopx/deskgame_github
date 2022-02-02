@@ -262,7 +262,7 @@ function setTrap (framework,trapAttack_origin){
   //使該卡片加入陷阱傷害
   var clickCard=card_list[framework-1];
   clickCard.trap.trapOwner=role.id;
-  clickCard.trap.trapAttack=trapAttack_origin;//受到的陷阱傷害
+  clickCard.trap.trapAttack=trapAttack_origin;//設定該卡的自帶陷阱傷害
   
 }
 

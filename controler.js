@@ -25,19 +25,19 @@ $(document).ready(function(){
         })
 
     
-    $('.buttonUnTrap').click(function(){
-        canActive();
-        $('.canTrap').removeClass("canTrap");//移除陷阱的class
-        })
+    // $('.buttonUnTrap').click(function(){
+    //     canActive();
+    //     $('.canTrap').removeClass("canTrap");//移除陷阱的class
+    //     })
     
-    $("section").on("click",'.canTrap',function(){ 
-        //console.log(this.dataset.framework);
-        setTrap(this.dataset.framework,2);
-        $(this).removeClass("canTrap");//每個圖只能加一次
-        console.log(this);
-        $(this).off();// 移除On 避免之前開陷阱留下的事件
-        //加上陷阱
-        })
+    // $("section").on("click",'.canTrap',function(){ 
+    //     //console.log(this.dataset.framework);
+    //     setTrap(this.dataset.framework,2);
+    //     $(this).removeClass("canTrap");//每個圖只能加一次
+    //     console.log(this);
+    //     $(this).off();// 移除On 避免之前開陷阱留下的事件
+    //     //加上陷阱
+    //     })
 
     
 
