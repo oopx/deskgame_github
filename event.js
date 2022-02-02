@@ -3,11 +3,11 @@ var role;
 var other;
 var level=2;
 var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
-var card_list=[];
+var card_list=[];//場面上的牌組
 
 function setStart(){  
   role=role2; 
-  creatMonsterCard(24);//
+  creatMonsterCard(24);//創立牌組
   creatBossCard();//創立boss卡
   shuffle(card_list,24);//陣列，數量洗牌
   othersTurn();//換人
@@ -131,7 +131,7 @@ function othersTurn(){
 
 
 
-//新增一張卡片背面
+//將卡牌卡置桌面上
 function addOption(){
     //$('.memory-game').afert('<div class="card" data-framework="react">');
     console.log(card_list);

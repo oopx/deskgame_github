@@ -67,6 +67,8 @@ function CreatParnerCard(){
         role.friend_gun=role.friend_gun+this.friend_gun;
         role.friend_sword=role.friend_sword+this.friend_sword;
         role.friend_arrow=role.friend_arrow+this.friend_arrow;
+        role.hp=role.hp-role.friendNum;//號召夥伴花的血量
+        role.friendNum++;//號召朋友的次數
         //加入手牌
         if(role=role1)
             {$('#toolList_role1>.trapTool').append('<img class="tool" src="'+this.src+'"/>');}
@@ -172,11 +174,12 @@ var role2= new Vue({
             light:0
         },
         more_attack:0,//來自怪的傷害增加或減少，容許負值
-        more_trapAttack:0,//自帶受到額外陷阱傷害增加
+        more_trapAttack:0,//受到陷阱傷害增加
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數
         weapon:0,//擁有武器數
-        sacrificeNum:1,//血祭次數,一開始為一
+        sacrificeNum:1,//血祭次數
+        friendNum:1,//召朋友次數
         weaponChoose:"",//當前使用武器
         },
     methods: {
