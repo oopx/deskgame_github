@@ -12,7 +12,7 @@ section{
   background-image: url("https://alldata.sgp1.digitaloceanspaces.com/images/christmas-dark.png");
 }
 
-.your_turn{
+.role.your_turn{
   background-color:rgb(165, 255, 113);
 }
 
@@ -68,6 +68,22 @@ button.doWhat{
   filter:opacity(.2);
   filter:grayscale(1);
   /* 變黑白刷淡 */
+}
+
+/* 控制工具區的開啟 */
+#toolList_role1,#toolList_role2{
+  display:none;
+}
+
+#toolList_role1.your_turn,#toolList_role2.your_turn{
+  display:inline;
+}
+
+
+
+.tool{
+  width: calc(30% );
+  
 }
 
 .choose{

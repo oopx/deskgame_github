@@ -145,47 +145,7 @@ var role2= new Vue({
     
 })
 
-$(document).ready(function(){
-    //$('#cost').click( function(){ role1.hp--;});
-    //$('#attack').click( function(){ card1.attackEvent();});
-    // $('.memory-card').click( function(){ 
-    //     //console.log(card[this.dataset.framework].attack);
-    //     //card[this.dataset.framework].attackEvent()
-        
-    //    // alert(this.dataset.framework);
-    //     })
-    setStart();//初始化
-    
 
-    //下陷阱
-
-    $(".buttonTrap").on("click",function(){
-        notActive();
-        $('.card').addClass("canTrap");//可加陷阱的class  
-        })
-    
-    $('.buttonUnTrap').click(function(){
-        canActive();
-        $('.canTrap').removeClass("canTrap");//移除陷阱的class
-        })
-    
-    $("section").on("click",'.canTrap',function(){ 
-        //console.log(this.dataset.framework);
-        setTrap(this.dataset.framework,2);
-        $(this).removeClass("canTrap");//每個圖只能加一次
-        console.log(this);
-        $(this).off();// 移除On 避免之前開陷阱留下的事件
-        //加上陷阱
-        })
-
-    
-
-    $('.turn').click( function(){othersTurn();});//換回合
-
-    
-    
-    
-})
     
 
 //const cards = document.querySelectorAll('.memory-card');

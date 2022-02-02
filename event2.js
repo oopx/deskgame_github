@@ -98,19 +98,23 @@ function endAction(fromThis,isAble){
 
 //切換回合系統
 function othersTurn(){
-  if (role==role1)
+  if (role==role1)//換role2
     {
     console.log("turn");
     role=role2;
     other=role1;
     $("#role2").addClass("your_turn");
     $("#role1").removeClass("your_turn");
+    $('#toolList_role2').addClass('your_turn');
+    $("#toolList_role1").removeClass("your_turn");
     } 
-    else{
+    else{//換role1
     role=role1;
     other=role2;
     $("#role1").addClass("your_turn");
     $("#role2").removeClass("your_turn");
+    $('#toolList_role1').addClass('your_turn');
+    $('#toolList_role2').removeClass("your_turn");
     }
     
     $("button").removeClass('doWhat');//全部換白色按鍵

@@ -17,7 +17,7 @@
   <body >
     
     <div id="role1" class="item_left role">
-        <h1>role1角色卡牌</h1> 
+        <h2>role1角色卡牌</h2> 
         <p>hp : {{hp}}</p>
         <p>exp : {{exp}}</p>
         <p>gun:{{gun}}</p>
@@ -30,11 +30,20 @@
         <button class="remove">移除</button>
         <button class="learn">學習</button>
         <button class="turn">換對手的回合</button>
-        <h2>武器選擇</h2>
         <img class="weapon gun" src="img/t1_2.png" />
         <img class="weapon sword" src="img/t1_1.png" />
         <img class="weapon arrow" src="img/t1_3.png" />
-        
+        <div id="toolList_role1" >
+        <h2>role1的武器庫</h2>
+        <img class="trapTool tool " src="img/t0_4.png" />
+        <img class="trapTool tool" src="img/t0_4.png" />
+        </div>
+
+        <div id="toolList_role2">
+        <h2>role2的武器庫</h2>
+        <img class="trapTool tool " src="img/t0_4.png" />
+        <img class="trapTool tool" src="img/t0_4.png" />
+        </div>
     </div>
     <section class="memory-game"> 
         <div class="card" data-framework="1"></div>
@@ -92,6 +101,6 @@
   </body>
   <!-- vue要等網頁載完才執行 -->
   <!-- <script src='event.js'></script> -->
-  <script src='card.js'></script> 
-  
+   <script src='card.js'></script> 
+   <script src='controler.js'></script> 
   </html>    
