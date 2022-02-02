@@ -154,6 +154,14 @@ var role2= new Vue({
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
+        elementGet:{
+            fire:0,
+            water:0,
+            earth:0,
+            thunder:0,
+            poison:0,
+            light:0
+        },
         more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//自帶受到額外陷阱傷害增加
         friend_free:false,//招伙伴免費
