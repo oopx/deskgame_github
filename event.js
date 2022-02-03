@@ -1,7 +1,7 @@
 //初始化
 var role;
 var other;
-var level=2;
+var level=1;
 var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
 var card_list=[];//場面上的牌組
 
@@ -15,7 +15,7 @@ function setStart(){
   creatWeaponCard();
   creatTrapCard();
   creatTreatCard();
-  
+
   shuffle(card_list,24);//陣列，數量洗牌
   othersTurn();//換人
   addOption();//戴入卡片
@@ -38,6 +38,11 @@ function setStart(){
   $('[data-framework=25]').addClass('flip');
 
 //確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+  $(".attack").on("click",function(){
+      doWhat=1;
+    $("button").removeClass('doWhat');
+    $(this).addClass('doWhat')
+  })
   $(".rest").on("click",function(){
       doWhat=2;
       $("button").removeClass('doWhat');
@@ -57,6 +62,7 @@ function setStart(){
       doWhat=5;
       $("button").removeClass('doWhat');
       $(this).addClass('doWhat')
+      $('img').attr('style','filter:grayscale(1)  hue-rotate(100deg)');//實驗，點後會有不同色調
       canActive();//可再執行行動，因為可一直血祭
   })  
 
@@ -102,8 +108,8 @@ function endAction(fromThis,isAble){
     $(".rest").attr('disabled',isAble);//使按扭不能再次使用
     $(".learn").attr('disabled',isAble);//使按扭不能再次使用
     
-    if(fromThis=="")return;//若未回傳，則不執從消失卡牌    
-    setUsed(fromThis);
+    if(fromThis=="")return;//若未回傳，則不執行消失卡牌    
+    setUsed(fromThis);//點的卡消失
     notActive()// 不可再點卡
 }
 
@@ -133,6 +139,8 @@ function othersTurn(){
     endAction('',false);//重啟點卡按鍵
     $('.weapon').removeClass('choose');//武器系統還原為空
     role.weaponChoose="";//武器系統還原為空
+    doWhat=1;//將做什麼改為攻擊
+    $('.canTrap').removeClass("canTrap");//避免有人按陷阱後不放
 
 }
 
@@ -148,8 +156,8 @@ function addOption(){
       //console.log(element); 
       var j=card_list.indexOf(element)+1;//計算該項目次序 
       element.order=j;//設定每張的位置
-      //以下分五組
-      console.log(j%4); 
+
+       
     
       $('[data-framework='+j+']').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
       

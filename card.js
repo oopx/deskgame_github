@@ -76,6 +76,8 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
             {$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');}
         if(role==role2)
             {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
 
 
         
@@ -98,8 +100,10 @@ function CreatWeaponCard(id,src,gun,sword,arrow){
             {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
         
         if(this.gun>role.gun){role.gun=this.gun};
-        if(this.sword>role.wsord){role.sword=this.sword};
+        if(this.sword>role.sword){role.sword=this.sword};
         if(this.arrow>role.arrow){role.arrow=this.arrow};       //換上最強的武器
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
     }
 }
 //陷阱卡建構子
@@ -117,6 +121,8 @@ function CreatTrapCard(id,src,attack,isTrap){
             {$('#toolList_role1>.trapTool').removeClass("used")}//開啟，使陷阱可使用
         if(role==role2)
             {$('#toolList_role2>.trapTool').removeClass("used")}//開啟，使陷阱可使用
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
 
     }
 }
@@ -131,6 +137,8 @@ function CreatTreatCard(id,src,treat,restUp){
     this.attackEvent=function(){
         role.restUp=role.restUp+this.restUp;
         role.hp=role.hp+this.treat;
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
     
     }
 }
@@ -245,8 +253,8 @@ function creatMonsterCard(){
 }
 //建立Boss卡牌
 function creatBossCard(){
-    var tem=new CardMonster(25,"boss1.png",0,3,2,10,2);
-    tem.attack=tem.attack*level;//隨關卡增加
+    var tem=new CardMonster(25,"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
     card_list.push(tem);
 
 }
