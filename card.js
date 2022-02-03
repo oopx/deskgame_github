@@ -181,7 +181,7 @@ var role2= new Vue({
     el: '#role2 ',
     data:{
         id:2,
-        hp:8,
+        hp:9,
         exp:0,
         //attack:0;
         gun:0,
@@ -245,7 +245,7 @@ function creatMonsterCard(){
 }
 //建立Boss卡牌
 function creatBossCard(){
-    var tem=new CardMonster(25,"boss1.png",1,1,1,1,1,0,0,0,0,0,1);
+    var tem=new CardMonster(25,"boss1.png",0,3,2,10,2);
     tem.attack=tem.attack*level;//隨關卡增加
     card_list.push(tem);
 
