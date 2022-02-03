@@ -8,9 +8,11 @@
   width: 16%;
 }
 #toolBar{
+  text-align:center;
+  color: #fae9e9; ;
   position:fixed;
   float:bottom;
-  height:30%;
+  height:90%;
   width: 100%;
   bottom: 0px; 
   background-color: rgba(0, 0, 0, 0.411);     
@@ -27,6 +29,9 @@
 #toolButton.click{
   transform: scale(1,1);
 }
+
+
+
 section{
   /* cursor:crosshair;  */
   background-color:rgb(245, 156, 156);
@@ -64,9 +69,7 @@ button.doWhat{
   visibility:hidden;
 }
 
-
-
-.trap1 {
+.trap1,.trap2 {
   /* visibility:hidden; */
   display:flex;
   position: absolute;
@@ -78,17 +81,13 @@ button.doWhat{
 
 }
 .trap2 {
- 
-  display:flex;
-  position: absolute;
-  z-index: 2;
-  height: calc(50% - 10px);
-  top:calc(50% + 10px);
-  right:calc(50% - 26px);
+
   transform: rotateY(180deg);
   /* 使兩面都有圖 */
 
 }
+
+
 .weapon{
   width: calc(31% );
   filter:opacity(.2);
@@ -108,7 +107,7 @@ button.doWhat{
 
 
 .tool{
-  height: calc(30% );
+  height: calc(20% );
   
 }
 #toolList_role1:hover img,#toolList_role2:hover img{ 

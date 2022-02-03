@@ -4,23 +4,28 @@ var other;
 var level=1;
 var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
 var card_list=[];//場面上的牌組
-
+var card_list1=[];
+var card_list2=[];
+var card_list3=[];
 function setStart(){  
   role=role2; 
   //creatMonsterCard(24);//創立牌組
   
-  creatBossCard();//創立boss卡
-  creatMonsterCard();
-  creatParnerCard();
-  creatWeaponCard();
-  creatTrapCard();
-  creatTreatCard();
+  creatBossCard1();//創立boss卡
+  creatMonsterCard1();
+  creatParnerCard1();
+  creatWeaponCard1();
+  creatTrapCard1();
+  creatTreatCard1();
 
   shuffle(card_list,24);//陣列，數量洗牌
   othersTurn();//換人
-  addOption();//戴入卡片
+  addOption('back1.png');//戴入卡片
   setActive();//初始化下五張為active
   weaponChooseSys();//武器監聽系統
+
+  doWhat=1;//預設行動為攻擊
+  $(".attack").addClass('doWhat');//預設行動為攻擊
 
 
 
@@ -62,7 +67,7 @@ function setStart(){
       doWhat=5;
       $("button").removeClass('doWhat');
       $(this).addClass('doWhat')
-      $('img').attr('style','filter:grayscale(1)  hue-rotate(100deg)');//實驗，點後會有不同色調
+      //$('img').attr('style','filter:grayscale(1)  hue-rotate(100deg)');//實驗，點後會有不同色調
       canActive();//可再執行行動，因為可一直血祭
   })  
 
@@ -73,6 +78,7 @@ function setStart(){
         case 1:                
             getCard(this.dataset.framework);//發動點擊該卡的效果
             endAction(this,'disabled')//無法再進行任何行動
+            $('.attack').removeClass('doWhat');
             break;
         case 2:
             rest();
@@ -104,10 +110,8 @@ function setStart(){
 
 //結束行動，使不可按行動，並變色
 function endAction(fromThis,isAble){
-    $(".remove").attr('disabled',isAble);//使按扭不能再次使用
-    $(".rest").attr('disabled',isAble);//使按扭不能再次使用
-    $(".learn").attr('disabled',isAble);//使按扭不能再次使用
-    
+    $(".remove,.rest,.learn,.attack").attr('disabled',isAble);//使按扭不能再次使用
+        
     if(fromThis=="")return;//若未回傳，則不執行消失卡牌    
     setUsed(fromThis);//點的卡消失
     notActive()// 不可再點卡
@@ -139,7 +143,8 @@ function othersTurn(){
     endAction('',false);//重啟點卡按鍵
     $('.weapon').removeClass('choose');//武器系統還原為空
     role.weaponChoose="";//武器系統還原為空
-    doWhat=1;//將做什麼改為攻擊
+    doWhat=1;//預設行動為攻擊
+    $(".attack").addClass('doWhat');//預設行動為攻擊
     $('.canTrap').removeClass("canTrap");//避免有人按陷阱後不放
 
 }
@@ -147,7 +152,7 @@ function othersTurn(){
 
 
 //將卡牌卡置桌面上
-function addOption(){
+function addOption(back){
     //$('.memory-game').afert('<div class="card" data-framework="react">');
     console.log(card_list);
     
@@ -161,7 +166,7 @@ function addOption(){
     
       $('[data-framework='+j+']').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
       
-      $('[data-framework='+j+']').append('<img class="back-face" src="img/back1.png" alt="back"/>');// 動態新增卡牌
+      $('[data-framework='+j+']').append('<img class="back-face" src="img/'+back+'" alt="back"/>');// 動態新增卡牌
       
       // var text=element.name;
       // var value=element.name;
@@ -276,16 +281,7 @@ function weaponChooseSys(){
 
 
 
-//設定陷阱卡
-function setTrap (framework,trapAttack_origin){
-  $('[data-framework='+framework+']').append('<img class="trap1" src="img/t1_4.png" alt="React" />');
-  $('[data-framework='+framework+']').append('<img class="trap2" src="img/t1_4.png" alt="React" />');//使兩面都有圖案
-  //使該卡片加入陷阱傷害
-  var clickCard=card_list[framework-1];
-  clickCard.trap.trapOwner=role.id;
-  clickCard.trap.trapAttack=trapAttack_origin;//設定該卡的自帶陷阱傷害
-  
-}
+
 
 //負值為0
 function ignoreNegative(num){
@@ -298,8 +294,68 @@ function ignoreNegative(num){
    return num
 }
 
-//放入手牌(實驗)
+//(實驗)//
+//放入手牌
 function creatOwnCard()
 {
   $('#toolList_role1').append('<img class="tool" src="img/boss2.png"/>');
+}
+
+
+function resetCard (level){
+  $(".card").empty();//清空卡牌DIV
+  card_list=[];//清空陣列
+//依等級放入
+  switch (level){
+    case 1:
+      card_list=card_list1;
+      break;
+    case 2:
+      card_list=card_list2;
+      break;
+
+    case 3:
+      card_list=card_list3;
+      break;
+  }
+
+  //創立boss卡
+  // creatBossCard2();
+   creatMonsterCard2(25,level);
+  // creatParnerCard2();
+  // creatWeaponCard2();
+  // creatTrapCard2();
+  // creatTreatCard2();
+
+  shuffle(card_list,23);//陣列，數量洗牌
+
+  addOption("back"+level+".png");//戴入卡片
+};
+
+function creatMonsterCard2(num,level){
+  for(var i=0;i<num;i++)
+  {
+      var src="c"+level+"_"+String(i+1)+".png";
+      //console.log(src);
+      var tem=new CardMonster(i+1,src,2,0,1,0,1,0,0,0,0,0,0);
+      card_list.push(tem);
+  }
+}
+
+function turnControl(){
+  if($('.card.used').length==25){};
+}
+//使手牌全開
+function f(){
+$(".card").addClass("flip");
+}
+// 下陷阱
+function setTrap (framework,trapAttack_origin){
+  $('[data-framework='+framework+']').append('<img class="trap1" src="img/t1_4.png" alt="React" />');
+  $('[data-framework='+framework+']').append('<img class="trap2" src="img/t1_4.png" alt="React" />');//使兩面都有圖案
+  //使該卡片加入陷阱傷害
+  var clickCard=card_list[framework-1];
+  clickCard.trap.trapOwner=role.id;
+  clickCard.trap.trapAttack=trapAttack_origin;//設定該卡的自帶陷阱傷害
+
 }
