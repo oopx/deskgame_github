@@ -1,4 +1,111 @@
-//初始化
+// //初始化
+// var role;
+// var other;
+// var level=1;
+// var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+// var card_list=[];//場面上的牌組
+// var card_list1=[];
+// var card_list2=[];
+// var card_list3=[];
+// function setStart(){  
+//   role=role2; 
+//   //creatMonsterCard(24);//創立牌組
+  
+//   creatBossCard1();//創立boss卡
+//   creatMonsterCard1();
+//   creatParnerCard1();
+//   creatWeaponCard1();
+//   creatTrapCard1();
+//   creatTreatCard1();
+
+//   shuffle(card_list,24);//陣列，數量洗牌
+//   othersTurn();//換人
+//   addOption('back1.png');//戴入卡片
+//   setActive();//初始化下五張為active
+//   weaponChooseSys();//武器監聽系統
+
+//   doWhat=1;//預設行動為攻擊
+//   $(".attack").addClass('doWhat');//預設行動為攻擊
+
+
+
+  
+// //偶數牌及底五張設為flip
+//   for(i=0;i<=20;i=i+2){
+//     var tem='[data-framework='+String(i)+']';
+//     if(tem<0){return};//不能用break 會跳出整個ready函式
+//     $(tem).addClass('flip');
+//   }
+//   $('[data-framework=21]').addClass('flip');
+//   $('[data-framework=22]').addClass('flip');
+//   $('[data-framework=23]').addClass('flip');
+//   $('[data-framework=24]').addClass('flip');
+//   $('[data-framework=25]').addClass('flip');
+
+// //確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+//   $(".attack").on("click",function(){
+//       doWhat=1;
+//     $("button").removeClass('doWhat');
+//     $(this).addClass('doWhat')
+//   })
+//   $(".rest").on("click",function(){
+//       doWhat=2;
+//       $("button").removeClass('doWhat');
+//       $(this).addClass('doWhat')
+//   })
+//   $(".remove").on("click",function(){
+//       doWhat=3;
+//       $("button").removeClass('doWhat');
+//       $(this).addClass('doWhat')
+//   })
+//   $(".learn").on("click",function(){
+//       doWhat=4;
+//       $("button").removeClass('doWhat');
+//       $(this).addClass('doWhat')
+//   })
+//   $(".sacrifice").on("click",function(){
+//       doWhat=5;
+//       $("button").removeClass('doWhat');
+//       $(this).addClass('doWhat')
+//       //$('img').attr('style','filter:grayscale(1)  hue-rotate(100deg)');//實驗，點後會有不同色調
+//       canActive();//可再執行行動，因為可一直血祭
+//   })  
+
+// //執行點卡後的行動
+//   $("section").on ("click",".active",function(){
+    
+//     switch(doWhat){//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
+//         case 1:                
+//             getCard(this.dataset.framework);//發動點擊該卡的效果
+//             endAction(this,'disabled')//無法再進行任何行動
+//             $('.attack').removeClass('doWhat');
+//             break;
+//         case 2:
+//             rest();
+//             $('.rest').removeClass('doWhat');
+//             endAction(this,'disabled')//無法再進行任何行動
+//             break;
+//         case 3: 
+//             {};
+//             $('.remove').removeClass('doWhat');
+//             endAction(this,'disabled')//無法再進行任何行動
+//             break;
+//         case 4:
+//             {};
+//             $('.learn').removeClass('doWhat');
+//             endAction(this,'disabled')//無法再進行任何行動
+//             break;
+//         case 5:
+            
+//             sacrifice();
+//             setUsed(this);
+//             endAction('',false);//血祭後可重啟點卡按鍵
+//            // $('.sacrifice').removeClass('doWhat'); 血祭不能關紅燈
+//             break;
+//     }
+//   });
+
+// } 
 var role;
 var other;
 var level=1;
@@ -7,106 +114,8 @@ var card_list=[];//場面上的牌組
 var card_list1=[];
 var card_list2=[];
 var card_list3=[];
-function setStart(){  
-  role=role2; 
-  //creatMonsterCard(24);//創立牌組
-  
-  creatBossCard1();//創立boss卡
-  creatMonsterCard1();
-  creatParnerCard1();
-  creatWeaponCard1();
-  creatTrapCard1();
-  creatTreatCard1();
-
-  shuffle(card_list,24);//陣列，數量洗牌
-  othersTurn();//換人
-  addOption('back1.png');//戴入卡片
-  setActive();//初始化下五張為active
-  weaponChooseSys();//武器監聽系統
-
-  doWhat=1;//預設行動為攻擊
-  $(".attack").addClass('doWhat');//預設行動為攻擊
 
 
-
-  
-//偶數牌及底五張設為flip
-  for(i=0;i<=20;i=i+2){
-    var tem='[data-framework='+String(i)+']';
-    if(tem<0){return};//不能用break 會跳出整個ready函式
-    $(tem).addClass('flip');
-  }
-  $('[data-framework=21]').addClass('flip');
-  $('[data-framework=22]').addClass('flip');
-  $('[data-framework=23]').addClass('flip');
-  $('[data-framework=24]').addClass('flip');
-  $('[data-framework=25]').addClass('flip');
-
-//確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
-  $(".attack").on("click",function(){
-      doWhat=1;
-    $("button").removeClass('doWhat');
-    $(this).addClass('doWhat')
-  })
-  $(".rest").on("click",function(){
-      doWhat=2;
-      $("button").removeClass('doWhat');
-      $(this).addClass('doWhat')
-  })
-  $(".remove").on("click",function(){
-      doWhat=3;
-      $("button").removeClass('doWhat');
-      $(this).addClass('doWhat')
-  })
-  $(".learn").on("click",function(){
-      doWhat=4;
-      $("button").removeClass('doWhat');
-      $(this).addClass('doWhat')
-  })
-  $(".sacrifice").on("click",function(){
-      doWhat=5;
-      $("button").removeClass('doWhat');
-      $(this).addClass('doWhat')
-      //$('img').attr('style','filter:grayscale(1)  hue-rotate(100deg)');//實驗，點後會有不同色調
-      canActive();//可再執行行動，因為可一直血祭
-  })  
-
-//執行點卡後的行動
-  $("section").on ("click",".active",function(){
-    
-    switch(doWhat){//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
-        case 1:                
-            getCard(this.dataset.framework);//發動點擊該卡的效果
-            endAction(this,'disabled')//無法再進行任何行動
-            $('.attack').removeClass('doWhat');
-            break;
-        case 2:
-            rest();
-            $('.rest').removeClass('doWhat');
-            endAction(this,'disabled')//無法再進行任何行動
-            break;
-        case 3: 
-            {};
-            $('.remove').removeClass('doWhat');
-            endAction(this,'disabled')//無法再進行任何行動
-            break;
-        case 4:
-            {};
-            $('.learn').removeClass('doWhat');
-            endAction(this,'disabled')//無法再進行任何行動
-            break;
-        case 5:
-            
-            sacrifice();
-            setUsed(this);
-            endAction('',false);//血祭後可重啟點卡按鍵
-           // $('.sacrifice').removeClass('doWhat'); 血祭不能關紅燈
-            
-            break;
-    }
-  });
-
-} 
 
 //結束行動，使不可按行動，並變色
 function endAction(fromThis,isAble){
