@@ -12,7 +12,7 @@
   color: #fae9e9; ;
   position:fixed;
   float:bottom;
-  height:90%;
+  height:100%;
   width: 100%;
   bottom: 0px; 
   background-color: rgba(0, 0, 0, 0.411);     
@@ -86,6 +86,11 @@ button.doWhat{
   /* 使兩面都有圖 */
 
 }
+.canNotUsed{
+  filter:opacity(.2);
+  filter:grayscale(1);
+}
+
 
 
 .weapon{

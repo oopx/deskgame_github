@@ -1,7 +1,7 @@
 $(document).ready(function(){
      //初始化
-    {//初始化
-         
+     //初始化
+
         role=role2; 
         //creatMonsterCard(24);//創立牌組
         
@@ -11,10 +11,20 @@ $(document).ready(function(){
         creatWeaponCard1();
         creatTrapCard1();
         creatTreatCard1();
+
+        creatBossCard2();//創立boss卡
+        creatMonsterCard2();
+        creatParnerCard2();
+        creatWeaponCard2();
+        creatTrapCard2();
+        creatTreatCard2();
+
+        console.log(card_list);
+        console.log(card_list2);
       
-        shuffle(card_list,24);//陣列，數量洗牌
+        //shuffle(card_list,24);//陣列，數量洗牌
         othersTurn();//換人
-        addOption('back1.png');//戴入卡片
+        resetCard(level);//設置該回合卡片
         setActive();//初始化下五張為active
         weaponChooseSys();//武器監聽系統
       
@@ -26,15 +36,15 @@ $(document).ready(function(){
         
       //偶數牌及底五張設為flip
         for(i=0;i<=20;i=i+2){
-          var tem='[data-framework='+String(i)+']';
+          var tem='[data-framework="'+String(i)+'"]';
           if(tem<0){return};//不能用break 會跳出整個ready函式
           $(tem).addClass('flip');
         }
-        $('[data-framework=21]').addClass('flip');
-        $('[data-framework=22]').addClass('flip');
-        $('[data-framework=23]').addClass('flip');
-        $('[data-framework=24]').addClass('flip');
-        $('[data-framework=25]').addClass('flip');
+        $('[data-framework="21"]').addClass('flip');
+        $('[data-framework="22"]').addClass('flip');
+        $('[data-framework="23"]').addClass('flip');
+        $('[data-framework="24"]').addClass('flip');
+        $('[data-framework="25"]').addClass('flip');
       
       //確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
         $(".attack").on("click",function(){
@@ -67,9 +77,9 @@ $(document).ready(function(){
       
       //執行點卡後的行動
         $("section").on ("click",".active",function(){
-          
+          console.log(this); 
           switch(doWhat){//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
-              case 1:                
+              case 1:        
                   getCard(this.dataset.framework);//發動點擊該卡的效果
                   endAction(this,'disabled')//無法再進行任何行動
                   $('.attack').removeClass('doWhat');
@@ -80,12 +90,12 @@ $(document).ready(function(){
                   endAction(this,'disabled')//無法再進行任何行動
                   break;
               case 3: 
-                  {};
+                  
                   $('.remove').removeClass('doWhat');
                   endAction(this,'disabled')//無法再進行任何行動
                   break;
               case 4:
-                  {};
+                  
                   $('.learn').removeClass('doWhat');
                   endAction(this,'disabled')//無法再進行任何行動
                   break;
@@ -99,16 +109,17 @@ $(document).ready(function(){
           }
         });
 
-    };
-    $("#toolBar").attr('style','display:none');//預設收合  
+    
+    $("#toolBar").hide();//預設收合  
     $("#toolButton").on("click",function(event){
         let check=$(this).is('.click');
-        $("#toolBar").toggle(300);
+        $("#toolBar").show();
         if(check==true)$(this).removeClass("click");
         if(check==false)$(this).addClass("click");
         event.stopPropagation();
+
         $("div").one("click",function(){
-            $("#toolBar").attr('style','display:none');
+            $("#toolBar").hide();
             $("#toolButton").removeClass("click"); //點空白處可收合，實驗      
         })
 
@@ -122,6 +133,66 @@ $(document).ready(function(){
 
     //換回合
     $('.turn').click( function(){othersTurn();});
+
+    //測試鈕實驗用
+    $('#nextLevel').click(function(){ 
+        level++;
+        resetCard(level);
+        
+      })
+    $("#f").click(function(){f()});
+    $('#testbutton').click(function(){
+           
+            
+    //    if(this.trap.trapOwner!=role){
+            let weaponType="gun";
+            let num=$('#toolBar .'+weaponType).length;
+            if (num==0){
+                $(".tool").removeClass("canNotUsed" );// 移除黑白
+                return;  };//如果完全沒有武器就反回 
+            
+            //打開role 的toolbar
+            $('#toolButton').hide();//隱藏div 
+            
+            $("#toolBar").show();
+            $("#toolList_role1 .tool,#toolList_role2 .tool").addClass("canNotUsed" );
+
+            //判斷哪種武器要被銷毀
+            
+            //switch(this.trap.weaponAttack){// 將要改變的取消黑白
+            switch("gunbreak"){// 將要改變的取消黑白
+                case "arrowbreak":
+                    $(".arrow").removeClass("canNotUsed" );
+                    $(".arrow").addClass("canDestroy" );
+                    weaponType="arrow";
+
+                    break;
+                case "gunbreak":
+                    $(".gun").removeClass("canNotUsed" );
+                    $(".gun").addClass("canDestroy" );
+                    weaponType="gun";
+                    break;
+                case "swordbreak":
+                    $(".sword").removeClass("canNotUsed" );
+                    $(".sword").addClass("canDestroy" );
+                    weaponType="sword";
+                    break;
+            }
+                               
+            //顯示可棄的武器//點擊後消失武器及toolbar          
+            $('.canDestroy').one("click",function(){
+                this.remove();
+                $(".tool").removeClass("canNotUsed" );// 移除黑白
+                $(".tool").removeClass("canDestroy" );// 移除黑白
+                $('#toolButton').show();//SHOW div 
+                $("#toolBar").hide();
+            })
+        // }
+              
+        
+    })
+
+})
 
     // function setStart(){  
     //     role=role2; 
@@ -288,6 +359,6 @@ $(document).ready(function(){
     
     
     
-})
+
 
 

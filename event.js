@@ -169,13 +169,13 @@ function addOption(back){
       //console.log(card_list.indexOf(element));
       //console.log(element); 
       var j=card_list.indexOf(element)+1;//計算該項目次序 
-      element.order=j;//設定每張的位置
-
        
+      element.order=j;//設定每張的位置
     
-      $('[data-framework='+j+']').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
+    
+      $('[data-framework="'+j+'"]').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
       
-      $('[data-framework='+j+']').append('<img class="back-face" src="img/'+back+'" alt="back"/>');// 動態新增卡牌
+      $('[data-framework="'+j+'"]').append('<img class="back-face" src="img/'+back+'" alt="back"/>');// 動態新增卡牌
       
       // var text=element.name;
       // var value=element.name;
@@ -214,11 +214,11 @@ function setUsed(Fromthis){
 
 //設定最後一張為Active
 function setActive(){
-  $('[data-framework=21]').addClass('active');
-  $('[data-framework=22]').addClass('active');
-  $('[data-framework=23]').addClass('active');
-  $('[data-framework=24]').addClass('active');
-  $('[data-framework=25]').addClass('active');
+  $('[data-framework="21"]').addClass('active');
+  $('[data-framework="22"]').addClass('active');
+  $('[data-framework="23"]').addClass('active');
+  $('[data-framework="24"]').addClass('active');
+  $('[data-framework="25"]').addClass('active');
 
 
 };
@@ -245,6 +245,7 @@ function setNextActive(framwork){
 
 //點擊執行場面上的卡效果
 function getCard(framework){
+  console.log(framework);
   var clickCard=card_list[framework-1]
   console.log(clickCard);
   clickCard.attackEvent();
@@ -267,21 +268,21 @@ function sacrifice(){
 
 //武器選擇系統
 function weaponChooseSys(){
-  $(".gun").on("click",function(){
-    $('.weapon').removeClass('choose');
+  $(".weaponBar .gun").on("click",function(){
+    $('.weaponBar .weapon').removeClass('choose');
     $(this).addClass('choose');
     role.weaponChoose="gun";
     
     
   });
-  $(".arrow").on("click",function(){
-    $('.weapon').removeClass('choose');
+  $(".weaponBar .arrow").on("click",function(){
+    $('.weaponBar .weapon').removeClass('choose');
     $(this).addClass('choose');
     role.weaponChoose="arrow";
     
   })
-  $(".sword").on("click",function(){
-    $('.weapon').removeClass('choose');
+  $(".weaponBar .sword").on("click",function(){
+    $('.weaponBar weapon').removeClass('choose');
     $(this).addClass('choose');
     role.weaponChoose="sword";
     
@@ -328,28 +329,20 @@ function resetCard (level){
       break;
   }
 
-  //創立boss卡
-  // creatBossCard2();
-   creatMonsterCard2(25,level);
-  // creatParnerCard2();
-  // creatWeaponCard2();
-  // creatTrapCard2();
-  // creatTreatCard2();
-
   shuffle(card_list,23);//陣列，數量洗牌
 
   addOption("back"+level+".png");//戴入卡片
 };
 
-function creatMonsterCard2(num,level){
-  for(var i=0;i<num;i++)
-  {
-      var src="c"+level+"_"+String(i+1)+".png";
-      //console.log(src);
-      var tem=new CardMonster(i+1,src,2,0,1,0,1,0,0,0,0,0,0);
-      card_list.push(tem);
-  }
-}
+// function creatMonsterCard2(num,level){
+//   for(var i=0;i<num;i++)
+//   {
+//       var src="c"+level+"_"+String(i+1)+".png";
+//       //console.log(src);
+//       var tem=new CardMonster(i+1,src,2,0,1,0,1,0,0,0,0,0,0);
+//       card_list.push(tem);
+//   }
+// }
 
 function turnControl(){
   if($('.card.used').length==25){};

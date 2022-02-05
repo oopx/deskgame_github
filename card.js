@@ -1,5 +1,6 @@
 //怪物卡片建構子
 function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,water,earth,thunder,poison,light){
+    //this.__proto__.__proto__.testtt="test";//卡片的原型鍊//實驗中
     this.id=id;
     this.src=src;
     this.gun_short=gun_short;
@@ -8,7 +9,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
     this.attack=attack;//需扣除弱點後的傷害
     this.exp=exp;
     this.order=0;//卡牌在場上順序
-    this.trap={trapOwner:role,trapAttack:0};//陷阱物件 預設trap傷害為0
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};//陷阱物件 預設trap傷害為0
     this.element={
         fire:fire,
         water:water,
@@ -66,7 +67,7 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
     this.friend_sword=friend_sword;
     this.friend_arrow=friend_arrow;
     this.order=0;
-    this.trap={trapOwner:role,trapAttack:0};
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
     this.attackEvent=function(){//點擊後執行
         role.friend_gun=role.friend_gun+this.friend_gun;
         role.friend_sword=role.friend_sword+this.friend_sword;
@@ -86,7 +87,7 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
     }
 }
 //武器卡片建構子
-function CreatWeaponCard(id,src,gun,sword,arrow){
+function CreatWeaponCard(id,src,gun,sword,arrow,type){
     this.id=id;
     this.src=src;
     this.gun=gun,
@@ -94,13 +95,13 @@ function CreatWeaponCard(id,src,gun,sword,arrow){
     this.arrow=arrow,
     this.order=0,
     this.toolAbility=function(){};//放入toolBar的時候可執行的能力
-    this.trap={trapOwner:role,trapAttack:0};
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
     this.attackEvent=function(){//點擊後執行
         //加入手牌
         if(role==role1)
-            {$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');}
+            {$('#toolList_role1').append('<img class="tool '+type+'" src="img/'+this.src+'"/>');}
         if(role==role2)
-            {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
+            {$('#toolList_role2').append('<img class="tool '+type+'" src="img/'+this.src+'"/>');}
         
         if(this.gun>role.gun){role.gun=this.gun};
         if(this.sword>role.sword){role.sword=this.sword};
@@ -116,6 +117,8 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
     this.attack=attack;
     this.order=0;
     this.trapAttack_origin=trapAttack_origin;
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
+
     //放入toolBar的時候，被點擊可執行的能力
     this.toolAbility=function(thisIcon){ 
         notActive();
@@ -123,10 +126,9 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
         $(thisIcon).remove();;//點完圖後，該圖移除        
        // let framework=thisIcon.dataset.framework;
        // role.hand[framework].setTrapAbility();//執行role的能力  
-
         
         $("section").one("click",'.canTrap',function(event){ 
-            //console.log(this.dataset.framework);
+            console.log(this);
             event.stopPropagation();//防冒泡(實驗) 
 
         //於點擊的卡上設陷阱卡
@@ -153,9 +155,9 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
         
       
     };
-    this.trap={trapOwner:role,trapAttack:0};
     
-    this.handFrame="";//陷阱於手億的位置
+    
+    //this.handFrame="";//陷阱於手億的位置
     this.attackEvent=function(){
         other.hp=other.hp-this.attack;
         if(isTrap==0)return;//若該陷阱卡無帶可設陷阱
@@ -167,12 +169,8 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
             let frame=role1.hand.indexOf(this);
             
             $('#toolList_role1').append('<img class="trapTool tool" data-framework="'+frame+'" tool" src="img/t0_4.png"/>');
-            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t0_4.png"/>');
-            
-           // role1.hand.push(this);//加入手牌
-
+            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t0_4.png"/>');           
             }
-            //{$('#toolList_role1>.trapTool').removeClass("used")}//開啟，使陷阱可使用
         if(role==role2)
             {
             role2.hand.push(this);//加入手牌, 一次兩張
@@ -183,39 +181,118 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
             $('#toolList_role2').append('<img class="trapTool tool" data-framework="'+(frame+1)+'" tool" src="img/t0_4.png"/>');
 
             }   
-            //{$('#toolList_role2>.trapTool').removeClass("used")}//開啟，使陷阱可使用
+            
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
 
     }
-    // //可移植給角色的設陷阱能力
-    // this.abilitySetTrap=function abilitySetTrap(){ 
+}
+//武器破壞者建構子
+function CreatWeaponDestroyer(id,src){
+    this.id=id;
+    this.src=src;
+    this.order=0;
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
+    //放入toolBar的時候，被點擊可執行的能力
+    this.toolAbility=function(thisIcon){ 
+        notActive();
+        $('.card').addClass("canTrap");//可加陷阱的class
+        $(thisIcon).remove();//點完圖後，該圖移除        
+        //console.log($(thisIcon)[0].alt);
+        
+        $("section").one("click",'.canTrap',function(event){ 
+        event.stopPropagation();//防冒泡(實驗) 
 
-    //     let temtrapAttack_origin =this.trapAttack_origin; //將此陷阱的傷害傳入      
-    //     $("section").one("click",'.canTrap',function(event){ 
-    //         //console.log(this.dataset.framework);
-    //         event.stopPropagation();//防冒泡(實驗)
-    
-    //         setTrap(this.dataset.framework,temtrapAttack_origin);//取得該卡的位置，原始傷害2
+        
+        let chooseTrap=$(thisIcon)[0].alt;
+        if(chooseTrap=="arrowbreak"){
+                //於點擊的卡上設陷阱卡
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap1" src="img/t1_1.png" alt="React" />');
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap2" src="img/t1_1.png" alt="React" />');//使兩面都有圖案
+
+            //使該卡片加入陷阱傷害
+            var clickCard=card_list[this.dataset.framework-1];
+            clickCard.trap.trapOwner=role.id;
+            clickCard.trap.weaponAttack="arrowbreak";//設定該卡破壞的武器種類          
             
+            $(this).removeClass("canTrap");//每個圖只能加一次
+            console.log(this);       
             
-    //         $(this).removeClass("canTrap");//每個圖只能加一次
-    //         console.log(this);
-    //         //$(this).off();// 移除On 避免之前開陷阱留下的事件
-    //         //加上陷阱
-            
-    //         let tem=($(".rest").attr("disabled"));//陷阱後，若原本已無行動，便不再恢復
-    //         if(tem!="disabled")
-    //             {canActive();}
-    //         $('.canTrap').removeClass("canTrap");//移除陷阱的class
-    //         })
-            
+            let tem=($(".rest").attr("disabled"));//陷阱後，若原本已無行動，便不再恢復
+            if(tem!="disabled")
+                {canActive();}
+            $('.canTrap').removeClass("canTrap");//移除陷阱的class  
+
+        }
+        if(chooseTrap=="gunbreak"){
+                //於點擊的卡上設陷阱卡
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap1" src="img/t1_2.png" alt="React" />');
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap2" src="img/t1_2.png" alt="React" />');//使兩面都有圖案
+            //使該卡片加入陷阱傷害
+            var clickCard=card_list[this.dataset.framework-1];
+            clickCard.trap.trapOwner=role.id;
+            clickCard.trap.weaponAttack="gunbreak";//設定該卡破壞的武器種類
+
+            $(this).removeClass("canTrap");//每個圖只能加一次
+            console.log(this);       
+            let tem=($(".rest").attr("disabled"));//陷阱後，若原本已無行動，便不再恢復
+            if(tem!="disabled")
+                {canActive();}
+            $('.canTrap').removeClass("canTrap");//移除陷阱的class
+        }
+        if(chooseTrap=="swordbreak"){
+                //於點擊的卡上設陷阱卡
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap1" src="img/t1_3.png" alt="React" />');
+            $('[data-framework='+this.dataset.framework+']').append('<img class="trap2" src="img/t1_3.png" alt="React" />');//使兩面都有圖案
+            //使該卡片加入陷阱傷害
+            var clickCard=card_list[this.dataset.framework-1];
+            clickCard.trap.trapOwner=role.id;
+            clickCard.trap.weaponAttack="swordbreak";//設定該卡破壞的武器種類       
+
+            $(this).removeClass("canTrap");//每個圖只能加一次
+            console.log(this);       
+            let tem=($(".rest").attr("disabled"));//陷阱後，若原本已無行動，便不再恢復
+            if(tem!="disabled")
+                {canActive();}
+            $('.canTrap').removeClass("canTrap");//移除陷阱的class
+        }
+        
+        })
+        
+        
       
-    // }
-    // //給ROLE設陷阱的能力
-    // this.setTrapAbility=function setTrapAbility(){
-    //     role.ability=this.abilitySetTrap();
-    // }
+    };
+   
+    
+    //this.handFrame="";//陷阱於手億的位置
+    this.attackEvent=function(){
+        if(role==role1)
+            {//一次加三張
+            role1.hand.push(this);//加入手牌
+            role1.hand.push(this);//加入手牌
+            role1.hand.push(this);//加入手牌
+            let frame=role1.hand.indexOf(this);
+            
+            $('#toolList_role1').append('<img class="trapTool tool" data-framework="'+frame+'" tool" src="img/t1_1.png" alt="arrowbreak" />');
+            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t1_2.png" alt="gunbreak" />');           
+            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+2)+'" tool" src="img/t1_3.png" alt="swordbreak" />'); 
+            }
+        if(role==role2)
+            {
+            role2.hand.push(this);//加入手牌, 一次3張
+            role2.hand.push(this);//加入手牌
+            role2.hand.push(this);//加入手牌
+            let frame=role2.hand.indexOf(this);
+
+            $('#toolList_role1').append('<img class="trapTool tool" data-framework="'+frame+'" tool" src="img/t1_1.png" alt="arrowbreak" />');
+            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t1_2.png" alt="gunbreak" />');           
+            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+2)+'" tool" src="img/t1_3.png" alt="swordbreak" />');
+            } 
+            
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+
+    }
 }
 //建立治療卡
 function CreatTreatCard(id,src,treat,restUp){
@@ -224,7 +301,7 @@ function CreatTreatCard(id,src,treat,restUp){
     this.treat=treat;
     this.restUp=restUp;
     this.order=0;
-    this.trap={trapOwner:role,trapAttack:0};
+    this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
     this.attackEvent=function(){
         role.restUp=role.restUp+this.restUp;
         role.hp=role.hp+this.treat;
@@ -319,124 +396,115 @@ var role2= new Vue({
     
 })
 
-//建立卡牌
-// function creatMonsterCard(num){
-//     for(var i=0;i<num;i++)
-//     {
-//         var src="c1_"+String(i+1)+".png";
-//         console.log(src);
-//         var tem=new CardMonster(i+1,src,1,1,1,1,1,0,0,0,0,0,1);
-//         card_list.push(tem);
-//     }
-//   }
 /////////////////////////////////////////////////////level 1
 //建立小怪
 function creatMonsterCard1(){
-    var tem=new CardMonster(1,"c1_1.png",2,0,1,0,1,0,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(2,"c1_2.png",1,2,0,0,1,0,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(3,"c1_3.png",1,2,0,0,1,0,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(4,"c1_4.png",0,1,2,1,1,0,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(5,"c1_5.png",1,2,0,2,1,0,0,0,0,0,0       );card_list.push(tem);
-    var tem=new CardMonster(6,"c1_6.png",0,1,2,2,1,0,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(7,"c1_7.png",0,2,1,0,0,1,0,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(8,"c1_8.png",1,2,0,0,0,0,1,0,0,0,0        );card_list.push(tem);
-    var tem=new CardMonster(9,"c1_9.png",2,0,1,0,0,0,0,0,1,0,0        );card_list.push(tem);
-    var tem=new CardMonster(10,"c1_10.png",0,1,2,0,0,0,0,0,0,1,0        );card_list.push(tem);
-    var tem=new CardMonster(11,"c1_11.png",2,1,0,0,0,0,0,0,0,0,1        );card_list.push(tem);
-    var tem=new CardMonster(12,"c1_12.png",1,0,2,0,0,0,0,1,0,0,0        );card_list.push(tem);
+    var tem=new CardMonster(1,"c1_1.png",2,0,1,0,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(2,"c1_2.png",1,2,0,0,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(3,"c1_3.png",1,2,0,0,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(4,"c1_4.png",0,1,2,1,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(5,"c1_5.png",1,2,0,2,1,0,0,0,0,0,0       );card_list1.push(tem);
+    var tem=new CardMonster(6,"c1_6.png",0,1,2,2,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(7,"c1_7.png",0,2,1,0,0,1,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(8,"c1_8.png",1,2,0,0,0,0,1,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(9,"c1_9.png",2,0,1,0,0,0,0,0,1,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(10,"c1_10.png",0,1,2,0,0,0,0,0,0,1,0        );card_list1.push(tem);
+    var tem=new CardMonster(11,"c1_11.png",2,1,0,0,0,0,0,0,0,0,1        );card_list1.push(tem);
+    var tem=new CardMonster(12,"c1_12.png",1,0,2,0,0,0,0,1,0,0,0        );card_list1.push(tem);
        
 }
 //建立Boss卡牌
 function creatBossCard1(){
     var tem=new CardMonster(25,"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list.push(tem);
+    card_list1.push(tem);
 }
 //建立夥伴
 
 function creatParnerCard1(){
-    var tem=new CreatParnerCard(13,"c1_13.png",0,0,1);card_list.push(tem);
-    var tem=new CreatParnerCard(14,"c1_14.png",0,0,1);card_list.push(tem);
-    var tem=new CreatParnerCard(15,"c1_15.png",0,1,0);card_list.push(tem);
-    var tem=new CreatParnerCard(16,"c1_16.png",0,1,0);card_list.push(tem);
-    var tem=new CreatParnerCard(17,"c1_17.png",1,0,0);card_list.push(tem);
-    var tem=new CreatParnerCard(18,"c1_18.png",1,0,0);card_list.push(tem);
+    var tem=new CreatParnerCard(13,"c1_13.png",0,0,1);card_list1.push(tem);
+    var tem=new CreatParnerCard(14,"c1_14.png",0,0,1);card_list1.push(tem);
+    var tem=new CreatParnerCard(15,"c1_15.png",0,1,0);card_list1.push(tem);
+    var tem=new CreatParnerCard(16,"c1_16.png",0,1,0);card_list1.push(tem);
+    var tem=new CreatParnerCard(17,"c1_17.png",1,0,0);card_list1.push(tem);
+    var tem=new CreatParnerCard(18,"c1_18.png",1,0,0);card_list1.push(tem);
    
 } 
 //建立武器
 function creatWeaponCard1(){
-    var tem=new CreatWeaponCard(19,"c1_19.png",0,0,1);card_list.push(tem);
-    var tem=new CreatWeaponCard(20,"c1_20.png",1,0,0);card_list.push(tem);
-    var tem=new CreatWeaponCard(21,"c1_21.png",0,1,0);card_list.push(tem);
+    var tem=new CreatWeaponCard("c1_19","c1_19.png",0,0,1,"arrow");card_list1.push(tem);
+    var tem=new CreatWeaponCard("c1_20","c1_20.png",1,0,0,"gun");card_list1.push(tem);
+    var tem=new CreatWeaponCard("c1_21","c1_21.png",0,1,0,"sword");card_list1.push(tem);
    
 }
 //陷阱卡建構子
 function creatTrapCard1(){
-    var tem=new CreatTrapCard(22,"c1_22.png",2,0);card_list.push(tem);
-    var tem=new CreatTrapCard(23,"c1_23.png",0,2,5);card_list.push(tem);
+    var tem=new CreatTrapCard(22,"c1_22.png",2,0);card_list1.push(tem);
+    var tem=new CreatTrapCard(23,"c1_23.png",0,2,5);card_list1.push(tem);
 }
 ////建立治療卡
 function creatTreatCard1(){
-    var tem=new CreatTreatCard(24,"c1_24.png",1,1);card_list.push(tem);
+    var tem=new CreatTreatCard(24,"c1_24.png",1,1);card_list1.push(tem);
 }
 
 /////////////////////////////////////////////////////level 2
 //建立小怪
 function creatMonsterCard2(){
-    var tem=new CardMonster(1,'c2_1.png',0,1,2,6,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(2,'c2_2.png',2,0,1,6,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(3,'c2_3.png',1,2,0,8,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(4,'c2_4.png',0,1,2,8,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(5,'c2_5.png',1,2,0,10,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(6,'c2_6.png',2,0,1,10,1,0,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(7,'c2_7.png',0,2,1,6,0,1,0,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(8,'c2_8.png',1,2,0,6,0,0,1,0,0,0,0);card_list.push(tem);
-    var tem=new CardMonster(9,'c2_9.png',2,0,1,6,0,0,0,0,1,0,0);card_list.push(tem);
-    var tem=new CardMonster(10,'c2_10.png',0,1,2,6,0,0,0,0,0,1,0);card_list.push(tem);
-    var tem=new CardMonster(11,'c2_11.png',2,1,0,6,0,0,0,0,0,0,1);card_list.push(tem);
-    var tem=new CardMonster(12,'c2_12.png',1,0,2,6,0,0,0,1,0,0,0);card_list.push(tem);
+    var tem=new CardMonster(1,'c2_1.png',0,1,2,6,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(2,'c2_2.png',2,0,1,6,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(3,'c2_3.png',1,2,0,8,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(4,'c2_4.png',0,1,2,8,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(5,'c2_5.png',1,2,0,10,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(6,'c2_6.png',2,0,1,10,1,0,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(7,'c2_7.png',0,2,1,6,0,1,0,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(8,'c2_8.png',1,2,0,6,0,0,1,0,0,0,0);card_list2.push(tem);
+    var tem=new CardMonster(9,'c2_9.png',2,0,1,6,0,0,0,0,1,0,0);card_list2.push(tem);
+    var tem=new CardMonster(10,'c2_10.png',0,1,2,6,0,0,0,0,0,1,0);card_list2.push(tem);
+    var tem=new CardMonster(11,'c2_11.png',2,1,0,6,0,0,0,0,0,0,1);card_list2.push(tem);
+    var tem=new CardMonster(12,'c2_12.png',1,0,2,6,0,0,0,1,0,0,0);card_list2.push(tem);
 }
 
 
 //建立Boss卡牌
 function creatBossCard2(){
+    var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    card_list2.push(tem);
+    var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    card_list2.push(tem);
     
 }
+
 //建立夥伴
 function creatParnerCard2(){
-    var tem=new CreatParnerCard(13,'c2_13.png',0,0,2);card_list.push(tem);
-    var tem=new CreatParnerCard(14,'c2_14.png',0,2,0);card_list.push(tem);
-    var tem=new CreatParnerCard(15,'c2_15.png',2,0,0);card_list.push(tem);
+    var tem=new CreatParnerCard(13,'c2_13.png',0,0,2);card_list2.push(tem);
+    var tem=new CreatParnerCard(14,'c2_14.png',0,2,0);card_list2.push(tem);
+    var tem=new CreatParnerCard(15,'c2_15.png',2,0,0);card_list2.push(tem);
     
 }
 //建立武器
 function creatWeaponCard2(){
-    var tem=new CreatWeaponCard(16,'c2_16.png',1,1,1);card_list.push(tem);//三重
-    var tem=new CreatWeaponCard(17,'c2_17.png',0,0,0);//HP-2
+    var tem=new CreatWeaponCard("c2_16",'c2_16.png',1,1,1,"gun arrow sword");card_list2.push(tem);//三重
+    var tem=new CreatWeaponCard("c2_17",'c2_17.png',0,0,0,"");//HP-2
     tem.toolAbility=function(){
         role.weaponChoose='wraichWand';
     }    
-        card_list.push(tem);
-    
-            
-            
+        card_list2.push(tem);
 
-    
 }
 //陷阱卡建構子
 function creatTrapCard2(){
-    var tem=new CreatTrapCard(18,'c2_18.png',3,0);card_list.push(tem);
-    var tem=new CreatTrapCard(19,'c2_19.png',3,0);card_list.push(tem);
-    var tem=new CreatTrapCard(20,'c2_20.png',0,3);card_list.push(tem);
-    var tem=new CreatTrapCard(21,'c2_21.png',0,0);//武器破壞  
-    
-    tem.toolAbility={}
-    card_list.push(tem); 
+    var tem=new CreatTrapCard(18,'c2_18.png',3,0);card_list2.push(tem);
+    var tem=new CreatTrapCard(19,'c2_19.png',3,0);card_list2.push(tem);
+    var tem=new CreatTrapCard(20,'c2_20.png',0,3);card_list2.push(tem);
+    //武器破壞 
+    var tem=new CreatWeaponDestroyer(21,'c2_21.png');card_list2.push(tem); 
 }
 ////建立治療卡
 function creatTreatCard2(){
-    var tem=new CreatTreatCard(22,'c2_22.png',3,1);card_list.push(tem);
-    var tem=new CreatTreatCard(23,'c2_23.png',3,1);card_list.push(tem);
+    var tem=new CreatTreatCard(22,'c2_22.png',3,1);card_list2.push(tem);
+    var tem=new CreatTreatCard(23,'c2_23.png',3,1);card_list2.push(tem);
 }
 /////////////////////////////////////////////////////level 3
 //建立小怪
