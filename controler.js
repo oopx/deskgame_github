@@ -49,8 +49,8 @@ $(document).ready(function(){
       //確定當前點卡是要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
         $(".attack").on("click",function(){
             doWhat=1;
-          $("button").removeClass('doWhat');
-          $(this).addClass('doWhat')
+            $("button").removeClass('doWhat');
+            $(this).addClass('doWhat')
         })
         $(".rest").on("click",function(){
             doWhat=2;
@@ -145,7 +145,7 @@ $(document).ready(function(){
            
             
     //    if(this.trap.trapOwner!=role){
-            let weaponType="gun";
+            let weaponType=this.trap.weaponAttack;//抓取該卡的破壞𡋟果
             let num=$('#toolBar .'+weaponType).length;
             if (num==0){
                 $(".tool").removeClass("canNotUsed" );// 移除黑白
@@ -159,23 +159,19 @@ $(document).ready(function(){
 
             //判斷哪種武器要被銷毀
             
-            //switch(this.trap.weaponAttack){// 將要改變的取消黑白
-            switch("gunbreak"){// 將要改變的取消黑白
-                case "arrowbreak":
+            switch(weaponType){// 將要改變的取消黑白
+            //switch("gunbreak"){// 將要改變的取消黑白
+                case "arrow":
                     $(".arrow").removeClass("canNotUsed" );
                     $(".arrow").addClass("canDestroy" );
-                    weaponType="arrow";
-
                     break;
-                case "gunbreak":
+                case "gun":
                     $(".gun").removeClass("canNotUsed" );
                     $(".gun").addClass("canDestroy" );
-                    weaponType="gun";
                     break;
-                case "swordbreak":
+                case "sword":
                     $(".sword").removeClass("canNotUsed" );
                     $(".sword").addClass("canDestroy" );
-                    weaponType="sword";
                     break;
             }
                                

@@ -41,6 +41,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         }
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
+        if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
         //攻擊血量計算
         role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
         //經驗值計算
@@ -213,7 +214,7 @@ function CreatWeaponDestroyer(id,src){
             //使該卡片加入陷阱傷害
             var clickCard=card_list[this.dataset.framework-1];
             clickCard.trap.trapOwner=role.id;
-            clickCard.trap.weaponAttack="arrowbreak";//設定該卡破壞的武器種類          
+            clickCard.trap.weaponAttack="arrow";//設定該卡破壞的武器種類          
             
             $(this).removeClass("canTrap");//每個圖只能加一次
             console.log(this);       
@@ -231,7 +232,7 @@ function CreatWeaponDestroyer(id,src){
             //使該卡片加入陷阱傷害
             var clickCard=card_list[this.dataset.framework-1];
             clickCard.trap.trapOwner=role.id;
-            clickCard.trap.weaponAttack="gunbreak";//設定該卡破壞的武器種類
+            clickCard.trap.weaponAttack="gun";//設定該卡破壞的武器種類
 
             $(this).removeClass("canTrap");//每個圖只能加一次
             console.log(this);       
@@ -247,7 +248,7 @@ function CreatWeaponDestroyer(id,src){
             //使該卡片加入陷阱傷害
             var clickCard=card_list[this.dataset.framework-1];
             clickCard.trap.trapOwner=role.id;
-            clickCard.trap.weaponAttack="swordbreak";//設定該卡破壞的武器種類       
+            clickCard.trap.weaponAttack="sword";//設定該卡破壞的武器種類       
 
             $(this).removeClass("canTrap");//每個圖只能加一次
             console.log(this);       
@@ -284,9 +285,9 @@ function CreatWeaponDestroyer(id,src){
             role2.hand.push(this);//加入手牌
             let frame=role2.hand.indexOf(this);
 
-            $('#toolList_role1').append('<img class="trapTool tool" data-framework="'+frame+'" tool" src="img/t1_1.png" alt="arrowbreak" />');
-            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t1_2.png" alt="gunbreak" />');           
-            $('#toolList_role1').append('<img class="trapTool tool " data-framework="'+(frame+2)+'" tool" src="img/t1_3.png" alt="swordbreak" />');
+            $('#toolList_role2').append('<img class="trapTool tool" data-framework="'+frame+'" tool" src="img/t1_1.png" alt="arrowbreak" />');
+            $('#toolList_role2').append('<img class="trapTool tool " data-framework="'+(frame+1)+'" tool" src="img/t1_2.png" alt="gunbreak" />');           
+            $('#toolList_role2').append('<img class="trapTool tool " data-framework="'+(frame+2)+'" tool" src="img/t1_3.png" alt="swordbreak" />');
             } 
             
         //陷阱傷害計算
@@ -315,7 +316,7 @@ function CreatTreatCard(id,src,treat,restUp){
 var role1= new Vue({
     el: '#role1 ',
     data:{
-        id:1,
+        id:'role1',
         hp:8,
         exp:0,
         //attack:0;
@@ -353,12 +354,11 @@ var role1= new Vue({
         }   
     
 })
-
 //創立 VUE 角色物件
 var role2= new Vue({
     el: '#role2 ',
     data:{
-        id:2,
+        id:'role2',
         hp:9,
         exp:0,
         //attack:0;

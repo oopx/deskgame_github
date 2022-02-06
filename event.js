@@ -361,3 +361,51 @@ function setTrap (framework,trapAttack_origin){
   clickCard.trap.trapAttack=trapAttack_origin;//設定該卡的自帶陷阱傷害
 
 }
+
+//觸發的武器破壞陷阱
+function setWeaponDestroy(weaponAttack){
+           
+            
+  //    if(this.trap.trapOwner!=role){
+          let weaponType=weaponAttack;//抓取該卡的破壞𡋟果
+          let num=$('#toolList_'+role.id+' .'+weaponType).length;
+          if (num==0){
+              $(".tool").removeClass("canNotUsed" );// 移除黑白
+              return;  };//如果完全沒有武器就反回 
+          
+          //打開role 的toolbar
+          $('#toolButton').hide();//隱藏div 
+          
+          $("#toolBar").show();
+          $("#toolList_role1 .tool,#toolList_role2 .tool").addClass("canNotUsed" );
+
+          //判斷哪種武器要被銷毀
+          
+          switch(weaponType){// 將要改變的取消黑白
+          //switch("gunbreak"){// 將要改變的取消黑白
+              case "arrow":
+                  $(".arrow").removeClass("canNotUsed" );
+                  $(".arrow").addClass("canDestroy" );
+                  break;
+              case "gun":
+                  $(".gun").removeClass("canNotUsed" );
+                  $(".gun").addClass("canDestroy" );
+                  break;
+              case "sword":
+                  $(".sword").removeClass("canNotUsed" );
+                  $(".sword").addClass("canDestroy" );
+                  break;
+          }
+                             
+          //顯示可棄的武器//點擊後消失武器及toolbar          
+          $('.canDestroy').one("click",function(){
+              this.remove();
+              $(".tool").removeClass("canNotUsed" );// 移除黑白
+              $(".tool").removeClass("canDestroy" );// 移除黑白
+              $('#toolButton').show();//SHOW div 
+              $("#toolBar").hide();
+          })
+      // }
+            
+      
+  }
