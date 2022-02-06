@@ -131,7 +131,7 @@ $(document).ready(function(){
         //每點完一張卡，即偵測是否可得魔法
         elementControl();
         //每點完一張卡，即偵測是否死亡
-        if(role1.hp<=0 || role2.hp<=0)
+        if(role1.hp<=0 || role2.hp<=0 || Math.abs(role1.exp-role2.exp)>=4 )
         {   $("#endBoard").show();
             //alert("s");
             
@@ -165,6 +165,7 @@ $(document).ready(function(){
 
     //換回合
     $('.turn').click( function(){othersTurn();}); 
+    $(document).keyup(function(event){ if(event.keyCode==32){ othersTurn(); }}); 
 
     function elementControl(){
         //元素效果偵測
@@ -193,7 +194,7 @@ $(document).ready(function(){
         if(role.water2==1&&role.elementGet.water==1){
             $(toolBarOwner).append('<img class="tool" src="img/m108.png"/>');
             role.exp=role.exp+1;
-            role.elementGet.fire=0;//元素歸零
+            role.elementGet.water=0;//元素歸零
         };
     
         if(role.elementGet.thunder==2){
@@ -211,7 +212,7 @@ $(document).ready(function(){
             other.monsterBuff=other.monsterBuff+3;
             $(toolBarOwner).append('<img class="tool" src="img/m10.png"/>');
             role.elementGet.poison=0;//元素歸零
-            role.poison2=1;//得到慣毒二階魔法
+            role.poison2=1;//得到毒二階魔法
         };
         if(role.poison2==1&&role.elementGet.poison==1){
             $(toolBarOwner).append('<img class="tool" src="img/m110.png"/>');
@@ -222,7 +223,7 @@ $(document).ready(function(){
             role.exp=role.exp+2;
             $(toolBarOwner).append('<img class="tool" src="img/m11.png"/>');
             role.elementGet.light=0;//元素歸零
-            role.light2=1;//得到慣毒二階魔法
+            role.light2=1;//得到光二階魔法
         };
         if(role.light2==1&&role.elementGet.light==1){
             $(toolBarOwner).append('<img class="tool" src="img/m111.png"/>');
