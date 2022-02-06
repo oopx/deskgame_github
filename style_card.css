@@ -1,10 +1,24 @@
 
+#endBoard{
+  /* display: none; */
+  text-align:center;
+  color: #fae9e9; ;
+  position:fixed;
+  float:bottom;
+  height:100%;
+  width: 100%;
+  bottom: 0px; 
+  font-size: 300px;
+  background-color: rgba(0, 0, 0, 0.705);     
+  z-index: 100;   
+}
 #role1,#role2{
   position:fixed;
   height:100%;
   
   color: rgb(49, 49, 49);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size:larger;
   width: 16%;
 }
 #toolBar{
@@ -113,7 +127,7 @@ button.doWhat{
 
 
 .tool{
-  height: calc(20% );
+  height: calc(30% );
   
 }
 #toolList_role1:hover img,#toolList_role2:hover img{ 

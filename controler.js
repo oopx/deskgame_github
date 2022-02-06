@@ -35,6 +35,7 @@ $(document).ready(function(){
         console.log(card_list1);
         console.log(card_list2);
         console.log(card_list3);
+        $("#endBoard").hide();//將完結隱藏
       
         //shuffle(card_list,24);//陣列，數量洗牌
         othersTurn();//換人
@@ -127,8 +128,14 @@ $(document).ready(function(){
             level++;
             resetCard(level);
           }
-          //每點完一張卡，即偵測是否可得魔法
-          elementControl();
+        //每點完一張卡，即偵測是否可得魔法
+        elementControl();
+        //每點完一張卡，即偵測是否死亡
+        if(role1.hp<=0 || role2.hp<=0)
+        {   $("#endBoard").show();
+            //alert("s");
+            
+        }
 
         });
 
@@ -142,7 +149,7 @@ $(document).ready(function(){
         event.stopPropagation();
 
         $("#toolBar").one("click",function(){
-            console.log("this bar")
+            console.log("this bar");
             $("#toolBar").hide();
             $("#toolButton").removeClass("click"); //點空白處可收合，實驗      
         })
