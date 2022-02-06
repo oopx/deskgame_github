@@ -171,9 +171,17 @@ function addOption(back){
       var j=card_list.indexOf(element)+1;//計算該項目次序 
        
       element.order=j;//設定每張的位置
+
+      let cardId=['boss1','boss2','boss3','boss4','boss5','boss6'];
+      if (cardId.includes(element.id)){
+        console.log("find");
+        $('[data-framework="'+j+'"]').append('<img class="front-face" src="img/'+element.src+'"/>');
+        $('[data-framework="'+j+'"]').append('<img class="back-face" src="img/backboss.png" alt="back"/>');// 動態新增卡牌
+        return;
+      };
     
     
-      $('[data-framework="'+j+'"]').append('<img class="front-face" src="img/'+element.src+'"alt="React"/>');
+      $('[data-framework="'+j+'"]').append('<img class="front-face" src="img/'+element.src+'"/>');
       
       $('[data-framework="'+j+'"]').append('<img class="back-face" src="img/'+back+'" alt="back"/>');// 動態新增卡牌
       
@@ -313,7 +321,29 @@ function creatOwnCard()
 
 
 function resetCard (level){
-  $(".card").empty();//清空卡牌DIV
+  
+  $(".card").removeClass('used');
+  $(".card").removeClass('flip');
+  $(".card").removeClass('unactive');
+  $(".card").empty();//清空卡牌DIV的圖
+
+  setActive();//初始化下五張為active
+
+  //偶數牌及底五張設為flip
+  for(i=0;i<=20;i=i+2){
+    var tem='[data-framework="'+String(i)+'"]';
+    if(tem<0){return};//不能用break 會跳出整個ready函式
+    $(tem).addClass('flip');
+  }
+  $('[data-framework="21"]').addClass('flip');
+  $('[data-framework="22"]').addClass('flip');
+  $('[data-framework="23"]').addClass('flip');
+  $('[data-framework="24"]').addClass('flip');
+  $('[data-framework="25"]').addClass('flip');
+
+  setTimeout('', 5000);//等待3秒，以確定卡片翻牌完成 
+
+
   card_list=[];//清空陣列
 //依等級放入
   switch (level){
@@ -329,7 +359,7 @@ function resetCard (level){
       break;
   }
 
-  shuffle(card_list,23);//陣列，數量洗牌
+  shuffle(card_list,24);//陣列，數量洗牌
 
   addOption("back"+level+".png");//戴入卡片
 };
@@ -368,6 +398,10 @@ function setWeaponDestroy(weaponAttack){
             
   //    if(this.trap.trapOwner!=role){
           let weaponType=weaponAttack;//抓取該卡的破壞𡋟果
+          //誰的武器庫
+          //console.log(weaponType);
+          if(weaponAttack==""){return;}//不帶陷阱就退出
+          //console.log(whosweaponType);
           let num=$('#toolList_'+role.id+' .'+weaponType).length;
           if (num==0){
               $(".tool").removeClass("canNotUsed" );// 移除黑白

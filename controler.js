@@ -3,28 +3,38 @@ $(document).ready(function(){
      //初始化
 
         role=role2; 
-        //creatMonsterCard(24);//創立牌組
-        
-        creatBossCard1();//創立boss卡
+        //creatMonsterCard(24);
+        //創立牌組
+        //creatBossCard1();//創立boss卡
         creatMonsterCard1();
         creatParnerCard1();
         creatWeaponCard1();
         creatTrapCard1();
         creatTreatCard1();
 
-        creatBossCard2();//創立boss卡
+        
+
+        //creatBossCard2();//創立boss卡
         creatMonsterCard2();
         creatParnerCard2();
         creatWeaponCard2();
         creatTrapCard2();
         creatTreatCard2();
-
-        creatBossCard3();//創立boss卡
+      
+        //creatBossCard3();//創立boss卡
         creatMonsterCard3();
         //creatParnerCard3();
         creatWeaponCard3();
         creatTrapCard3();
         creatTreatCard3();
+
+        
+
+        creatBossCard()//加入魔王卡
+
+        console.log(card_list1);
+        console.log(card_list2);
+        console.log(card_list3);
 
 
         console.log(card_list);
@@ -33,7 +43,7 @@ $(document).ready(function(){
         //shuffle(card_list,24);//陣列，數量洗牌
         othersTurn();//換人
         resetCard(level);//設置該回合卡片
-        setActive();//初始化下五張為active
+        //setActive();//初始化下五張為active
         weaponChooseSys();//武器監聽系統
       
         doWhat=1;//預設行動為攻擊
@@ -126,7 +136,8 @@ $(document).ready(function(){
         if(check==false)$(this).addClass("click");
         event.stopPropagation();
 
-        $("div").one("click",function(){
+        $("#toolBar").one("click",function(){
+            console.log("this bar")
             $("#toolBar").hide();
             $("#toolButton").removeClass("click"); //點空白處可收合，實驗      
         })
@@ -134,7 +145,7 @@ $(document).ready(function(){
     })
     
     //抓取toolBar的元件，並自動連結到擁有者的手牌能力，未完成
-    $("#toolBar").on("click",".tool",function(){
+    $("#toolBar").on("click",".trapTool",function(){
         let framework=this.dataset.framework;
         role.hand[framework].toolAbility(this);
     })

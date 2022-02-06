@@ -82,6 +82,7 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
             {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+        if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
 
 
         
@@ -109,6 +110,7 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
         if(this.arrow>role.arrow){role.arrow=this.arrow};       //換上最強的武器
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+        if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
     }
 }
 //陷阱卡建構子
@@ -185,6 +187,7 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
             
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+        if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
 
     }
 }
@@ -194,6 +197,10 @@ function CreatWeaponDestroyer(id,src){
     this.src=src;
     this.order=0;
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
+    //陷阱傷害計算
+    if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+    if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
+
     //放入toolBar的時候，被點擊可執行的能力
     this.toolAbility=function(thisIcon){ 
         notActive();
@@ -262,6 +269,7 @@ function CreatWeaponDestroyer(id,src){
         
         
       
+    
     };
    
     
@@ -308,6 +316,8 @@ function CreatTreatCard(id,src,treat,restUp){
         role.hp=role.hp+this.treat;
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
+        if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
+
     
     }
 }
@@ -396,6 +406,52 @@ var role2= new Vue({
     
 })
 
+//////////////////////////////////////////建立Boss卡牌
+function creatBossCard(){
+    let bossCard=[];
+    var tem=new CardMonster('boss1',"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);
+    
+    var tem=new CardMonster("boss2","boss2.png",1,1,1,4,1,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);
+    
+    var tem=new CardMonster("boss3","boss3.png",0,0,0,6,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);
+    
+    var tem=new CardMonster("boss4","boss4.png",0,0,0,3,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);
+    
+    var tem=new CardMonster("boss5","boss5.png",3,2,0,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);
+    
+    var tem=new CardMonster("boss6","boss6.png",2,0,3,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    bossCard.push(tem);   
+    
+    //洗牌
+    let tmp ;
+    let t = 0;
+    for (let i = 0; i < bossCard.length; i++) {
+        t = Math.floor((Math.random() * 5) + 1);
+        tmp = bossCard[i];
+        bossCard[i] = bossCard[t];
+        bossCard[t] = tmp;
+    }       
+    //放回卡包組
+    card_list1.push(bossCard[0]);
+    card_list2.push(bossCard[1]);
+    card_list2.push(bossCard[2]);
+    card_list3.push(bossCard[3]);
+    card_list3.push(bossCard[4]);
+    card_list3.push(bossCard[5]);
+    console.log(bossCard);
+}
+
 /////////////////////////////////////////////////////level 1
 //建立小怪
 function creatMonsterCard1(){
@@ -414,11 +470,11 @@ function creatMonsterCard1(){
        
 }
 //建立Boss卡牌
-function creatBossCard1(){
-    var tem=new CardMonster(25,"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list1.push(tem);
-}
+// function creatBossCard1(){
+//     var tem=new CardMonster(25,"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
+//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+//     card_list1.push(tem);
+// }
 //建立夥伴
 
 function creatParnerCard1(){
@@ -465,16 +521,7 @@ function creatMonsterCard2(){
 }
 
 
-//建立Boss卡牌
-function creatBossCard2(){
-    var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list2.push(tem);
-    var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list2.push(tem);
-    
-}
+
 
 //建立夥伴
 function creatParnerCard2(){
@@ -524,17 +571,18 @@ function creatMonsterCard3(){
     
 }
 //建立Boss卡牌
-function creatBossCard3(){
-    var tem=new CardMonster(23,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list3.push(tem);
-    var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list3.push(tem);
-    var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-    card_list3.push(tem);    
-}
+// function creatBossCard3(){
+//     var tem=new CardMonster(23,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+//     card_list3.push(tem);
+//     var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+//     card_list3.push(tem);
+//     var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+//     card_list3.push(tem);    
+// }
+
 //建立武器伴
 function creatWeaponCard3(){
     var tem=new CreatWeaponCard('c3_13','c3_13.png',0,0,4,'arrow');card_list3.push(tem);
@@ -557,3 +605,18 @@ function creatTreatCard3(){
     var tem=new CreatTreatCard(22,'c3_22.png',5,1);card_list3.push(tem);    
 } 
 
+// function shuffle(poker,x){ 
+//     let tmp ;
+//     let t = 0;
+//     for (let i = 0; i < poker.length; i++) {
+//         t = Math.floor((Math.random() * x) + 1);
+//         tmp = poker[i];
+//         poker[i] = poker[t];
+//         poker[t] = tmp;
+//     }       
+//     bossCard=poker;//將陣列回傳定為原本的陣列
+
+
+
+
+// };

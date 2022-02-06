@@ -87,8 +87,9 @@ button.doWhat{
 
 }
 .canNotUsed{
-  filter:opacity(.2);
-  filter:grayscale(1);
+  /* filter:opacity(.2);
+  filter:grayscale(1); */
+  visibility:hidden;
 }
 
 
@@ -115,9 +116,9 @@ button.doWhat{
   height: calc(20% );
   
 }
-#toolList_role1:hover img,#toolList_role2:hover img{ 
+/* #toolList_role1:hover img,#toolList_role2:hover img{ 
   transform: scale(2,2); 
-}
+} */
 
 .choose{
   filter:grayscale(0);
@@ -125,10 +126,11 @@ button.doWhat{
 }
 
 /* 放大 */
-.card:hover img{ 
+/* .card:hover { 
   transform: scale(-2,2); 
+} */
   /* -2的原因是他是背景會反轉 */
   /* transform: scaleX(-2);  */
   
   
-}
+
