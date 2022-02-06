@@ -19,6 +19,14 @@ $(document).ready(function(){
         creatTrapCard2();
         creatTreatCard2();
 
+        creatBossCard3();//創立boss卡
+        creatMonsterCard3();
+        //creatParnerCard3();
+        creatWeaponCard3();
+        creatTrapCard3();
+        creatTreatCard3();
+
+
         console.log(card_list);
         console.log(card_list2);
       

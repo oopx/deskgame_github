@@ -509,26 +509,51 @@ function creatTreatCard2(){
 /////////////////////////////////////////////////////level 3
 //建立小怪
 function creatMonsterCard3(){
+    var tem=new CardMonster(1,'c3_1.png',0,1,2,9,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(2,'c3_2.png',1,2,0,9,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(3,'c3_3.png',1,2,0,12,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(4,'c3_4.png',2,0,1,12,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(5,'c3_5.png',2,0,1,15,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(6,'c3_6.png',0,1,2,15,1,0,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(7,'c3_7.png',0,2,1,9,0,1,0,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(8,'c3_8.png',1,2,0,9,0,0,1,0,0,0,0);card_list3.push(tem);
+    var tem=new CardMonster(9,'c3_9.png',2,0,1,9,0,0,0,0,1,0,0);card_list3.push(tem);
+    var tem=new CardMonster(10,'c3_10.png',0,1,2,9,0,0,0,0,0,1,0);card_list3.push(tem);
+    var tem=new CardMonster(11,'c3_11.png',2,1,0,9,0,0,0,0,0,0,1);card_list3.push(tem);
+    var tem=new CardMonster(12,'c3_12.png',1,0,2,9,0,0,0,1,0,0,0);card_list3.push(tem);
     
 }
 //建立Boss卡牌
 function creatBossCard3(){
-    
+    var tem=new CardMonster(23,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    card_list3.push(tem);
+    var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    card_list3.push(tem);
+    var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
+    tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
+    card_list3.push(tem);    
 }
-//建立夥伴
-function creatParnerCard3(){
-    
-}
-//建立武器
+//建立武器伴
 function creatWeaponCard3(){
-    
+    var tem=new CreatWeaponCard('c3_13','c3_13.png',0,0,4,'arrow');card_list3.push(tem);
+    var tem=new CreatWeaponCard("c3_14",'c3_14.png',4,0,0,"gun");card_list3.push(tem);
+    var tem=new CreatWeaponCard("c3_15",'c3_15.png',0,4,0,"sword");card_list3.push(tem);
+
 }
 //陷阱卡建構子
 function creatTrapCard3(){
-    
+    var tem=new CreatTrapCard(16,'c3_16.png',0,4);card_list3.push(tem);
+    var tem=new CreatTrapCard(17,'c3_17.png',0,4);card_list3.push(tem);
+    var tem=new CreatTrapCard(18,'c3_18.png',4,0);card_list3.push(tem);
+    var tem=new CreatTrapCard(19,'c3_19.png',4,0);card_list3.push(tem);
+    //武器破壞 
+    var tem=new CreatWeaponDestroyer(20,'c3_20.png');card_list3.push(tem);  
 }
 ////建立治療卡
 function creatTreatCard3(){
-    
+    var tem=new CreatTreatCard(21,'c3_21.png',5,1);card_list3.push(tem);
+    var tem=new CreatTreatCard(22,'c3_22.png',5,1);card_list3.push(tem);    
 } 
 
