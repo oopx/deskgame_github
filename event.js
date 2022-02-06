@@ -364,18 +364,12 @@ function resetCard (level){
   addOption("back"+level+".png");//戴入卡片
 };
 
-// function creatMonsterCard2(num,level){
-//   for(var i=0;i<num;i++)
-//   {
-//       var src="c"+level+"_"+String(i+1)+".png";
-//       //console.log(src);
-//       var tem=new CardMonster(i+1,src,2,0,1,0,1,0,0,0,0,0,0);
-//       card_list.push(tem);
-//   }
-// }
-
+//確定卡牌還沒翻完或到最後一回合
 function turnControl(){
-  if($('.card.used').length==25){};
+  if($('.card.used').length==25&&level!=3){
+    level++;
+    resetCard(level);
+  };
 }
 //使手牌全開
 function f(){
