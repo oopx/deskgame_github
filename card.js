@@ -6,9 +6,8 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
     this.gun_short=gun_short;
     this.sword_short=sword_short;
     this.arrow_short=arrow_short;
-    this.attack=attack;//需扣除弱點後的傷害
+    this.attack=attack;
     this.exp=exp;
-    this.monsterBuff=0;
     this.order=0;//卡牌在場上順序
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};//陷阱物件 預設trap傷害為0
     this.element={
@@ -47,7 +46,8 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
         //攻擊血量計算
-        role.hp=role.hp-this.ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow);
+        this.attack=ignoreNegative(this.attack+role.monsterBuff);//來自自身的增減傷
+        role.hp=role.hp-ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow);
         //經驗值計算
         role.exp=role.exp+this.exp;
         //元素量計算
@@ -102,12 +102,36 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
     this.order=0,
     this.toolAbility=function(){};//放入toolBar的時候可執行的能力
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
+    this.toolAbility=function(){
+        console.log(type);
+        role.weaponChoose=type;
+        switch(type){
+            case "gun":
+                role.weaponAttack=this.gun;
+                break;
+            case "sword":
+                role.weaponAttack=this.sword;
+                break;
+            case "arrow":
+                role.weaponAttack=this.arrow;
+                break;
+            case "wraichWand"://其已自帶HP-2
+                break;
+        }
+
+    
+    };
     this.attackEvent=function(){//點擊後執行
         //加入手牌
-        if(role==role1)
-            {$('#toolList_role1').append('<img class="tool '+type+'" src="img/'+this.src+'"/>');}
-        if(role==role2)
-            {$('#toolList_role2').append('<img class="tool '+type+'" src="img/'+this.src+'"/>');}
+       
+        if(role==role1){
+            role1.hand.push(this);
+            let frame=role1.hand.indexOf(this);
+            $('#toolList_role1').append('<img class="tool '+type+'" src="img/'+this.src+'"data-framework="'+frame+'"/>');}
+        if(role==role2){
+            role2.hand.push(this);
+            let frame=role2.hand.indexOf(this);
+            $('#toolList_role2').append('<img class="tool '+type+'" src="img/'+this.src+'"data-framework="'+frame+'"/>');}
         
         if(this.gun>role.gun){role.gun=this.gun};
         if(this.sword>role.sword){role.sword=this.sword};
@@ -340,7 +364,8 @@ var role1= new Vue({
         num:3,
         restUp:3,
         soul:0,
-        weaponAttack:0,
+        
+        monsterBuff:0,
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
@@ -360,7 +385,10 @@ var role1= new Vue({
         weapon:0,//擁有武器數
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數
+
         weaponChoose:"",//當前使用武器
+        weaponAttack:0,
+
         hand:[]//手牌
         },
     methods: {
@@ -386,7 +414,8 @@ var role2= new Vue({
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
-        weaponAttack:0,
+        
+        monsterBuff:0,
         elementGet:{
             fire:0,
             water:0,
@@ -402,7 +431,10 @@ var role2= new Vue({
         weapon:0,//擁有武器數
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數
+        
         weaponChoose:"",//當前使用武器
+        weaponAttack:0,
+        
         hand:[]//手牌
         },
     methods: {
@@ -520,9 +552,6 @@ function creatMonsterCard2(){
     var tem=new CardMonster(12,'c2_12.png',1,0,2,6,0,0,0,1,0,0,0);card_list2.push(tem);
 }
 
-
-
-
 //建立夥伴
 function creatParnerCard2(){
     var tem=new CreatParnerCard(13,'c2_13.png',0,0,2);card_list2.push(tem);
@@ -570,18 +599,6 @@ function creatMonsterCard3(){
     var tem=new CardMonster(12,'c3_12.png',1,0,2,9,0,0,0,1,0,0,0);card_list3.push(tem);
     
 }
-//建立Boss卡牌
-// function creatBossCard3(){
-//     var tem=new CardMonster(23,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-//     card_list3.push(tem);
-//     var tem=new CardMonster(24,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-//     card_list3.push(tem);
-//     var tem=new CardMonster(25,"boss2.png",0,3,2,10,2,0,0,0,0,0,0);
-//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-//     card_list3.push(tem);    
-// }
 
 //建立武器伴
 function creatWeaponCard3(){
@@ -604,19 +621,3 @@ function creatTreatCard3(){
     var tem=new CreatTreatCard(21,'c3_21.png',5,1);card_list3.push(tem);
     var tem=new CreatTreatCard(22,'c3_22.png',5,1);card_list3.push(tem);    
 } 
-
-// function shuffle(poker,x){ 
-//     let tmp ;
-//     let t = 0;
-//     for (let i = 0; i < poker.length; i++) {
-//         t = Math.floor((Math.random() * x) + 1);
-//         tmp = poker[i];
-//         poker[i] = poker[t];
-//         poker[t] = tmp;
-//     }       
-//     bossCard=poker;//將陣列回傳定為原本的陣列
-
-
-
-
-// };

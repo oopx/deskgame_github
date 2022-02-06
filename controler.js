@@ -147,14 +147,16 @@ $(document).ready(function(){
     })
     
     //抓取toolBar的元件，並自動連結到擁有者的手牌能力，未完成
-    $("#toolBar").on("click",".trapTool",function(){
+    $("#toolBar").on("click",".tool",function(){
         let framework=this.dataset.framework;
+        console.log(framework);
         role.hand[framework].toolAbility(this);
     })
 
     //換回合
-    $('.turn').click( function(){othersTurn();});
-
+    $('.turn').click( function(){othersTurn();}); 
+    
+    
     //測試鈕實驗用
     $('#nextLevel').click(function(){ 
         level++;
@@ -163,54 +165,32 @@ $(document).ready(function(){
       })
     $("#f").click(function(){f()});
     $('#testbutton').click(function(){
-           
-            
-    //    if(this.trap.trapOwner!=role){
-            let weaponType=this.trap.weaponAttack;//抓取該卡的破壞𡋟果
-            let num=$('#toolBar .'+weaponType).length;
-            if (num==0){
-                $(".tool").removeClass("canNotUsed" );// 移除黑白
-                return;  };//如果完全沒有武器就反回 
-            
-            //打開role 的toolbar
-            $('#toolButton').hide();//隱藏div 
-            
-            $("#toolBar").show();
-            $("#toolList_role1 .tool,#toolList_role2 .tool").addClass("canNotUsed" );
-
-            //判斷哪種武器要被銷毀
-            
-            switch(weaponType){// 將要改變的取消黑白
-            //switch("gunbreak"){// 將要改變的取消黑白
-                case "arrow":
-                    $(".arrow").removeClass("canNotUsed" );
-                    $(".arrow").addClass("canDestroy" );
-                    break;
-                case "gun":
-                    $(".gun").removeClass("canNotUsed" );
-                    $(".gun").addClass("canDestroy" );
-                    break;
-                case "sword":
-                    $(".sword").removeClass("canNotUsed" );
-                    $(".sword").addClass("canDestroy" );
-                    break;
-            }
-                               
-            //顯示可棄的武器//點擊後消失武器及toolbar          
-            $('.canDestroy').one("click",function(){
-                this.remove();
-                $(".tool").removeClass("canNotUsed" );// 移除黑白
-                $(".tool").removeClass("canDestroy" );// 移除黑白
-                $('#toolButton').show();//SHOW div 
-                $("#toolBar").hide();
-            })
-        // }
-              
-        
+        //元素效果偵測
     })
 
 })
-
+//武器選擇系統
+function weaponChooseSys(){
+    $(".weaponBar .gun").on("click",function(){
+      $('.weaponBar .weapon').removeClass('choose');
+      $(this).addClass('choose');
+      role.weaponChoose="gun";
+      
+      
+    });
+    $(".weaponBar .arrow").on("click",function(){
+      $('.weaponBar .weapon').removeClass('choose');
+      $(this).addClass('choose');
+      role.weaponChoose="arrow";
+      
+    })
+    $(".weaponBar .sword").on("click",function(){
+      $('.weaponBar weapon').removeClass('choose');
+      $(this).addClass('choose');
+      role.weaponChoose="sword";
+      
+    })
+  }
     
     
     
