@@ -40,7 +40,7 @@ $(document).ready(function(){
         othersTurn();//換人
         resetCard(level);//設置該回合卡片
         //setActive();//初始化下五張為active
-        weaponChooseSys();//武器監聽系統
+        //weaponChooseSys();//武器監聽系統
       
         doWhat=1;//預設行動為攻擊
         $(".attack").addClass('doWhat');//預設行動為攻擊
@@ -127,6 +127,9 @@ $(document).ready(function(){
             level++;
             resetCard(level);
           }
+          //每點完一張卡，即偵測是否可得魔法
+          elementControl();
+
         });
 
     
@@ -155,7 +158,89 @@ $(document).ready(function(){
 
     //換回合
     $('.turn').click( function(){othersTurn();}); 
+
+    function elementControl(){
+        //元素效果偵測
+        let toolBarOwner="#toolList_"+role.id;//決定要加給誰
+
+        if(role.elementGet.fire==2){//練炎劍 武器+2
+            role.weaponAttackBuff=role.weaponAttackBuff+2;
+            $(toolBarOwner).append('<img class="tool" src="img/m7.png"/>');
+            role.elementGet.fire=0;//元素歸零
+            role.fire2=1;//得到火二階魔法
+        };
+        if(role.fire2==1&&role.elementGet.fire==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m107.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
+
+
+        if(role.elementGet.water==2){
+            role.restUp=role.restUp+4;
+            $(toolBarOwner).append('<img class="tool" src="img/m8.png"/>');
+            role.elementGet.water=0;//元素歸零
+            role.water2=1;//得到水二階魔法
+
+        };
+        if(role.water2==1&&role.elementGet.water==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m108.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
     
+        if(role.elementGet.thunder==2){
+            role.monsterBuff=role.monsterBuff-3;
+            $(toolBarOwner).append('<img class="tool" src="img/m9.png"/>');
+            role.elementGet.thunder=0;//元素歸零
+            role.thunder2=1;//得到雷二階魔法
+        };
+        if(role.thunder2==1&&role.elementGet.thunder==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m109.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
+        if(role.elementGet.poison==2){
+            other.monsterBuff=other.monsterBuff+3;
+            $(toolBarOwner).append('<img class="tool" src="img/m10.png"/>');
+            role.elementGet.poison=0;//元素歸零
+            role.poison2=1;//得到慣毒二階魔法
+        };
+        if(role.poison2==1&&role.elementGet.poison==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m110.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        }; 
+        if(role.elementGet.light==2){
+            role.exp=role.exp+2;
+            $(toolBarOwner).append('<img class="tool" src="img/m11.png"/>');
+            role.elementGet.light=0;//元素歸零
+            role.light2=1;//得到慣毒二階魔法
+        };
+        if(role.light2==1&&role.elementGet.light==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m111.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        }
+
+        if(role.elementGet.earth==2){
+            //承受傷害一半，已加於怪的傷害判定上
+            $(toolBarOwner).append('<img class="tool" src="img/m12.png"/>');
+            role.elementGet.earth=0;//元素歸零
+            role.earth2=1;//得到慣毒二階魔法
+        };
+        if(role.earth2==1&&role.elementGet.earth==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m112.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.earth=0;//元素歸零
+        }
+   
+
+    }
+
+
+    
+    /////////////////////////////////////////實驗區
     
     //測試鈕實驗用
     $('#nextLevel').click(function(){ 
@@ -164,33 +249,126 @@ $(document).ready(function(){
         
       })
     $("#f").click(function(){f()});
+    
     $('#testbutton').click(function(){
         //元素效果偵測
+        let toolBarOwner="#toolList_"+role.id;//決定要加給誰
+
+        if(role.elementGet.fire==2){//練炎劍 武器+2
+            role.weaponAttackBuff=role.weaponAttackBuff+2;
+            $(toolBarOwner).append('<img class="tool" src="img/m7.png"/>');
+            role.elementGet.fire=0;//元素歸零
+            role.fire2=1;//得到火二階魔法
+        };
+        if(role.fire2==1&&role.elementGet.fire==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m107.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
+
+
+        if(role.elementGet.water==2){
+            role.restUp=role.restUp+4;
+            $(toolBarOwner).append('<img class="tool" src="img/m8.png"/>');
+            role.elementGet.water=0;//元素歸零
+            role.water2=1;//得到水二階魔法
+
+        };
+        if(role.water2==1&&role.elementGet.water==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m108.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
+    
+        if(role.elementGet.thunder==2){
+            role.monsterBuff=role.monsterBuff-3;
+            $(toolBarOwner).append('<img class="tool" src="img/m9.png"/>');
+            role.elementGet.thunder=0;//元素歸零
+            role.thunder2=1;//得到雷二階魔法
+        };
+        if(role.thunder2==1&&role.elementGet.thunder==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m109.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        };
+        if(role.elementGet.poison==2){
+            other.monsterBuff=other.monsterBuff+3;
+            $(toolBarOwner).append('<img class="tool" src="img/m10.png"/>');
+            role.elementGet.poison=0;//元素歸零
+            role.poison2=1;//得到慣毒二階魔法
+        };
+        if(role.poison2==1&&role.elementGet.poison==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m110.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        }; 
+        if(role.elementGet.light==2){
+            role.exp=role.exp+2;
+            $(toolBarOwner).append('<img class="tool" src="img/m11.png"/>');
+            role.elementGet.light=0;//元素歸零
+            role.light2=1;//得到慣毒二階魔法
+        };
+        if(role.light2==1&&role.elementGet.light==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m111.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.fire=0;//元素歸零
+        }
+
+        if(role.elementGet.earth==2){
+            //承受傷害一半，已加於怪的傷害判定上
+            $(toolBarOwner).append('<img class="tool" src="img/m12.png"/>');
+            role.elementGet.earth=0;//元素歸零
+            role.earth2=1;//得到慣毒二階魔法
+        };
+        if(role.earth2==1&&role.elementGet.earth==1){
+            $(toolBarOwner).append('<img class="tool" src="img/m112.png"/>');
+            role.exp=role.exp+1;
+            role.elementGet.earth=0;//元素歸零
+        }
+   
+
     })
 
 })
-//武器選擇系統
-function weaponChooseSys(){
-    $(".weaponBar .gun").on("click",function(){
-      $('.weaponBar .weapon').removeClass('choose');
-      $(this).addClass('choose');
-      role.weaponChoose="gun";
+//原型實驗區
+role1.__proto__.fire2=0;
+role1.__proto__.fire3=0;
+role1.__proto__.water2=0;
+role1.__proto__.water3=0;
+role1.__proto__.earth2=0;
+role1.__proto__.earth3=0;
+role1.__proto__.thunder2=0;
+role1.__proto__.thunder3=0;
+role1.__proto__.poison2=0;
+role1.__proto__.poison3=0;
+role1.__proto__.light2=0;
+role1.__proto__.light3=0;
+
+
+
+
+// //武器選擇系統
+// function weaponChooseSys(){
+//     $(".weaponBar .gun").on("click",function(){
+//       $('.weaponBar .weapon').removeClass('choose');
+//       $(this).addClass('choose');
+//       role.weaponChoose="gun";
       
       
-    });
-    $(".weaponBar .arrow").on("click",function(){
-      $('.weaponBar .weapon').removeClass('choose');
-      $(this).addClass('choose');
-      role.weaponChoose="arrow";
+//     });
+//     $(".weaponBar .arrow").on("click",function(){
+//       $('.weaponBar .weapon').removeClass('choose');
+//       $(this).addClass('choose');
+//       role.weaponChoose="arrow";
       
-    })
-    $(".weaponBar .sword").on("click",function(){
-      $('.weaponBar weapon').removeClass('choose');
-      $(this).addClass('choose');
-      role.weaponChoose="sword";
+//     })
+//     $(".weaponBar .sword").on("click",function(){
+//       $('.weaponBar weapon').removeClass('choose');
+//       $(this).addClass('choose');
+//       role.weaponChoose="sword";
       
-    })
-  }
+//     })
+//   }
     
     
     

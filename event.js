@@ -9,6 +9,7 @@ var card_list3=[];
 
 
 
+
 //結束行動，使不可按行動，並變色
 function endAction(fromThis,isAble){
     $(".remove,.rest,.learn,.attack").attr('disabled',isAble);//使按扭不能再次使用
@@ -43,7 +44,8 @@ function othersTurn(){
     canActive();//可再點卡
     endAction('',false);//重啟點卡按鍵
     $('.weapon').removeClass('choose');//武器系統還原為空
-    //role.weaponChoose="";//武器系統還原為空
+    role.weaponChoose="";//武器系統選取還原為空
+    role.weaponAttack=0;//武器系統值還原為空
     doWhat=1;//預設行動為攻擊
     $(".attack").addClass('doWhat');//預設行動為攻擊
     $('.canTrap').removeClass("canTrap");//避免有人按陷阱後不放
