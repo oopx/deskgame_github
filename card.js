@@ -8,6 +8,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
     this.arrow_short=arrow_short;
     this.attack=attack;//需扣除弱點後的傷害
     this.exp=exp;
+    this.monsterBuff=0;
     this.order=0;//卡牌在場上順序
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};//陷阱物件 預設trap傷害為0
     this.element={
@@ -27,11 +28,14 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         
         //武器判定
         switch(role.weaponChoose){
-            case "gun":this.gun_short=ignoreNegative(this.gun_short-role.gun);
+            case "gun":
+                this.attack=ignoreNegative(this.attack-(role.weaponAttack*this.gun_short));
                 break;
-            case "sword":this.sword_short=ignoreNegative(this.sword_short-role.sword);
+            case "sword":
+                this.attack=ignoreNegative(this.attack-(role.weaponAttack*this.sword_short));
                 break;
-            case "arrow":this.arrow_short=ignoreNegative(this.arrow_short-role.arrow);
+            case "arrow":
+                this.attack=ignoreNegative(this.attack-(role.weaponAttack*this.arrow_short));
                 break;
             case "wraichWand":this.attack=ignoreNegative(this.attack-2);//針對真傷武器
                 break;
@@ -43,7 +47,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
         //攻擊血量計算
-        role.hp=role.hp-ignoreNegative(this.gun_short-role.friend_gun)-ignoreNegative(this.sword_short-role.friend_sword)-ignoreNegative(this.arrow_short-role.friend_arrow)-this.attack;
+        role.hp=role.hp-this.ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow);
         //經驗值計算
         role.exp=role.exp+this.exp;
         //元素量計算
@@ -336,6 +340,7 @@ var role1= new Vue({
         num:3,
         restUp:3,
         soul:0,
+        weaponAttack:0,
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
@@ -381,6 +386,7 @@ var role2= new Vue({
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
+        weaponAttack:0,
         elementGet:{
             fire:0,
             water:0,
@@ -455,26 +461,20 @@ function creatBossCard(){
 /////////////////////////////////////////////////////level 1
 //建立小怪
 function creatMonsterCard1(){
-    var tem=new CardMonster(1,"c1_1.png",2,0,1,0,1,0,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(2,"c1_2.png",1,2,0,0,1,0,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(3,"c1_3.png",1,2,0,0,1,0,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(4,"c1_4.png",0,1,2,1,1,0,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(5,"c1_5.png",1,2,0,2,1,0,0,0,0,0,0       );card_list1.push(tem);
-    var tem=new CardMonster(6,"c1_6.png",0,1,2,2,1,0,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(7,"c1_7.png",0,2,1,0,0,1,0,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(8,"c1_8.png",1,2,0,0,0,0,1,0,0,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(9,"c1_9.png",2,0,1,0,0,0,0,0,1,0,0        );card_list1.push(tem);
-    var tem=new CardMonster(10,"c1_10.png",0,1,2,0,0,0,0,0,0,1,0        );card_list1.push(tem);
-    var tem=new CardMonster(11,"c1_11.png",2,1,0,0,0,0,0,0,0,0,1        );card_list1.push(tem);
-    var tem=new CardMonster(12,"c1_12.png",1,0,2,0,0,0,0,1,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(1,"c1_1.png",2,0,1,3,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(2,"c1_2.png",1,2,0,3,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(3,"c1_3.png",1,2,0,3,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(4,"c1_4.png",0,1,2,4,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(5,"c1_5.png",1,2,0,5,1,0,0,0,0,0,0       );card_list1.push(tem);
+    var tem=new CardMonster(6,"c1_6.png",0,1,2,5,1,0,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(7,"c1_7.png",0,2,1,3,0,1,0,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(8,"c1_8.png",1,2,0,3,0,0,1,0,0,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(9,"c1_9.png",2,0,1,3,0,0,0,0,1,0,0        );card_list1.push(tem);
+    var tem=new CardMonster(10,"c1_10.png",0,1,2,3,0,0,0,0,0,1,0        );card_list1.push(tem);
+    var tem=new CardMonster(11,"c1_11.png",2,1,0,3,0,0,0,0,0,0,1        );card_list1.push(tem);
+    var tem=new CardMonster(12,"c1_12.png",1,0,2,3,0,0,0,1,0,0,0        );card_list1.push(tem);
        
 }
-//建立Boss卡牌
-// function creatBossCard1(){
-//     var tem=new CardMonster(25,"boss1.png",0,3,2,10,2,0,0,0,0,0,0);
-//     tem.attack=tem.attack*level-tem.gun_short-tem.arrow_short-tem.arrow_short;//隨關卡增加，並扣除原已扣在破綻的傷害
-//     card_list1.push(tem);
-// }
 //建立夥伴
 
 function creatParnerCard1(){
