@@ -146,7 +146,7 @@ $(document).ready(function(){
 
         });
 
-    
+    $(document).keyup(function(event){ if(event.keyCode==9){ $("#toolBar").toggle(); }});
     $("#toolBar").hide();//預設收合  
     $("#toolButton").on("click",function(event){
         let check=$(this).is('.click');
