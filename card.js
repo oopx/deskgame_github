@@ -96,7 +96,7 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
         role.friend_gun=role.friend_gun+this.friend_gun;
         role.friend_sword=role.friend_sword+this.friend_sword;
         role.friend_arrow=role.friend_arrow+this.friend_arrow;
-        role.hp=role.hp-role.friendNum;//號召夥伴花的血量
+        if(friend_free==false){role.hp=role.hp-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
         role.friendNum++;//號召朋友的次數
         //加入手牌
         if(role==role1)

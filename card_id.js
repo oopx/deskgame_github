@@ -51,7 +51,7 @@ ability_list =[
 
             },
         },
-    { 
+    {   id:"j6",
         name:"lord",
         exp:1,
         ability:function(){//招伙伴免費
