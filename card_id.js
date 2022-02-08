@@ -1,5 +1,5 @@
 ability_list =[
-    { 
+    {   id:"j1",
         name:"adventure",
         exp:4,
         ability:function(){
@@ -23,7 +23,7 @@ ability_list =[
         name:"Curseman",
         exp:5,
         ability:function(){//對手怪物HP+3
-            other.more_attack=this+3;//other 未設定
+            other.monsterBuff=this+3;
             },
         },
 
