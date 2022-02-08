@@ -59,7 +59,7 @@ ability_list =[
 
             },
         },
-    { 
+    {   id:"j7",
         name:"cleric",
         exp:2,
         ability:function(){//HP+2並休息+2
@@ -67,11 +67,11 @@ ability_list =[
         role.restUp=this+2;
             },
         },
-    { 
+    {   id:"j8",
         name:"warrior",
         exp:2,
         ability:function(){
-        role.more_attack=this-1;
+        role.monsterBuff=this-1;
 
             },
         },
