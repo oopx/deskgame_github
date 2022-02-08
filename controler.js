@@ -252,7 +252,19 @@ $(document).ready(function(){
    
 
     }
-
+    //role原型實驗區
+    role1.__proto__.fire2=0;
+    role1.__proto__.fire3=0;
+    role1.__proto__.water2=0;
+    role1.__proto__.water3=0;
+    role1.__proto__.earth2=0;
+    role1.__proto__.earth3=0;
+    role1.__proto__.thunder2=0;
+    role1.__proto__.thunder3=0;
+    role1.__proto__.poison2=0;
+    role1.__proto__.poison3=0;
+    role1.__proto__.light2=0;
+    role1.__proto__.light3=0;
 
     
     /////////////////////////////////////////實驗區
@@ -265,25 +277,53 @@ $(document).ready(function(){
       })
     $("#f").click(function(){f()});
     
-    $('#testbutton').click(function(){role.hp=100000;})
+    $('#testbutton').click(function(){
+        var get=$("section .active");//抓取為有Active 的卡
+        console.log(get.length);
+        for(let i=0;i<get.length;i++)
+        {
+            console.log(get[i].dataset.framework);
+            let framework=get[i].dataset.framework;
+            //使第二層的可以點擊
+            let tem='[data-framework='+String(framework-5)+']';//往上抓取一張
+            
+            if($(tem).hasClass("flip")){$(tem).addClass("active magicPower")};//如果該卡有被翻卡，即設為active
+            
+        }
+        // for (var prop in get) {
+        //     console.log(prop);
+        //   }
+        //get.forEach(element => console.log(element));
+    });
 
 })
-//原型實驗區
-role1.__proto__.fire2=0;
-role1.__proto__.fire3=0;
-role1.__proto__.water2=0;
-role1.__proto__.water3=0;
-role1.__proto__.earth2=0;
-role1.__proto__.earth3=0;
-role1.__proto__.thunder2=0;
-role1.__proto__.thunder3=0;
-role1.__proto__.poison2=0;
-role1.__proto__.poison3=0;
-role1.__proto__.light2=0;
-role1.__proto__.light3=0;
+{role.hp=100000;}
 
 
+//插入選職業系統
+skill_src=[];
+for(let i=1;i<=14;i++){
+$('#chooseSkill').append('<img class="skill" src="img/j'+i+'.png"/>');
+}
+//
+ var list2=["ttee","jlk","sfasdf","sdasdf","sdas"];
+ var tt="lkl"
+ //console.log(card_list);
+///建立職業卡
+var viewControl= new Vue({
+    el:'#chooseSkill',
+    //delimiters: ['${', '}'],
+    data:{
+        img:tt,
+        card_list:[],
+        list: [
+            { id: '123456789', name: '選項 1' },
+            { id: '234567890', name: '選項 2' },
+            { id: '345678901', name: '選項 3' },
+          ],
+    }
 
+})
 
 // //武器選擇系統
 // function weaponChooseSys(){

@@ -1,17 +1,24 @@
-
 #endBoard{
+  font-size: 300px;
+}
+#chooseSkil{
+  font-size: 90px;
+}
+.overBoard{
   /* display: none; */
   text-align:center;
   color: #fae9e9; ;
   position:fixed;
   float:bottom;
+  /* font-size: 100px; */
   height:100%;
   width: 100%;
   bottom: 0px; 
-  font-size: 300px;
-  background-color: rgba(0, 0, 0, 0.705);     
+  background-color: rgba(0, 0, 0, 0.829);     
   z-index: 100;   
 }
+
+
 #role1,#role2{
   position:fixed;
   height:100%;
@@ -21,6 +28,14 @@
   font-size:larger;
   width: 16%;
 }
+
+#chooseSkill .skill{
+  height:30%;
+}
+#chooseSkill .skill:hover{
+  transform: scale(2,2);
+}
+
 #toolBar{
   text-align:center;
   color: #fae9e9; ;

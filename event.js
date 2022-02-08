@@ -49,6 +49,7 @@ function othersTurn(){
     doWhat=1;//預設行動為攻擊
     $(".attack").addClass('doWhat');//預設行動為攻擊
     $('.canTrap').removeClass("canTrap");//避免有人按陷阱後不放
+    $(".magicPower").removeClass("active magicPower")//換回合後，移除因魔法而可以翻的卡
 
 }
 
@@ -138,17 +139,26 @@ function canActive(){
 };
 
 //設點擊完的上一張卡為active
-function setNextActive(framwork){
-  var tem='[data-framework='+String(framwork-5)+']';
+function setNextActive(framework){
+  let tem0='[data-framework='+String(framework-10)+']';//上上一張卡位置
+  let tem='[data-framework='+String(framework-5)+']';//上一張卡位置
+  let tem2='[data-framework='+String(framework+5)+']';//下一張卡位置
    if(tem<0){return};//不能用break 會跳出整個ready函式
+  
+   if($(tem2).hasClass('used')||framework>=21){//確保前一張是有使用過或在第一排
    $(tem).addClass('flip active');
+   }
+   if($(tem).hasClass('used')) {//如果上一張是使用過的，就開上上一張  
+   $(tem0).addClass('flip active'); 
+   }
+
 
 };
 
 //點擊執行場面上的卡效果
 function getCard(framework){
   console.log(framework);
-  var clickCard=card_list[framework-1]
+  let clickCard=card_list[framework-1]
   console.log(clickCard);
   clickCard.attackEvent();
 }

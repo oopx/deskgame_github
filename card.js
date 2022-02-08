@@ -82,6 +82,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
 
 }
 
+
 //夥伴卡片建構子
 function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
     this.id=id;
@@ -424,7 +425,7 @@ var role2= new Vue({
     el: '#role2 ',
     data:{
         id:'role2',
-        hp:9,
+        hp:10,
         exp:0,
         //attack:0;
         gun:0,
@@ -638,3 +639,5 @@ function creatTreatCard3(){
     var tem=new CreatTreatCard(21,'c3_21.png',5,1);card_list3.push(tem);
     var tem=new CreatTreatCard(22,'c3_22.png',5,1);card_list3.push(tem);    
 } 
+
+

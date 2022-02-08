@@ -2,10 +2,22 @@ ability_list =[
     { 
         name:"adventure",
         exp:4,
-        ability:function(){//選牌時可選第二張公開的卡片
-            $
-            },
+        ability:function(){
+            var get=$("section .active");//抓取為有Active 的卡
+            console.log(get.length);
+            for(let i=0;i<get.length;i++)
+            {
+                console.log(get[i].dataset.framework);
+                let framework=get[i].dataset.framework;
+                //使第二層的可以點擊
+                let tem='[data-framework='+String(framework-5)+']';//往上抓取一張
+                
+                if($(tem).hasClass("flip")){$(tem).addClass("active magicPower")};//如果該卡有被翻卡，即設為active
+                
+            }
+
         },
+    },
 
     { 
         name:"Curseman",

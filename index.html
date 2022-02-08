@@ -119,14 +119,27 @@
         <p>friend_arrow:{{friend_arrow}}</p>
         <p>restUp:{{restUp}}</p>
         <button id="testbutton">testbutton</button>
+        <button id="testbutton2">testbutton2</button>
         <button id="nextLevel">nextLevel</button>
         <button id="f">flip all</button>
   
         
     </div>
-    <div id="endBoard">
+    <div id="endBoard" class="overBoard">
         <hr>-END-</hr>
     </div>
+    </div>
+
+    <!-- <div id="chooseSkill" class="overBoard">
+        <hr>-chooseSkill-</hr>
+        <div v-html="img"></div>
+        <div>{{img}}</div>
+      
+        <li v-for="(item, index) in img">
+            index: {{ item }}, name:
+          </li>
+    </div> -->
+
     <!-- <div id="role1" class="col-sm-2 ">
             <h2>role角色卡牌</h2> 
              hp : {{hp}}
@@ -146,7 +159,7 @@
   </body>
   <!-- vue要等網頁載完才執行 -->
   <!-- <script src='event.js'></script> -->
-  
+   <script src='card_id.js'></script>  
    <script src='card.js'></script> 
    <script src='event.js'></script>
    <script src='controler.js'></script> 
