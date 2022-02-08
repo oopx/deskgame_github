@@ -138,8 +138,18 @@ $(document).ready(function(){
         //每點完一張卡，即偵測是否可得魔法
         elementControl();
         //每點完一張卡，即偵測是否死亡
+        if(role==role1){return;}//如果還沒完成該回合，則不結算
         if(role1.hp<=0 || role2.hp<=0 || Math.abs(role1.exp-role2.exp)>=4 )
         {   $("#endBoard").show();
+            if(role1.hp<=0){
+                $("#endBoard").append("<hr>Role2 VICTOR</hr>");
+            }else if(role2.hp<=0){
+                $("#endBoard").append("<hr>Role1 VICTOR</hr>");
+            }else if(role1.exp>role2.exp){
+                $("#endBoard").append("<hr>Role1 VICTOR</hr>");
+            }else if(role2.exp>role1.exp){
+                $("#endBoard").append("<hr>Role2 VICTOR</hr>");
+            }else{return;}
             //alert("s");
             
         }
@@ -292,26 +302,15 @@ $(document).ready(function(){
     $("#f").click(function(){f()});
     
     $('#testbutton').click(function(){
-        var get=$("section .active");//抓取為有Active 的卡
-        console.log(get.length);
-        for(let i=0;i<get.length;i++)
-        {
-            console.log(get[i].dataset.framework);
-            let framework=get[i].dataset.framework;
-            //使第二層的可以點擊
-            let tem='[data-framework='+String(framework-5)+']';//往上抓取一張
-            
-            if($(tem).hasClass("flip")){$(tem).addClass("active magicPower")};//如果該卡有被翻卡，即設為active
-            
-        }
-        // for (var prop in get) {
-        //     console.log(prop);
-        //   }
-        //get.forEach(element => console.log(element));
+        endAction('',false);
+        canActive();//可再點卡
+    });
+    $('#testbutton2').click(function(){
+        role.hp=10000;
     });
 
 })
-{role.hp=100000;}
+
 
 
 //插入選職業系統

@@ -12,7 +12,7 @@ var card_list3=[];
 
 //結束行動，使不可按行動，並變色
 function endAction(fromThis,isAble){
-    $(".remove,.rest,.learn,.attack").attr('disabled',isAble);//使按扭不能再次使用
+    $(".remove,.rest,.learn,.attack").attr('disabled',isAble);//判定按扭能否再次使用
         
     if(fromThis=="")return;//若未回傳，則不執行消失卡牌    
     setUsed(fromThis);//點的卡消失
@@ -140,15 +140,17 @@ function canActive(){
 
 //設點擊完的上一張卡為active
 function setNextActive(framework){
-  let tem0='[data-framework='+String(framework-10)+']';//上上一張卡位置
-  let tem='[data-framework='+String(framework-5)+']';//上一張卡位置
-  let tem2='[data-framework='+String(framework+5)+']';//下一張卡位置
-   if(tem<0){return};//不能用break 會跳出整個ready函式
+  let tem0='[data-framework='+String(framework-10)+']';//後後一排卡位置
+  let tem='[data-framework='+String(framework-5)+']';//後一排卡位置
+  let tem2='[data-framework='+String(framework+5)+']';//前一排卡位置
   
-   if($(tem2).hasClass('used')||framework>=21){//確保前一張是有使用過或在第一排
+  //$(tem).addClass('flip active');
+  //if(tem<0){return};//不能用break 會跳出整個ready函式
+  
+   if($(tem2).hasClass('used')==false||framework>20){//確保前一張是有使用過或在第一排
    $(tem).addClass('flip active');
    }
-   if($(tem).hasClass('used')) {//如果上一張是使用過的，就開上上一張  
+   if($(tem).hasClass('used')==true) {//如果上一張是使用過的，就開上上一張  
    $(tem0).addClass('flip active'); 
    }
 
@@ -311,6 +313,7 @@ function setWeaponDestroy(weaponAttack){
           //顯示可棄的武器//點擊後消失武器及toolbar          
           $('.canDestroy').one("click",function(){
               this.remove();
+              role.weapon--;//持有武器數少1
               $(".tool").removeClass("canNotUsed" );// 移除黑白
               $(".tool").removeClass("canDestroy" );// 移除黑白
               $('#toolButton').show();//SHOW div 

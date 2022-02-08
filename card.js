@@ -96,7 +96,7 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
         role.friend_gun=role.friend_gun+this.friend_gun;
         role.friend_sword=role.friend_sword+this.friend_sword;
         role.friend_arrow=role.friend_arrow+this.friend_arrow;
-        if(friend_free==false){role.hp=role.hp-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
+        if(role.friend_free==false){role.hp=role.hp-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
         role.friendNum++;//號召朋友的次數
         //加入手牌
         if(role==role1)
@@ -148,10 +148,12 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
        
         if(role==role1){
             role1.hand.push(this);
+            role.weapon++;
             let frame=role1.hand.indexOf(this);
             $('#toolList_role1').append('<img class="tool '+type+'" src="img/'+this.src+'"data-framework="'+frame+'"/>');}
         if(role==role2){
             role2.hand.push(this);
+            role.weapon++;
             let frame=role2.hand.indexOf(this);
             $('#toolList_role2').append('<img class="tool '+type+'" src="img/'+this.src+'"data-framework="'+frame+'"/>');}
         

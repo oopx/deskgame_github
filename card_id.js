@@ -1,3 +1,4 @@
+//有「每」的功能尚未完成
 ability_list =[
     {   id:"j1",
         name:"adventure",
@@ -23,7 +24,7 @@ ability_list =[
         name:"Curseman",
         exp:5,
         ability:function(){//對手怪物HP+3
-            other.monsterBuff=this+3;
+            other.monsterBuff=other.monsterBuff+3;
             },
         },
 
@@ -31,8 +32,8 @@ ability_list =[
         name:"thief",
         exp:1,
         ability:function(){//立即HP少2，並未來執行陷阱卡時，對手HP-1
-            other.hp=this-2;
-            other.more_trapAttack=this+1;//受到更多傷害
+            other.hp=role.hp-2;
+            other.more_trapAttack=other.more_trapAttack+1;//受到更多傷害
 
             },
         },
@@ -40,7 +41,7 @@ ability_list =[
         name:"pope",
         exp:1,
         ability:function(){
-            role.hp=this+8;
+            role.hp=role.hp+8;
             },
         },
     {   id:"j5",
@@ -63,15 +64,15 @@ ability_list =[
         name:"cleric",
         exp:2,
         ability:function(){//HP+2並休息+2
-        role.hp=this+2;
-        role.restUp=this+2;
+        role.hp=role.hp+2;
+        role.restUp=role.restUp+2;
             },
         },
     {   id:"j8",
         name:"warrior",//可使用兩把武器尚未完成
         exp:2,
         ability:function(){
-        role.monsterBuff=this-1;
+        role.monsterBuff=role.monsterBuff-1;
 
             },
         },
@@ -79,40 +80,43 @@ ability_list =[
         name:"wizard",
         exp:4,
         ability:function(){//每有一種魔法，怪物HP-2
-        role.monsterBuff=this-(2*magicOwn);
+        role.monsterBuff=role.monsterBuff-(2*magicOwn);
             },
         },
-    { 
+    {   id:"j10",
         name:"bard",
         exp:3,
-        ability:function(){
+        ability:function(){//放置一指示物保護伙伴
 
             },
         },
-    { 
+    {   id:"j11",
         name:"weapon master",
         exp:4,
         ability:function(){//每有一武器，怪物HP-1
-        role.more_more_attack=this-(1*weapon);
+        role.monsterBuff=role.monsterBuff-(1*weapon);
             },
         },
-    { 
+    {   id:"j12",
         name:"hero",
         exp:4,
-        ability:function(){//自帶三種武器
+        ability:function(){//自帶三種武器//未完成
         role.gun=this+1;
         role.sword=this+1;
         role.arrow=this+1;
             },
         },
-    { 
+    {   id:"j13",
         name:"noble",
         exp:5,
         ability:function(){
+            role.exp=role.exp+2;
+            endAction('',false);
+            canActive();//可再點卡  
 
             },
         },
-    { 
+    {   id:"j14",
         name:"guider",
         exp:5,
         ability:function(){
