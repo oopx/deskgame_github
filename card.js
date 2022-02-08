@@ -387,7 +387,7 @@ var role1= new Vue({
         restUp:3,
         soul:0,
         
-        monsterBuff:0,
+        monsterBuff:0,//來自怪的傷害增加或減少，容許負值
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
@@ -399,8 +399,8 @@ var role1= new Vue({
             poison:0,
             light:0
         },
-        ability:function ability(){alert("joke")},
-        more_attack:0,//來自怪的傷害增加或減少，容許負值
+        
+        //more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//受到陷阱傷害增加
         friend_free:false,//招伙伴免費
         magic:0,//擁有魔法數

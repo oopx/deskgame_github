@@ -19,7 +19,7 @@ ability_list =[
         },
     },
 
-    { 
+    {   id:"j2",
         name:"Curseman",
         exp:5,
         ability:function(){//對手怪物HP+3
@@ -27,7 +27,7 @@ ability_list =[
             },
         },
 
-    { 
+    {    id:"j3",
         name:"thief",
         exp:1,
         ability:function(){//立即HP少2，並未來執行陷阱卡時，對手HP-1
