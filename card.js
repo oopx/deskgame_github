@@ -403,7 +403,7 @@ var role1= new Vue({
         //more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//受到陷阱傷害增加
         friend_free:false,//招伙伴免費
-        magic:0,//擁有魔法數
+        magicOwn:0,//擁有魔法數
         weapon:0,//擁有武器數
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數
@@ -447,10 +447,10 @@ var role2= new Vue({
             poison:0,
             light:0
         },
-        more_attack:0,//來自怪的傷害增加或減少，容許負值
+        //more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//受到陷阱傷害增加
         friend_free:false,//招伙伴免費
-        magic:0,//擁有魔法數
+        magicOwn:0,//擁有魔法數
         weapon:0,//擁有武器數
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數

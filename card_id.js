@@ -68,18 +68,18 @@ ability_list =[
             },
         },
     {   id:"j8",
-        name:"warrior",
+        name:"warrior",//可使用兩把武器尚未完成
         exp:2,
         ability:function(){
         role.monsterBuff=this-1;
 
             },
         },
-    { 
+    {   id:"j9",
         name:"wizard",
         exp:4,
         ability:function(){//每有一種魔法，怪物HP-2
-        role.more_attack=this-(2*maigic);
+        role.monsterBuff=this-(2*magicOwn);
             },
         },
     { 

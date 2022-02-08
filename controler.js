@@ -174,6 +174,7 @@ $(document).ready(function(){
     $('.turn').click( function(){othersTurn();}); 
     $(document).keyup(function(event){ if(event.keyCode==32){ othersTurn(); }}); 
 
+    //元素效果偵測
     function elementControl(){
         //元素效果偵測
         let toolBarOwner="#toolList_"+role.id;//決定要加給誰
@@ -183,11 +184,13 @@ $(document).ready(function(){
             $(toolBarOwner).append('<img class="tool" src="img/m7.png"/>');
             role.elementGet.fire=0;//元素歸零
             role.fire2=1;//得到火二階魔法
+            role.magicOwn++;
         };
         if(role.fire2==1&&role.elementGet.fire==1){
             $(toolBarOwner).append('<img class="tool" src="img/m107.png"/>');
             role.exp=role.exp+1;
             role.elementGet.fire=0;//元素歸零
+            role.magicOwn++;
         };
 
 
@@ -196,12 +199,14 @@ $(document).ready(function(){
             $(toolBarOwner).append('<img class="tool" src="img/m8.png"/>');
             role.elementGet.water=0;//元素歸零
             role.water2=1;//得到水二階魔法
+            role.magicOwn++;
 
         };
         if(role.water2==1&&role.elementGet.water==1){
             $(toolBarOwner).append('<img class="tool" src="img/m108.png"/>');
             role.exp=role.exp+1;
             role.elementGet.water=0;//元素歸零
+            role.magicOwn++;
         };
     
         if(role.elementGet.thunder==2){
@@ -209,33 +214,39 @@ $(document).ready(function(){
             $(toolBarOwner).append('<img class="tool" src="img/m9.png"/>');
             role.elementGet.thunder=0;//元素歸零
             role.thunder2=1;//得到雷二階魔法
+            role.magicOwn++;
         };
         if(role.thunder2==1&&role.elementGet.thunder==1){
             $(toolBarOwner).append('<img class="tool" src="img/m109.png"/>');
             role.exp=role.exp+1;
             role.elementGet.fire=0;//元素歸零
+            role.magicOwn++;
         };
         if(role.elementGet.poison==2){
             other.monsterBuff=other.monsterBuff+3;
             $(toolBarOwner).append('<img class="tool" src="img/m10.png"/>');
             role.elementGet.poison=0;//元素歸零
             role.poison2=1;//得到毒二階魔法
+            role.magicOwn++;
         };
         if(role.poison2==1&&role.elementGet.poison==1){
             $(toolBarOwner).append('<img class="tool" src="img/m110.png"/>');
             role.exp=role.exp+1;
             role.elementGet.fire=0;//元素歸零
+            role.magicOwn++;
         }; 
         if(role.elementGet.light==2){
             role.exp=role.exp+2;
             $(toolBarOwner).append('<img class="tool" src="img/m11.png"/>');
             role.elementGet.light=0;//元素歸零
             role.light2=1;//得到光二階魔法
+            role.magicOwn++;
         };
         if(role.light2==1&&role.elementGet.light==1){
             $(toolBarOwner).append('<img class="tool" src="img/m111.png"/>');
             role.exp=role.exp+1;
             role.elementGet.fire=0;//元素歸零
+            role.magicOwn++;
         }
 
         if(role.elementGet.earth==2){
@@ -243,11 +254,13 @@ $(document).ready(function(){
             $(toolBarOwner).append('<img class="tool" src="img/m12.png"/>');
             role.elementGet.earth=0;//元素歸零
             role.earth2=1;//得到慣毒二階魔法
+            role.magicOwn++;
         };
         if(role.earth2==1&&role.elementGet.earth==1){
             $(toolBarOwner).append('<img class="tool" src="img/m112.png"/>');
             role.exp=role.exp+1;
             role.elementGet.earth=0;//元素歸零
+            role.magicOwn++;
         }
    
 
