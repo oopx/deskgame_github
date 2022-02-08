@@ -36,17 +36,18 @@ ability_list =[
 
             },
         },
-    { 
+    {   id:"j4",
         name:"pope",
         exp:1,
         ability:function(){
             role.hp=this+8;
             },
         },
-    { 
+    {   id:"j5",
         name:"rune master",
         exp:2,
         ability:function(){
+            role.runeMasterMagic=true;//是否有血祭效果一半的魔法
 
             },
         },

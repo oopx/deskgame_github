@@ -173,7 +173,10 @@ function rest(){
 
 //血祭系統
 function sacrifice(){
-  role.hp=role.hp-(role.sacrificeNum*2);
+  if(role.runeMasterMagic==true)//是否有血祭效果一半的魔法
+  {role.hp=role.hp-(role.sacrificeNum*1);
+  }else{role.hp=role.hp-(role.sacrificeNum*2)};
+  
   role.sacrificeNum++;//血祭次數加一
 
 };

@@ -265,6 +265,7 @@ $(document).ready(function(){
     role1.__proto__.poison3=0;
     role1.__proto__.light2=0;
     role1.__proto__.light3=0;
+    role1.__proto__.runeMasterMagic=false;//是否有血祭效果一半的魔法
 
     
     /////////////////////////////////////////實驗區
