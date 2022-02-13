@@ -49,6 +49,7 @@
         <p>friend_gun:{{friend_gun}}</p>
         <p>friend_sword:{{friend_sword}}</p>
         <p>friend_arrow:{{friend_arrow}}</p>
+        <p>toLearnSkill:{{toLearnSkill}}</p>
         <p>fire:{{elementGet.fire}} 
         <P>water:{{elementGet.water}}
         <P>earth:{{elementGet.earth}}
@@ -64,7 +65,8 @@
         <button class="rest">休息</button>
         <button class="sacrifice">血祭</button>
         <button class="remove">移除</button>
-        <button class="learn">學習</button>
+        <button class="learn" disabled="disabled">學習</button>
+        <!-- 學習要由工具列中的職業卡觸發 -->
         <button class="turn">換回合</button>
         <br>
         <!-- <img class="weapon gun" src="img/t1_2.png" />
@@ -126,19 +128,28 @@
         
     </div>
     <div id="endBoard" class="overBoard">
-        
     </div>
     </div>
 
-    <!-- <div id="chooseSkill" class="overBoard">
-        <hr>-chooseSkill-</hr>
+    <div class="overBoard">
+        <div id="chooseSkill">
+            <H2>ChooseSkill</H2>
+        </div>
+        <div id="role1handSkill">
+            <H2>role1handSkill</H2>
+        </div>
+        <div id="role2handSkill">
+            <H2>role1handSkill</H2>
+        </div>
+
+        <!-- <hr>-chooseSkill-</hr>
         <div v-html="img"></div>
         <div>{{img}}</div>
       
         <li v-for="(item, index) in img">
             index: {{ item }}, name:
-          </li>
-    </div> -->
+          </li> -->
+    </div>
 
     <!-- <div id="role1" class="col-sm-2 ">
             <h2>role角色卡牌</h2> 

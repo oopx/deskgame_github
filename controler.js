@@ -118,6 +118,15 @@ $(document).ready(function(){
                   if (cardID=="boss1"||cardID=="boss2"||cardID=="boss3"||cardID=="boss4"||cardID=="boss5"||cardID=="boss6")
                   {return;}//如果是魔王就無法執行
                   $('.learn').removeClass('doWhat');
+                  role.toLearnSkill.ability();//執行該卡的學習效果
+
+                  if(role==role2){//將該卡加入可視技能區
+                    $("#role2").append('<img id="'+role.toLearnSkill.id+'" class="skill" src="img/'+role.toLearnSkill.id+'.png" alt="'+role.toLearnSkill.id+'"/>');
+                    }
+                  if(role==role1){
+                    $("#role1").append('<img id="'+role.toLearnSkill.id+'" class="skill" src="img/'+role.toLearnSkill.id+'.png" alt="'+role.toLearnSkill.id+'"/>');
+                    }
+
                   endAction(this,'disabled')//無法再進行任何行動
                   break;
               case 5:
@@ -305,19 +314,105 @@ $(document).ready(function(){
         endAction('',false);
         canActive();//可再點卡
     });
+
+    
     $('#testbutton2').click(function(){
-        role.hp=10000;
+       
+       
+       
+        //role.hp=10000;
+        
+        // const result = card_list.filter(word => word.type=="gun");//測試用，可篩選ID
+        // console.log(result.length);
+        
+        //list2.splice(index, 1);//好用，可用於vue
     });
+    //可學習測試中
+    $("#toolBar").on("click",".skill",function(){
+        let tem=this.alt;
+       let  result = skill_list.filter(word => word.id==tem);//找出的相對應物件
+       console.log(result[0].ability);//可找到對應的Skill物件
+       console.log(String(this));
+       
+       tem=this;
+       if(role.exp>=result[0].exp){
+       //將學習行動點燈
+        doWhat=4;
+        $("button").removeClass('doWhat');
+        $(".learn").addClass('doWhat')
+        role.toLearnSkill=result[0]//將該卡附加於ROLE上
+        
+        //result[0].ability();//執行該職業卡的技能
+        
+        this.remove();
+        console.log(this.alt);
+        }
+       
+    });
+    
+    //測試技能台  //插入選職業系統
+    skill_src=[];
+    for(let i=1;i<=14;i++){
+        let tem='<img id="j'+String(i)+'" class="skill" src="img/j'+String(i)+'.png" alt="j'+String(i)+'"/>';
+        skill_src.push(tem);    
+    }
+        
+   
+
+    //洗牌
+    var tmp ;
+    var poker=skill_src;
+    var t = 0;
+    for (var i = 1; i < poker.length; i++) {
+        t = Math.floor((Math.random() * 13) + 1);
+        tmp = poker[i];
+        poker[i] = poker[t];
+        poker[t] = tmp;
+        //skill_src=poker;
+    }    
+    //排上桌
+    for(let i=1;i<=7;i++){//只抽七張
+        $('#chooseSkill').append(skill_src[i]);
+        }
+
+    var num=1;
+    $(".skill").one('click',function(){
+        if([1,4,5].includes(num)){role=role1};
+        if([2,3,6].includes(num)){role=role2};
+        
+        console.log(this);
+
+        role.handSkill.push(this);
+        if(role==role1){
+        $('#role1handSkill').append('<img id="'+this.alt+'" class="skill" src="img/'+this.alt+'.png" alt="'+this.alt+'"/>');
+        $('#toolList_role1').append('<img id="'+this.alt+'" class="skill" src="img/'+this.alt+'.png" alt="'+this.alt+'"/>');
+        }
+        else if(role==role2){
+        $('#role2handSkill').append('<img id="'+this.alt+'" class="skill" src="img/'+this.alt+'.png" alt="'+this.alt+'"/>');
+        $('#toolList_role2').append('<img id="'+this.alt+'" class="skill" src="img/'+this.alt+'.png" alt="'+this.alt+'"/>');
+        }
+
+        this.remove();
+        num++;
+        if(num==7)
+        {   $("#role1handSkill").clone
+            
+            $(".overBoard").remove();}
+            role=role1;//回到角色一
+        });
 
 })
 
 
 
-//插入選職業系統
 skill_src=[];
-for(let i=1;i<=14;i++){
-$('#chooseSkill').append('<img class="skill" src="img/j'+i+'.png"/>');
-}
+
+
+$(".skill").on('click',function(){
+console.log(this);
+this.remove();
+});
+
 //
  var list2=["ttee","jlk","sfasdf","sdasdf","sdas"];
  var tt="lkl"
@@ -327,7 +422,7 @@ var viewControl= new Vue({
     el:'#chooseSkill',
     //delimiters: ['${', '}'],
     data:{
-        img:tt,
+        img:list2,
         card_list:[],
         list: [
             { id: '123456789', name: '選項 1' },

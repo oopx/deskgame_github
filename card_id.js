@@ -1,5 +1,5 @@
 //有「每」的功能尚未完成
-ability_list =[
+skill_list =[
     {   id:"j1",
         name:"adventure",
         exp:4,
@@ -94,7 +94,7 @@ ability_list =[
         name:"weapon master",
         exp:4,
         ability:function(){//每有一武器，怪物HP-1
-        role.monsterBuff=role.monsterBuff-(1*weapon);
+        role.monsterBuff=role.monsterBuff-(1*role.weapon);
             },
         },
     {   id:"j12",

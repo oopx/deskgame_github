@@ -118,6 +118,7 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
     this.gun=gun,
     this.sword=sword,
     this.arrow=arrow,
+    this.type=type,
     this.order=0,
     this.toolAbility=function(){};//放入toolBar的時候可執行的能力
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
@@ -411,10 +412,12 @@ var role1= new Vue({
         friendNum:1,//召朋友次數
 
         weaponChoose:"",//當前使用武器
+        toLearnSkill:"",//當前想學習的職業
         weaponAttack:0,
         weaponAttackBuff:0,
 
-        hand:[]//手牌
+        hand:[],//手牌
+        handSkill:[],
         },
     methods: {
         rest:function rest(){},
@@ -458,10 +461,12 @@ var role2= new Vue({
         friendNum:1,//召朋友次數
         
         weaponChoose:"",//當前使用武器
+        toLearnSkill:"",//當前想學習的職業
         weaponAttack:0,
         weaponAttackBuff:0,
         
-        hand:[]//手牌
+        hand:[],//手牌
+        handSkill:[],
         },
     methods: {
         rest:function rest(){},

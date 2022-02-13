@@ -12,7 +12,7 @@ var card_list3=[];
 
 //結束行動，使不可按行動，並變色
 function endAction(fromThis,isAble){
-    $(".remove,.rest,.learn,.attack").attr('disabled',isAble);//判定按扭能否再次使用
+    $(".remove,.rest,.attack").attr('disabled',isAble);//判定按扭能否再次使用
         
     if(fromThis=="")return;//若未回傳，則不執行消失卡牌    
     setUsed(fromThis);//點的卡消失
@@ -43,6 +43,7 @@ function othersTurn(){
     $("button").removeClass('doWhat');//全部換白色按鍵
     canActive();//可再點卡
     endAction('',false);//重啟點卡按鍵
+    role.toLearnSkill="";//將學習區變為0
     $('.weapon').removeClass('choose');//武器系統還原為空
     role.weaponChoose="";//武器系統選取還原為空
     role.weaponAttack=0;//武器系統值還原為空

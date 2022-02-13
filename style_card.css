@@ -1,20 +1,19 @@
 #endBoard{
   font-size: 300px;
 }
-#chooseSkil{
-  font-size: 90px;
-}
+
 .overBoard{
   /* display: none; */
+ 
   text-align:center;
-  color: #fae9e9; ;
+
   position:fixed;
-  float:bottom;
+  /* overflow:auto; */
   /* font-size: 100px; */
   height:100%;
   width: 100%;
   bottom: 0px; 
-  background-color: rgba(0, 0, 0, 0.829);     
+ 
   z-index: 100;   
 }
 
@@ -29,10 +28,23 @@
   width: 16%;
 }
 
-#chooseSkill .skill{
-  height:30%;
+
+#role1handSkill,#role2handSkill,#chooseSkill{
+ /* position:fixed; */
+  text-align:center;
+  color: aliceblue;
+  height: 33.333%;
+  width: 100%;
+  border-width:1px;
+  border-style:solid;
+  border-color: aliceblue;
+  background-color: rgba(0, 0, 94, 0.952);
 }
-#chooseSkill .skill:hover{
+
+.overBoard .skill{
+  height:70%;
+}
+.skill:hover{
   transform: scale(2,2);
 }
 
@@ -141,11 +153,11 @@ button.doWhat{
 
 
 
-.tool{
+.tool,.skill{
   height: calc(30% );
   
 }
-#toolList_role1:hover img,#toolList_role2:hover img{ 
+#toolList_role1 img:hover,#toolList_role2 img:hover { 
   transform: scale(2,2); 
 }
 
