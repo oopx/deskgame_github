@@ -69,7 +69,7 @@ skill_list =[
             },
         },
     {   id:"j8",
-        name:"warrior",//可使用兩把武器尚未完成
+        name:"warrior",//可使用兩把武器
         exp:2,
         ability:function(){
         role.warriorMagic=true;

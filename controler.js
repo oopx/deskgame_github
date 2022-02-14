@@ -398,7 +398,7 @@ $(document).ready(function(){
         if(num==7)
         {   $("#role1handSkill").clone
             
-            $(".overBoard").remove();}
+            $(".chooseSkill").remove();}
             role=role1;//回到角色一
         });
 

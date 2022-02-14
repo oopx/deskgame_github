@@ -1,12 +1,14 @@
 #endBoard{
   font-size: 300px;
+  background-color: rgba(0, 0, 0, 0.575);
+  color: aliceblue;
 }
 
 .overBoard{
   /* display: none; */
  
   text-align:center;
-
+  
   position:fixed;
   /* overflow:auto; */
   /* font-size: 100px; */
