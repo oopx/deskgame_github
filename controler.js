@@ -317,6 +317,7 @@ $(document).ready(function(){
 
     
     $('#testbutton2').click(function(){
+        role.warriorMagic=true;
        
        
        

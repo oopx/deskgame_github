@@ -72,7 +72,7 @@ skill_list =[
         name:"warrior",//可使用兩把武器尚未完成
         exp:2,
         ability:function(){
-        role.monsterBuff=role.monsterBuff-1;
+        role.warriorMagic=true;
 
             },
         },

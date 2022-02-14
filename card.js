@@ -26,7 +26,7 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         //var card=this;
         //role.hp++;
         
-        //武器判定
+        //武器判定1
         switch(role.weaponChoose){
             case "gun":
                 this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
@@ -54,6 +54,35 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
                 break;
                 }
         }
+        //武器判定2 給有二段武器的
+        switch(role.weaponChoose2){
+            case "gun":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                break;
+            case "sword":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                break;
+            case "arrow":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                break;
+            case "wraichWand":this.attack=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
+                break;
+            case "gun arrow sword"://針對三相武器
+                {
+                if(this.gun_short>this.sword_short&&this.gun_short>this.arrow_short)
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                else if(this.sword_short>this.gun_short&&this.sword_short>this.arrow_short)                
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                else if(this.arrow_short>this.gun_short&&this.arrow_short>this.sword_short) 
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                else {alert("wrong");};
+                break;
+                }
+            default: {
+                break;
+                }
+        }
+
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
@@ -124,22 +153,40 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
     this.toolAbility=function(){
         console.log(type);
-        role.weaponChoose=type;
+        //let choose,chooseattack;
+
+        
+        //choose=role.weaponChoose;
+        
+     
+        
+    
+
+        choose=type;
         switch(type){
             case "gun":
-                role.weaponAttack=this.gun;
+                chooseattackk=this.gun;
                 break;
             case "sword":
-                role.weaponAttack=this.sword;
+                chooseattack=this.sword;
                 break;
             case "arrow":
-                role.weaponAttack=this.arrow;
+                chooseattack=this.arrow;
                 break;
             case "wraichWand"://其已自帶HP-2
                 break;
             case "gun arrow sword"://
-                role.weaponAttack=1;
+                chooseattack=1;
                 break;
+        }
+        if(role.warriorMagic==true&&role.weaponChoose!=""&&role.weaponChoose2!=role.weaponChoose1){//判定有雙武器職業，且已選一把武器
+            role.weaponChoose2=choose;
+            role.weaponAttack2=chooseattack;
+
+        }
+        else{
+            role.weaponChoose=choose;
+            role.weaponAttack=chooseattack;
         }
 
     
@@ -412,8 +459,10 @@ var role1= new Vue({
         friendNum:1,//召朋友次數
 
         weaponChoose:"",//當前使用武器
+        weaponChoose2:"",//當前使用武器2
         toLearnSkill:"",//當前想學習的職業
         weaponAttack:0,
+        weaponAttack2:0,
         weaponAttackBuff:0,
 
         hand:[],//手牌
@@ -461,8 +510,10 @@ var role2= new Vue({
         friendNum:1,//召朋友次數
         
         weaponChoose:"",//當前使用武器
+        weaponChoose2:"",//當前使用武器2
         toLearnSkill:"",//當前想學習的職業
         weaponAttack:0,
+        weaponAttack2:0,
         weaponAttackBuff:0,
         
         hand:[],//手牌
@@ -625,7 +676,7 @@ function creatMonsterCard3(){
     
 }
 
-//建立武器伴
+//建立武器
 function creatWeaponCard3(){
     var tem=new CreatWeaponCard('c3_13','c3_13.png',0,0,4,'arrow');card_list3.push(tem);
     var tem=new CreatWeaponCard("c3_14",'c3_14.png',4,0,0,"gun");card_list3.push(tem);

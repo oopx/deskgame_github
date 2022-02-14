@@ -1,4 +1,5 @@
 var role;
+var choose,chooseattack;//標示目前的武器槽
 var other;
 var level=1;
 var doWhat=1;//確定當前要做什麼 1為打怪，2為休息，3為移除，4學習，5血祭
@@ -47,6 +48,8 @@ function othersTurn(){
     $('.weapon').removeClass('choose');//武器系統還原為空
     role.weaponChoose="";//武器系統選取還原為空
     role.weaponAttack=0;//武器系統值還原為空
+    role.weaponChoose2="";//武器系統選取還原為空
+    role.weaponAttack2=0;//武器系統值還原為空
     doWhat=1;//預設行動為攻擊
     $(".attack").addClass('doWhat');//預設行動為攻擊
     $('.canTrap').removeClass("canTrap");//避免有人按陷阱後不放
