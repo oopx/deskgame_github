@@ -79,7 +79,7 @@ function addOption(back){
         return;
       };
     
-    
+     // $('[data-framework="'+j+'"]').append('<div class="attackValue"></div>');
       $('[data-framework="'+j+'"]').append('<img class="front-face" src="img/'+element.src+'"/>');
       
       $('[data-framework="'+j+'"]').append('<img class="back-face" src="img/'+back+'" alt="back"/>');// 動態新增卡牌

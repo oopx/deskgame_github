@@ -73,6 +73,15 @@
   transform: scale(1,1);
 }
 
+.attackValue{
+  width:100%;
+  height:30%;
+  background-color: aliceblue;
+  bottom:0%;
+  z-index: 99;
+
+}
+
 
 
 section{

@@ -107,6 +107,78 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
        
                     
     };
+    this.attackValue=function(){
+        switch(role.weaponChoose){
+            case "gun":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
+                break;
+            case "sword":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
+                break;
+            case "arrow":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
+                break;
+            case "wraichWand":this.attack=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
+                break;
+            case "gun arrow sword"://針對三相武器
+                {
+                if(this.gun_short>this.sword_short&&this.gun_short>this.arrow_short)
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
+                else if(this.sword_short>this.gun_short&&this.sword_short>this.arrow_short)                
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
+                else if(this.arrow_short>this.gun_short&&this.arrow_short>this.sword_short) 
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
+                else {alert("wrong");};
+                break;
+                }
+            default: {
+                break;
+                }
+        }
+        //武器判定2 給有二段武器的
+        switch(role.weaponChoose2){
+            case "gun":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                break;
+            case "sword":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                break;
+            case "arrow":
+                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                break;
+            case "wraichWand":this.attack=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
+                break;
+            case "gun arrow sword"://針對三相武器
+                {
+                if(this.gun_short>this.sword_short&&this.gun_short>this.arrow_short)
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                else if(this.sword_short>this.gun_short&&this.sword_short>this.arrow_short)                
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                else if(this.arrow_short>this.gun_short&&this.arrow_short>this.sword_short) 
+                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                else {alert("wrong");};
+                break;
+                }
+            default: {
+                break;
+                }
+        }
+
+        //陷阱傷害計算
+        let attackValue=0;//要傳回的傷害值
+        if(this.trap.trapOwner!=role.id){attackValue=attackValue-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
+        //if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
+        //攻擊血量計算
+        this.attack=ignoreNegative(this.attack+role.monsterBuff);//來自自身的增減傷
+        if(role.earth2==1){//有兩個土元素的話
+            attackValue=attackValue-0.5*(ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow));
+
+        }else{    
+            attackValue=attackValue-ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow);
+        }
+        
+        return(attackValue);
+    };
     
 
 }
@@ -138,6 +210,16 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
 
 
         
+    }
+    this.attackValue=function(){
+        let attackValue=0;
+        if(role.friend_free==false){attackValue=attackValue-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
+        
+        //陷阱傷害計算
+        if(this.trap.trapOwner!=role.id){attackValue=attackValue-role.more_trapAttack-this.trap.trapAttack};
+        return(attackValue);
+
+
     }
 }
 //武器卡片建構子

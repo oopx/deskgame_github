@@ -402,6 +402,17 @@ $(document).ready(function(){
             role=role1;//回到角色一
         });
 
+
+    //測試預顯傷害
+    $("section").on ("mouseenter",".active",function(){
+        let framework=this.dataset.framework;
+        console.log(framework);
+        let clickCard=card_list[framework-1]
+        console.log(clickCard);
+        let title=clickCard.attackValue();
+        console.log(clickCard.attackValue());
+        $(this).attr("title",title);
+    })
 })
 
 
@@ -415,16 +426,18 @@ this.remove();
 });
 
 //
- var list2=["ttee","jlk","sfasdf","sdasdf","sdas"];
+ var list2=["c1_1","c1_2","c1_3","c1_4","c1_5"];
  var tt="lkl"
  //console.log(card_list);
 ///建立職業卡
 var viewControl= new Vue({
-    el:'#chooseSkill',
+    el:'#role2handSkill',
     //delimiters: ['${', '}'],
     data:{
         img:list2,
         card_list:[],
+        img:["img/c1_1.png","img/c1_2.png","img/c1_3.png","img/c1_4.png","img/c1_5.png"],
+        
         list: [
             { id: '123456789', name: '選項 1' },
             { id: '234567890', name: '選項 2' },
@@ -433,6 +446,7 @@ var viewControl= new Vue({
     }
 
 })
+
 
 // //武器選擇系統
 // function weaponChooseSys(){
