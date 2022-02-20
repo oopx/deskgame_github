@@ -147,11 +147,15 @@ $(document).ready(function(){
         //每點完一張卡，即偵測是否可得魔法
         elementControl();
         //改動血量魂值條
-        $("#role1Hp").attr("value",role1.hp);
+        $("#role1Hp").attr("style","width:"+String(role1.hp/30*100)+"%");
+        $("#role1Hp").text(String(role1.hp)+"生命值");
         $("#role1Exp").attr("style","width:"+String(role1.exp/25*100)+"%");
+        $("#role1Exp").text(String(role1.exp)+"魂值");
        // $("#role1Hp").append(role1.hp);
-        $("#role2Hp").attr("value",role2.hp);
+        $("#role2Hp").attr("style","width:"+String(role2.hp/30*100)+"%");
+        $("#role2Hp").text(String(role2.hp)+"生命值");
         $("#role2Exp").attr("style","width:"+String(role2.exp/25*100)+"%");
+        $("#role2Exp").text(String(role2.exp)+"魂值");
         //每點完一張卡，即偵測是否死亡
         if(role.isGuider==true&&role.magicOwn>=5){$("#endBoard").append("<hr>VICTOR</hr>");}
         if(role==role1){return;}//如果還沒完成該回合，則不結算
