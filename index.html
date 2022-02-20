@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     
@@ -39,6 +40,42 @@
             
         </div> 
         <img id="toolButton" src="img/sword.png" />
+    </div>
+    <div id="controlList" class="container">
+        
+        <div class="role1 rolehp">
+            <span>角色狀態1：</span><br>
+            <meter  id="role1Hp" min="0" low="5" max="25" value="8"></meter>
+            <span>角色1魂值：</span><br>
+            <div class="progress">
+                
+                <div id="role1Exp" class="progress-bar  progress-bar-info" role="progressbar" aria-valuenow="50"aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                    魂值
+                </div>
+            </div>
+        </div>
+        
+        <div class="role2 rolehp">
+            <span>角色狀態2：</span><br>
+            <meter  id="role2Hp" min="0" low="5" max="25" value="10"></meter>
+            <span>角色2魂值：</span><br>
+            <div class="progress">
+                
+                <div id="role2Exp" class="progress-bar  progress-bar-info  " role="progressbar" aria-valuenow="50"aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                    魂值
+                </div>
+            </div>  
+        </div>
+    
+                  
+
+        <button class="attack">攻擊</button>
+        <button class="rest">休息</button>
+        <button class="sacrifice">血祭</button>
+        <button class="remove">移除</button>
+        <button class="learn" disabled="disabled">學習</button>
+        <!-- 學習要由工具列中的職業卡觸發 -->
+        <button class="turn">換回合</button>
     </div>
     <div id="role1" class="item_left role weaponBar">
         <h2>role1角色卡牌</h2> 
@@ -126,6 +163,7 @@
         <p>restUp:{{restUp}}</p>
         <button id="testbutton">testbutton</button>
         <button id="testbutton2">testbutton2</button>
+        <button id="testbutton3">testbutton3</button>
         <button id="nextLevel">nextLevel</button>
         <button id="f">flip all</button>
   

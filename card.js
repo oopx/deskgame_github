@@ -88,6 +88,10 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
         //攻擊血量計算
         this.attack=ignoreNegative(this.attack+role.monsterBuff);//來自自身的增減傷
+        if(role.isWizard==true){this.attack=ignoreNegative(this.attack-role.magicOwn*2)};//每有一種魔法，怪物HP-2
+        if(role.isWeaponMaster==true){this.attack=ignoreNegative(this.attack-role.weapon*1)}//每有一武器，怪物HP-1
+        if(role.isHero==true){this.attack=ignoreNegative(this.attack-this.gun_short-this.sword_short-this.arrow_short)}//如果是英雄，自帶三把武器
+
         if(role.earth2==1){//有兩個土元素的話
             role.hp=role.hp-0.5*(ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow));
 
@@ -108,26 +112,28 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
                     
     };
     this.attackValue=function(){
+        let attackValue=0;//要傳回的傷害值
         switch(role.weaponChoose){
             case "gun":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
                 break;
             case "sword":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
                 break;
             case "arrow":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
                 break;
-            case "wraichWand":this.attack=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
+            case "wraichWand":
+                attackValue=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
                 break;
             case "gun arrow sword"://針對三相武器
                 {
                 if(this.gun_short>this.sword_short&&this.gun_short>this.arrow_short)
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.gun_short));
                 else if(this.sword_short>this.gun_short&&this.sword_short>this.arrow_short)                
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.sword_short));
                 else if(this.arrow_short>this.gun_short&&this.arrow_short>this.sword_short) 
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack+role.weaponAttackBuff)*this.arrow_short));
                 else {alert("wrong");};
                 break;
                 }
@@ -138,24 +144,24 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         //武器判定2 給有二段武器的
         switch(role.weaponChoose2){
             case "gun":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
                 break;
             case "sword":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
                 break;
             case "arrow":
-                this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
                 break;
-            case "wraichWand":this.attack=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
+            case "wraichWand": attackValue=ignoreNegative(this.attack-2-role.weaponAttackBuff);//針對真傷武器
                 break;
             case "gun arrow sword"://針對三相武器
                 {
                 if(this.gun_short>this.sword_short&&this.gun_short>this.arrow_short)
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.gun_short));
                 else if(this.sword_short>this.gun_short&&this.sword_short>this.arrow_short)                
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.sword_short));
                 else if(this.arrow_short>this.gun_short&&this.arrow_short>this.sword_short) 
-                    this.attack=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
+                    attackValue=ignoreNegative(this.attack-((role.weaponAttack2+role.weaponAttackBuff)*this.arrow_short));
                 else {alert("wrong");};
                 break;
                 }
@@ -165,13 +171,18 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
         }
 
         //陷阱傷害計算
-        let attackValue=0;//要傳回的傷害值
-        if(this.trap.trapOwner!=role.id){attackValue=attackValue-role.more_trapAttack-this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
+        
+        if(this.trap.trapOwner!=role.id){attackValue=attackValue+role.more_trapAttack+this.trap.trapAttack}//若卡上有非自己的陷阱，將發動傷害效果
         //if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
         //攻擊血量計算
-        this.attack=ignoreNegative(this.attack+role.monsterBuff);//來自自身的增減傷
+
+        if(role.isWizard==true){attackValue=ignoreNegative( attackValue+role.magicOwn*2)};//每有一種魔法，怪物HP-2
+        if(role.isWeaponMaster==true){attackValue=ignoreNegative( attackValue+role.weapon*1)}//每有一武器，怪物HP-1
+        if(role.isHero==true){ attackValue=ignoreNegative( attackValue+this.gun_short-this.sword_short+this.arrow_short)}//如果是英雄，自帶三把武器
+
+        attackValue=ignoreNegative( attackValue-role.monsterBuff);//來自自身的增減傷
         if(role.earth2==1){//有兩個土元素的話
-            attackValue=attackValue-0.5*(ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow));
+            attackValue=attackValue-0.5*(ignoreNegative(attackValue+this.gun_short*role.friend_gun+this.sword_short*role.friend_sword+this.arrow_short*role.friend_arrow));
 
         }else{    
             attackValue=attackValue-ignoreNegative(this.attack-gun_short*role.friend_gun-this.sword_short*role.friend_sword-this.arrow_short*role.friend_arrow);
@@ -185,25 +196,32 @@ function CardMonster(id,src,gun_short,sword_short,arrow_short,attack,exp,fire,wa
 
 
 //夥伴卡片建構子
-function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
+function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow,type){
     this.id=id;
     this.src=src;
     this.friend_gun=friend_gun;
     this.friend_sword=friend_sword;
     this.friend_arrow=friend_arrow;
     this.order=0;
+    this.type=type;
     this.trap={trapOwner:role,trapAttack:0,weaponAttack:""};
+    this.toolAbility=function(){return};
     this.attackEvent=function(){//點擊後執行
-        role.friend_gun=role.friend_gun+this.friend_gun;
-        role.friend_sword=role.friend_sword+this.friend_sword;
-        role.friend_arrow=role.friend_arrow+this.friend_arrow;
-        if(role.friend_free==false){role.hp=role.hp-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
+        
+        // role.friend_gun=role.friend_gun+this.friend_gun;
+        // role.friend_sword=role.friend_sword+this.friend_sword;
+        // role.friend_arrow=role.friend_arrow+this.friend_arrow;
+        if(role.isLord==false){role.hp=role.hp-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
         role.friendNum++;//號召朋友的次數
         //加入手牌
+        role.handFriend.push(this);
+        //由handFriend計算
+        followerCount();
+        let frame=role.handFriend.indexOf(this);
         if(role==role1)
-            {$('#toolList_role1').append('<img class="tool" src="img/'+this.src+'"/>');}
+            {$('#toolList_role1').append('<img id="'+this.id+'" class="friend '+type+'" data-framework="'+frame+'"src="img/'+this.src+'"/>');}
         if(role==role2)
-            {$('#toolList_role2').append('<img class="tool" src="img/'+this.src+'"/>');}
+            {$('#toolList_role2').append('<img id="'+this.id+'" class="friend '+type+'" data-framework="'+frame+'"src="img/'+this.src+'"/>');}
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
@@ -213,8 +231,9 @@ function CreatParnerCard(id,src,friend_gun,friend_sword,friend_arrow){
     }
     this.attackValue=function(){
         let attackValue=0;
-        if(role.friend_free==false){attackValue=attackValue-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
-        
+
+        if(role.isLord==false){attackValue=attackValue-role.friendNum;}//號召夥伴花的血量，如果沒有friend_free魔法的話
+        console.log(attackValue);
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){attackValue=attackValue-role.more_trapAttack-this.trap.trapAttack};
         return(attackValue);
@@ -261,7 +280,7 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
                 chooseattack=1;
                 break;
         }
-        if(role.warriorMagic==true&&role.weaponChoose!=""&&role.weaponChoose2!=role.weaponChoose1){//判定有雙武器職業，且已選一把武器
+        if(role.isWarrior==true&&role.weaponChoose!=""&&role.weaponChoose2!=role.weaponChoose1){//判定有雙武器職業，且已選一把武器
             role.weaponChoose2=choose;
             role.weaponAttack2=chooseattack;
 
@@ -293,7 +312,11 @@ function CreatWeaponCard(id,src,gun,sword,arrow,type){
         //陷阱傷害計算
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
-    }
+    };
+    this.attackValue=function(){
+        let attackValue=0;
+        return(attackValue);
+    };
 }
 //陷阱卡建構子
 function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
@@ -372,6 +395,10 @@ function CreatTrapCard(id,src,attack,isTrap,trapAttack_origin){
         if(this.trap.trapOwner!=role.id){setWeaponDestroy(this.trap.weaponAttack);}//若卡上有非自己的陷阱，將發動傷害效果
 
     }
+    this.attackValue=function(){
+        let attackValue=0;
+        return(attackValue);
+    };
 }
 //武器破壞者建構子
 function CreatWeaponDestroyer(id,src){
@@ -484,6 +511,10 @@ function CreatWeaponDestroyer(id,src){
         if(this.trap.trapOwner!=role.id){role.hp=role.hp-role.more_trapAttack-this.trap.trapAttack};
 
     }
+    this.attackValue=function(){
+        let attackValue=0;
+        return(attackValue);
+    };
 }
 //建立治療卡
 function CreatTreatCard(id,src,treat,restUp){
@@ -502,6 +533,10 @@ function CreatTreatCard(id,src,treat,restUp){
 
     
     }
+    this.attackValue=function(){
+        let attackValue=0;
+        return(attackValue);
+    };
 }
 
 //創立 VUE 物件
@@ -518,11 +553,11 @@ var role1= new Vue({
         num:3,
         restUp:3,
         soul:0,
-        
-        monsterBuff:0,//來自怪的傷害增加或減少，容許負值
         friend_gun:0,
         friend_sword:0,
         friend_arrow:0,
+        
+        monsterBuff:0,
         elementGet:{
             fire:0,
             water:0,
@@ -531,23 +566,28 @@ var role1= new Vue({
             poison:0,
             light:0
         },
-        
         //more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//受到陷阱傷害增加
-        friend_free:false,//招伙伴免費
+        isHero:false,//是否有英雄技能
+        isLord:false,//招伙伴免費
         magicOwn:0,//擁有魔法數
+        isGuider:false,//是否有引路者技能
+        isWizard:false,//是否有法師技能
         weapon:0,//擁有武器數
+        isWeaponMaster:false,//是否有武器大師技能
+        isWarrior:false,//是否有戰士技能
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數
-
+        
         weaponChoose:"",//當前使用武器
         weaponChoose2:"",//當前使用武器2
         toLearnSkill:"",//當前想學習的職業
         weaponAttack:0,
         weaponAttack2:0,
         weaponAttackBuff:0,
-
+        
         hand:[],//手牌
+        handFriend:[],//手中的夥伴
         handSkill:[],
         },
     methods: {
@@ -585,9 +625,14 @@ var role2= new Vue({
         },
         //more_attack:0,//來自怪的傷害增加或減少，容許負值
         more_trapAttack:0,//受到陷阱傷害增加
-        friend_free:false,//招伙伴免費
+        isHero:false,//是否有英雄技能
+        isLord:false,//招伙伴免費
         magicOwn:0,//擁有魔法數
+        isGuider:false,//是否有引路者技能
+        isWizard:false,//是否有法師技能
         weapon:0,//擁有武器數
+        isWeaponMaster:false,//是否有武器大師技能
+        isWarrior:false,//是否有戰士技能
         sacrificeNum:1,//血祭次數
         friendNum:1,//召朋友次數
         
@@ -599,6 +644,7 @@ var role2= new Vue({
         weaponAttackBuff:0,
         
         hand:[],//手牌
+        handFriend:[],//手中的夥伴
         handSkill:[],
         },
     methods: {
@@ -668,12 +714,12 @@ function creatMonsterCard1(){
 //建立夥伴
 
 function creatParnerCard1(){
-    var tem=new CreatParnerCard(13,"c1_13.png",0,0,1);card_list1.push(tem);
-    var tem=new CreatParnerCard(14,"c1_14.png",0,0,1);card_list1.push(tem);
-    var tem=new CreatParnerCard(15,"c1_15.png",0,1,0);card_list1.push(tem);
-    var tem=new CreatParnerCard(16,"c1_16.png",0,1,0);card_list1.push(tem);
-    var tem=new CreatParnerCard(17,"c1_17.png",1,0,0);card_list1.push(tem);
-    var tem=new CreatParnerCard(18,"c1_18.png",1,0,0);card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_13","c1_13.png",0,0,1,"arrow");card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_14","c1_14.png",0,0,1,"arrow");card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_15","c1_15.png",0,1,0,"sword");card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_16","c1_16.png",0,1,0,"sword");card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_17","c1_17.png",1,0,0,"gun");card_list1.push(tem);
+    var tem=new CreatParnerCard("c1_18","c1_18.png",1,0,0,"gun");card_list1.push(tem);
    
 } 
 //建立武器
@@ -712,9 +758,9 @@ function creatMonsterCard2(){
 
 //建立夥伴
 function creatParnerCard2(){
-    var tem=new CreatParnerCard(13,'c2_13.png',0,0,2);card_list2.push(tem);
-    var tem=new CreatParnerCard(14,'c2_14.png',0,2,0);card_list2.push(tem);
-    var tem=new CreatParnerCard(15,'c2_15.png',2,0,0);card_list2.push(tem);
+    var tem=new CreatParnerCard("c2_13",'c2_13.png',0,0,2,"arrow");card_list2.push(tem);
+    var tem=new CreatParnerCard("c2_14",'c2_14.png',0,2,0,"sword");card_list2.push(tem);
+    var tem=new CreatParnerCard("c2_15",'c2_15.png',2,0,0,"gun");card_list2.push(tem);
     
 }
 //建立武器

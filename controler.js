@@ -146,7 +146,14 @@ $(document).ready(function(){
           }
         //每點完一張卡，即偵測是否可得魔法
         elementControl();
+        //改動血量魂值條
+        $("#role1Hp").attr("value",role1.hp);
+        $("#role1Exp").attr("style","width:"+String(role1.exp/25*100)+"%");
+       // $("#role1Hp").append(role1.hp);
+        $("#role2Hp").attr("value",role2.hp);
+        $("#role2Exp").attr("style","width:"+String(role2.exp/25*100)+"%");
         //每點完一張卡，即偵測是否死亡
+        if(role.isGuider==true&&role.magicOwn>=5){$("#endBoard").append("<hr>VICTOR</hr>");}
         if(role==role1){return;}//如果還沒完成該回合，則不結算
         if(role1.hp<=0 || role2.hp<=0 || Math.abs(role1.exp-role2.exp)>=4 )
         {   $("#endBoard").show();
@@ -162,6 +169,7 @@ $(document).ready(function(){
             //alert("s");
             
         }
+        
 
         });
 
@@ -297,6 +305,7 @@ $(document).ready(function(){
     role1.__proto__.poison3=0;
     role1.__proto__.light2=0;
     role1.__proto__.light3=0;
+    
     role1.__proto__.runeMasterMagic=false;//是否有血祭效果一半的魔法
 
     
@@ -311,29 +320,70 @@ $(document).ready(function(){
     $("#f").click(function(){f()});
     
     $('#testbutton').click(function(){
-        endAction('',false);
-        canActive();//可再點卡
+        
+        //const index = array.indexOf(3);
+        
+        card_list = card_list.filter(function(item) {
+            return item.id !== "c1_17";//可刪除特定物件
+        });
+        console.log(card_list)
     });
 
     
     $('#testbutton2').click(function(){
-        role.warriorMagic=true;
-       
-       
-       
+        $(".friend").addClass("canMusic");
+        $("#toolBar").one("click",".canMusic",function(){
+            console.log(this.id);
+            let clickParner=role.hand.filter(word => word.id==this.id);
+            console.log(clickParner);
+            console.log(clickParner[0].type);
+            switch(clickParner[0].type){
+                case "gun":
+                    clickParner[0].friend_gun=clickParner[0].friend_gun+2;
+                    break; 
+                case "sword":
+                    clickParner[0].friend_sword=clickParner[0].friend_sword+2;
+                    break;
+                case "arrow":
+                    clickParner[0].friend_arrow=clickParner[0].friend_arrow+2;
+                    break;
+            }
+        $(".canMusic").removeClass("canMusic" );
+            
+           
+
+            })  
+    });
+    $('#testbutton3').click(function(){   //總計朋友武器值計數器
+        for (var item of role.handFriend){
+            //var j=0;
+            //i=i+item.friend_arrow;
+            let arrow=item.friend_arrow;
+            let gun=item.friend_gun;
+            let sword=item.friend_sword;
+            role.friend_arrow=arrow;
+            role.friend_gun=gun;
+            role.friend_sword=sword;
+
+            console.log("arrow"+item.friend_arrow);
+            console.log("gun"+item.friend_gun);
+            console.log("sword"+item.friend_sword);
+           
+        }
+    });
         //role.hp=10000;
         
         // const result = card_list.filter(word => word.type=="gun");//測試用，可篩選ID
         // console.log(result.length);
         
         //list2.splice(index, 1);//好用，可用於vue
-    });
+    
     //可學習測試中
     $("#toolBar").on("click",".skill",function(){
         let tem=this.alt;
        let  result = skill_list.filter(word => word.id==tem);//找出的相對應物件
        console.log(result[0].ability);//可找到對應的Skill物件
-       console.log(String(this));
+       //console.log(String(this));
        
        tem=this;
        if(role.exp>=result[0].exp){
@@ -344,7 +394,7 @@ $(document).ready(function(){
         role.toLearnSkill=result[0]//將該卡附加於ROLE上
         
         //result[0].ability();//執行該職業卡的技能
-        
+        if($(".attack").hasClass("disabled")=="disabled"){return;}//若當下無學習行動，則返回
         this.remove();
         console.log(this.alt);
         }
@@ -406,16 +456,24 @@ $(document).ready(function(){
     //測試預顯傷害
     $("section").on ("mouseenter",".active",function(){
         let framework=this.dataset.framework;
-        console.log(framework);
+        //console.log(framework);
         let clickCard=card_list[framework-1]
-        console.log(clickCard);
+        //console.log(clickCard);
         let title=clickCard.attackValue();
         console.log(clickCard.attackValue());
         $(this).attr("title",title);
     })
+
+    //測試滑鼠位置
+    $("html").mousemove(function(e){
+        console.log(e.pageX+", "+e.pageY);
+        if(e.pageX==0){$("#role1").show()}
+        else if(e.pageX>=$(window).width()){$("#role2").show()}
+        else{$("#role1,#role2").hide();}
+      })
 })
 
-
+//測試
 
 skill_src=[];
 
@@ -425,7 +483,12 @@ console.log(this);
 this.remove();
 });
 
-//
+//測試
+let num=$('#toolList_roll1 .gun').length;
+$("#toolList_role1 .sword").length//計算手牌量
+role.hand.filter(word => word.type=="sword");
+
+//測試
  var list2=["c1_1","c1_2","c1_3","c1_4","c1_5"];
  var tt="lkl"
  //console.log(card_list);

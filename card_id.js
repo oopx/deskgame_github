@@ -56,7 +56,7 @@ skill_list =[
         name:"lord",
         exp:1,
         ability:function(){//招伙伴免費
-        role.friend_free=true;
+        role.isLord=true;
 
             },
         },
@@ -64,15 +64,15 @@ skill_list =[
         name:"cleric",
         exp:2,
         ability:function(){//HP+2並休息+2
-        role.hp=role.hp+2;
-        role.restUp=role.restUp+2;
+            role.hp=role.hp+2;
+            role.restUp=role.restUp+2;
             },
         },
     {   id:"j8",
         name:"warrior",//可使用兩把武器
         exp:2,
         ability:function(){
-        role.warriorMagic=true;
+            role.isWarrior=true;
 
             },
         },
@@ -80,30 +80,78 @@ skill_list =[
         name:"wizard",
         exp:4,
         ability:function(){//每有一種魔法，怪物HP-2
-        role.monsterBuff=role.monsterBuff-(2*magicOwn);
+            role.isWizard=true;
             },
         },
     {   id:"j10",
         name:"bard",
         exp:3,
-        ability:function(){//放置一指示物保護伙伴
-
+        ability:function(){//放置一指示物保護伙伴，並使其能力加2
+            if(role==role1)
+                {
+                role1.hand.push(this);//加入手牌
+                let frame=role1.hand.indexOf(this);
+                $('#toolList_role1').append('<img class="bardTool tool" data-framework="'+frame+'" src="img/music.png"/>');
+                }
+            if(role==role2)
+                {
+                role2.hand.push(this);//加入手牌
+                let frame=role2.hand.indexOf(this);
+                $('#toolList_role2').append('<img class="bardTool tool" data-framework="'+frame+'" src="img/music.png"/>');
+                }
             },
+        toolAbility:function(){
+            $(".friend").addClass("canMusic");
+            $("#toolBar").one("click",".canMusic",function(){
+                console.log(this.id);
+                let clickParner=role.hand.filter(word => word.id==this.id);
+
+                switch(clickParner[0].type){
+                    case "gun":
+                        clickParner[0].friend_gun=clickParner[0].friend_gun+2;
+                        break; 
+                    case "sword":
+                        clickParner[0].friend_sword=clickParner[0].friend_sword+2;
+                        break;
+                    case "arrow":
+                        clickParner[0].friend_arrow=clickParner[0].friend_arrow+2;
+                        break;
+                }
+                $(".canMusic").removeClass("canMusic" );
+    
+                }) 
+                //以下計數朋友傷害
+                let arrow=0;
+                let gun=0;
+                let sword=0;
+
+                for (var item of role.handFriend){//總計朋友武器值計數器
+                    arrow=arrow+item.friend_arrow;
+                    gun=gun+item.friend_gun;
+                    sword=sword+item.friend_sword;
+                           
+                    console.log("arrow"+item.friend_arrow);
+                    console.log("gun"+item.friend_gun);
+                    console.log("sword"+item.friend_sword);
+                   
+                }
+                role.friend_arrow=arrow;
+                role.friend_gun=gun;
+                role.friend_sword=sword;
+            }
         },
     {   id:"j11",
         name:"weapon master",
         exp:4,
         ability:function(){//每有一武器，怪物HP-1
-        role.monsterBuff=role.monsterBuff-(1*role.weapon);
+            role.isWeaponMaster=true;
             },
         },
     {   id:"j12",
         name:"hero",
         exp:4,
         ability:function(){//自帶三種武器//未完成
-        role.gun=this+1;
-        role.sword=this+1;
-        role.arrow=this+1;
+            role.isHero=true;
             },
         },
     {   id:"j13",
@@ -120,6 +168,7 @@ skill_list =[
         name:"guider",
         exp:5,
         ability:function(){
+            role.isGuider=true;//擁有五個魔法即獲勝
 
             },
             },

@@ -6,7 +6,7 @@
 }
 
 body {
-  height: 100vh;
+  /* height: 100vh; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,19 +28,7 @@ h1 {
   padding: 1em 0;
 }
 
-.memory-game {
-  width: 900px;
-  height: 1400px;
-  margin: auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-perspective: 2000px;
-  perspective: 2000px;
-  margin-top: 0;
-}
+
 
 .card {
   width: calc(20% - 10px);

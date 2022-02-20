@@ -27,16 +27,16 @@ function othersTurn(){
       console.log("turn");
       role=role2;
       other=role1;
-      $("#role2").addClass("your_turn");
-      $("#role1").removeClass("your_turn");
+      $("#role2,.role2").addClass("your_turn");
+      $("#role1,.role1").removeClass("your_turn");
       $('#toolList_role2').addClass('your_turn');
       $("#toolList_role1").removeClass("your_turn");
       } 
   else{//換role1
       role=role1;
       other=role2;
-      $("#role1").addClass("your_turn");
-      $("#role2").removeClass("your_turn");
+      $("#role1,.role1").addClass("your_turn");
+      $("#role2,.role2").removeClass("your_turn");
       $('#toolList_role1').addClass('your_turn');
       $('#toolList_role2').removeClass("your_turn");
       }
@@ -280,7 +280,7 @@ function setWeaponDestroy(weaponAttack){
            
             
   //    if(this.trap.trapOwner!=role){
-          let weaponType=weaponAttack;//抓取該卡的破壞𡋟果
+          let weaponType=weaponAttack;//抓取該卡的破壞效果
           //誰的武器庫
           //console.log(weaponType);
           if(weaponAttack==""){return;}//不帶陷阱就退出
@@ -327,3 +327,25 @@ function setWeaponDestroy(weaponAttack){
             
       
   }
+  //以下計數朋友傷害
+  function followerCount(){
+
+      
+      let arrow=0;
+      let gun=0;
+      let sword=0;
+
+      for (var item of role.handFriend){//總計朋友武器值計數器
+          arrow=arrow+item.friend_arrow;
+          gun=gun+item.friend_gun;
+          sword=sword+item.friend_sword;
+                
+          console.log("arrow"+item.friend_arrow);
+          console.log("gun"+item.friend_gun);
+          console.log("sword"+item.friend_sword);
+        
+      }
+      role.friend_arrow=arrow;
+      role.friend_gun=gun;
+      role.friend_sword=sword;                  
+}
